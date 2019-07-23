@@ -4,10 +4,21 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var passport = require('passport');
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+var session = require('express-session');
+var flash = require('req-flash');
+
 var app = express();
+
+app.use(session({
+    secret: 'sopaipilla',
+    resave: false,
+    saveUninitialized: true
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -20,6 +31,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+require('./config/passport')(passport);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
