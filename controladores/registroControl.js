@@ -10,7 +10,10 @@ class registroControl {
 
         var datos = {
             username: req.body.usuario,
-            clave: req.body.clave
+            clave: req.body.clave,
+            tipo_cuenta:1,
+    email:null,
+    activa:true
         };
 
         cuenta.create(datos).then(function (wason) {
