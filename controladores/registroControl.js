@@ -15,7 +15,7 @@ class registroControl {
 
         cuenta.create(datos).then(function (wason) {
             req.flash('info', "Se ha registrado Correctamente");
-            res.redirect("/");
+            res.redirect("/logeo");
         });
 
     }

@@ -18,7 +18,7 @@ var auth = function (req, res, next) {
 /* GET home page. */
 router.get('/', function (req, res, next) {
     if (req.isAuthenticated()) {
-        res.render('index', {title: 'Anvorgueza', sesion: true, info: req.flash('info')});
+        res.render('index', {title: 'Anvorgueza', sesion: true, info: req.flash('info'), usuario: req.user.nombre});
     } else {
         res.render('index', {title: 'Anvorgueza', sesion: false, info: req.flash('info')});
     }
@@ -26,18 +26,18 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/logeo', function (req, res, next) {
-    res.render('fragmentos/login', {title: 'Logear', sesion: false});
+    res.render('fragmentos/login', {title: 'Inicio de Sesion', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}});
 });
 
 router.get('/registro', function (req, res, next) {
-    res.render('fragmentos/registro', {title: 'Registro', sesion: false});
+    res.render('fragmentos/registro', {title: 'Registro'});
 });
 
 router.post('/registro', cuentaC.guardar);
 
 router.post('/inicio_sesion', passport.authenticate('local-signin',
         {successRedirect: '/',
-            failureRedirect: '/inicio_sesion',
+            failureRedirect: '/logeo',
             failureFlash: true}
 ));
 
