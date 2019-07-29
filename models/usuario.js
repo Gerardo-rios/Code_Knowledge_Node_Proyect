@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
 
     }, {freezeTableName: true});
     usuario.associate = function (models) {
-        usuario.hasOne(models.cuenta, {foreignKey: 'id_usuario', as: "usuario"});
+        usuario.hasOne(models.cuenta, {foreignKey: 'id_usuario', as: "cuenta"});
         usuario.hasMany(models.pregunta, {foreignKey: 'id_usuario', as: "usuario_pregunta"});
     };
     return usuario;

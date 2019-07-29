@@ -26,7 +26,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/logeo', function (req, res, next) {
-    res.render('fragmentos/login', {title: 'Inicio de Sesion', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}});
+    res.render('fragmentos/login', {title: 'Inicio de Sesion', msg: {error: req.flash('error'), info: req.flash('info')}});
 });
 
 router.get('/registro', function (req, res, next) {
