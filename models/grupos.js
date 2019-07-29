@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
         nombre: DataTypes.STRING
     }, {freezeTableName: true});
     grupos.associate = function (models) {
-        grupos.hasMany(models.links, {foreignKey: 'id_grupo', as: 'grupos'});
+        grupos.hasMany(models.links, {foreignKey: 'id_grupo', as: 'links'});
 
     };
     return grupos;

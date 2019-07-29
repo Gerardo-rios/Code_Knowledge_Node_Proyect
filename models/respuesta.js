@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {freezeTableName: true});
     respuesta.associate = function (models) {
         respuesta.belongsTo(models.pregunta, {foreignKey: 'id_pregunta'});
-        respuesta.hasMany(models.comentario, {foreignKey: 'id_comentario', as: "respuesta"});
+        respuesta.hasMany(models.comentario, {foreignKey: 'id_comentario', as: "comentario"});
 
 
     };
