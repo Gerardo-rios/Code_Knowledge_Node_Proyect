@@ -1,9 +1,11 @@
 var models = require('./../models/');
 var cuenta = models.cuenta;
+var persona = models.usuario;
 
 module.exports = function (passport) {
     var Cuenta = cuenta; //modelo
-    
+    var Persona = persona; //modelo
+
     var LocalStrategy = require('passport-local').Strategy;
     //Permite serializar los datos de cuenta
     passport.serializeUser(function (cuenta, done) {
@@ -11,11 +13,11 @@ module.exports = function (passport) {
     });
     // Permite deserialize la cuenta de usuario
     passport.deserializeUser(function (id, done) {
-        Cuenta.findOne({where: {id: id}}).then(function (cuenta) {
+        Cuenta.findOne({where: {id: id}, include: [{model: Persona}]}).then(function (cuenta) {
             if (cuenta) {
                 var userinfo = {
-                    id: cuenta.id,
-                    nombre: cuenta.username
+                    id: cuenta.usuario.external_id,
+                    nombre: cuenta.usuario.apellidos + " " + cuenta.usuario.nombres
                 };
                 console.log(userinfo);
                 done(null, userinfo);
