@@ -24,9 +24,10 @@ module.exports = function (passport) {
             if (cuenta) {
                 var userinfo = {
                     id: cuenta.usuario.external_id,
-                    nombre: cuenta.usuario.apellidos + " " + cuenta.usuario.nombres
+                    nombre: cuenta.usuario.apellidos + " " + cuenta.usuario.nombres,
+                    
                 };
-                console.log(userinfo);
+              //  console.log(userinfo);
                 done(null, userinfo);
             } else {
                 done(cuenta.error, null);
@@ -69,8 +70,8 @@ module.exports = function (passport) {
         profileFields: ['id', 'displayName', 'emails', 'picture', 'short_name']
     },
             function (accessToken, refreshToken, profile, done) {
-                console.log(profile);
-                var Persona = persona;
+                //console.log(profile);
+                //var Persona = persona;
                 var datos = {
                     nombres: profile.displayName,
                     external_id: uuid.v4(),
@@ -89,14 +90,14 @@ module.exports = function (passport) {
                     }
                 };
                 Persona.findOrCreate({where: {'$cuenta.clave$': profile.id}, defaults: datos, include: [{model: models.cuenta, as: 'cuenta'}]}).then(function ([user, created]) {
-                    console.log(user.get({plain: true}));
-                    console.log(created);
+                   // console.log(user.get({plain: true}));
+                   // console.log(created);
                     perfil = user.cuenta.get();
                     return done(null, perfil);
 
                 }).catch(function (error) {
-                    console.log(error);
-                    return done(error, perfil);
+                    //console.log(error);
+                    return done(error, null);
                 });
 
 
@@ -111,8 +112,8 @@ module.exports = function (passport) {
     },
     
             function (accessToken, refreshToken, profile, done) {
-                console.log(profile);
-                var Persona = persona;
+               // console.log(profile);
+               
                 var datos = {
                     nombres: profile.name.givenName,
                     external_id: uuid.v4(),
@@ -132,7 +133,7 @@ module.exports = function (passport) {
                 };
                 Persona.findOrCreate({where: {'$cuenta.clave$': profile.id}, defaults: datos, include: [{model: models.cuenta, as: 'cuenta'}]}).then(function ([user, created]) {
                   //  console.log(user.get({plain: true}));
-                    console.log(created);
+                 //   console.log(created);
                     perfil = user.cuenta.get();
                     return done(null, perfil);
 
