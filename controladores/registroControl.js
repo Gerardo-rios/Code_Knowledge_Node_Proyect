@@ -1,4 +1,4 @@
-    'use strict';
+'use strict';
 
 var uuid = require('uuid');
 var models = require('./../models/');
@@ -13,17 +13,17 @@ class registroControl {
             nombres: req.body.nombre_u,
             external_id: uuid.v4(),
             apellidos: req.body.apellido_u,
-            pais_origen: req.body.pais,
-            grado_estudio: req.body.estudio,
-            //imagen: req.body.avatar,
-            //descripcion: req.body.description,
+            pais_origen: "",
+            grado_estudio: "",
+            imagen: "",
+            descripcion: "",
             cuenta: {
                 username: req.body.username,
                 clave: req.body.clave,
-                 tipo_cuenta: 0, // 0 es local //1 es facebook // 2 es google
+                tipo_cuenta: 0, // 0 es local //1 es facebook // 2 es google
                 email: req.body.email,
-                activa: true
-              //  id_rol:0 // rol 0 sera usuario // 1 sera admininistrador
+                activa: true,
+                id_rol: 2 // rol 2 sera usuario // 1 sera admininistrador
             }
         };
 

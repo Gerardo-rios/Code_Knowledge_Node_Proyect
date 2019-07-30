@@ -74,4 +74,8 @@ router.get('/auth/google', passport.authenticate('google', {
             res.redirect('/');
         });
 
+router.get('/ban', function (req, res, next) {
+    res.render('fragmentos/test_baner', {title: 'Inicio de Sesion', msg: {error: req.flash('error'), info: req.flash('info')}});
+});
+
 module.exports = router;
