@@ -1,4 +1,4 @@
-'use strict';
+    'use strict';
 
 var uuid = require('uuid');
 var models = require('./../models/');
@@ -20,9 +20,10 @@ class registroControl {
             cuenta: {
                 username: req.body.username,
                 clave: req.body.clave,
-                // tipo_cuenta: DataTypes.INTEGER(1),
+                 tipo_cuenta: 0, // 0 es local //1 es facebook // 2 es google
                 email: req.body.email,
                 activa: true
+              //  id_rol:0 // rol 0 sera usuario // 1 sera admininistrador
             }
         };
 

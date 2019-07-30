@@ -47,5 +47,31 @@ router.post('/inicio_sesion', passport.authenticate('local-signin',
 
 router.get('/cerrar_sesion', auth, cuentaC.cerrar_sesion);
 
+//inico de session facebook 
+
+router.get('/login/facebook',
+        passport.authenticate('facebook', {scope: ['email']}));
+
+router.get('/login/facebook/return',
+        passport.authenticate('facebook', {failureRedirect: '/logeo'
+        }),
+        function (req, res) {
+            res.redirect('/');
+        });
+
+
+// inicio de google
+
+router.get('/auth/google', passport.authenticate('google', {
+    scope: [
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'https://www.googleapis.com/auth/userinfo.email'
+    ]
+})),
+        router.get('/auth/google/callback', passport.authenticate('google', {
+            failureRedirect: '/logeo'
+        }), function (req, res) {
+            res.redirect('/');
+        });
 
 module.exports = router;
