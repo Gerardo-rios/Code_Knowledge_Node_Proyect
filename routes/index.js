@@ -18,9 +18,9 @@ var auth = function (req, res, next) {
 /* GET home page. */
 router.get('/', function (req, res, next) {
     if (req.isAuthenticated()) {
-        res.render('index', {title: 'Miss You', sesion: true, info: req.flash('info'), usuario: req.user.nombre});
+        res.render('index', {title: 'Gaaaaa', sesion: true, info: req.flash('info'), usuario: req.user.nombre});
     } else {
-        res.render('index', {title: 'Miss You', sesion: false, info: req.flash('info')});
+        res.render('index', {title: 'Gaaaaa', sesion: false, info: req.flash('info')});
     }
 
 });
@@ -73,9 +73,5 @@ router.get('/auth/google', passport.authenticate('google', {
         }), function (req, res) {
             res.redirect('/');
         });
-
-router.get('/ban', function (req, res, next) {
-    res.render('fragmentos/test_baner', {title: 'Inicio de Sesion', msg: {error: req.flash('error'), info: req.flash('info')}});
-});
 
 module.exports = router;

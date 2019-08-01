@@ -8,6 +8,10 @@
         <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
+        
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/styleB.css">
+        <link rel="stylesheet" href="css/fontawesome-all.css">
 
         <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
         <link rel="stylesheet" href="css/animate.css">
@@ -27,6 +31,7 @@
         <link rel="stylesheet" href="css/flaticon.css">
         <link rel="stylesheet" href="css/icomoon.css">
         <link rel="stylesheet" href="css/style.css">
+        
     </head>
     <body>
         <div id="colorlib-page">
@@ -38,12 +43,7 @@
                     <a class="btn btn-primary" href="/registro"> Registrarse</a>
                 </div>
                 {{else}}
-                <div class="login100-form-title p-b-53">    
-                    Bienvevide {{usuario}}
-                </div>
-                <div style="align-content: center; margin-bottom: 40px; margin-top: 0px;">
-                    <a class="btn btn-secondary" href="/cerrar_sesion"> Cerrar Sesión</a>
-                </div>
+                {{> barra_noti}}
                 {{/unless}}
                 <nav id="colorlib-main-menu" role="navigation">
                     <ul>
@@ -55,7 +55,7 @@
                     </ul>
                 </nav>
                 <div class="colorlib-footer">
-                    <h1 id="colorlib-logo" class="mb-4"><a href="#" style="background-image: url(images/bg_1.jpg);">Still{{title}}</a></h1>
+                    <h1 id="colorlib-logo" class="mb-4"><a href="#" style="background-image: url(images/bg_1.jpg);">{{title}}</a></h1>
                     <p class="pfooter"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
@@ -174,7 +174,7 @@
                                     <form action="#" class="search-form">
                                         <div class="form-group">
                                             <span class="icon icon-search"></span>
-                                            <input type="text" class="form-control" placeholder="Type a keyword and hit enter">
+                                            <input type="text" class="form-control" placeholder="Search">  <!-- Para buscador -->
                                         </div>
                                     </form>
                                 </div>
@@ -251,7 +251,6 @@
         </div><!-- END COLORLIB-PAGE -->
         <!-- loader -->
         <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
-
 
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery-migrate-3.0.1.min.js"></script>
