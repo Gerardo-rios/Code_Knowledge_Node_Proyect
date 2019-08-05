@@ -8,7 +8,8 @@
         <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
-        
+
+
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/styleB.css">
         <link rel="stylesheet" href="css/fontawesome-all.css">
@@ -31,9 +32,13 @@
         <link rel="stylesheet" href="css/flaticon.css">
         <link rel="stylesheet" href="css/icomoon.css">
         <link rel="stylesheet" href="css/style.css">
-        
+
     </head>
+
     <body>
+        {{#if sesion}}
+        {{> barra_noti}}
+        {{/if}}
         <div id="colorlib-page">
             <a href="" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
             <aside id="colorlib-aside" role="complementary" class="js-fullheight">
@@ -41,9 +46,7 @@
                 <div style="align-content: center; margin-bottom: 40px; margin-top: 0px;">
                     <a class="btn btn-danger" href="/logeo"> Iniciar Sesión</a>
                     <a class="btn btn-primary" href="/registro"> Registrarse</a>
-                </div>
-                {{else}}
-                {{> barra_noti}}
+                </div>               
                 {{/unless}}
                 <nav id="colorlib-main-menu" role="navigation">
                     <ul>
@@ -55,7 +58,7 @@
                     </ul>
                 </nav>
                 <div class="colorlib-footer">
-                    <h1 id="colorlib-logo" class="mb-4"><a href="#" style="background-image: url(images/bg_1.jpg);">{{title}}</a></h1>
+                    <h1 id="colorlib-logo" class="mb-4"><a href="#" style="background-image: url(images/bg-01.jpg);">{{title}}</a></h1>
                     <p class="pfooter"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
@@ -86,7 +89,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="blog-entry ftco-animate d-md-flex">
-                                            <a href="single.html" class="img img-2" style="background-image: url(images/image_2.jpg);"></a>
+                                            <a href="single.html" class="img img-2" style="background-image: url(images/image_10.jpg);"></a>
                                             <div class="text text-2 pl-md-4">
                                                 <h3 class="mb-2"><a href="single.html">Great Things Never Came from Comfort Zone</a></h3>
                                                 <div class="meta-wrap">
@@ -103,7 +106,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="blog-entry ftco-animate d-md-flex">
-                                            <a href="single.html" class="img img-2" style="background-image: url(images/image_3.jpg);"></a>
+                                            <a href="single.html" class="img img-2" style="background-image: url(images/author.jpg);"></a>
                                             <div class="text text-2 pl-md-4">
                                                 <h3 class="mb-2"><a href="single.html">Paths Are Made by Walking</a></h3>
                                                 <div class="meta-wrap">
@@ -191,7 +194,7 @@
                                 <div class="sidebar-box ftco-animate">
                                     <h3 class="sidebar-heading">Preguntas Populares</h3>
                                     <div class="block-21 mb-4 d-flex">
-                                        <a class="blog-img mr-4" style="background-image: url(images/image_1.jpg);"></a>
+                                        <a class="blog-img mr-4" style="background-image: url(images/image_12.jpg);"></a>
                                         <div class="text">
                                             <h3 class="heading"><a href="#">Por que mi perro no habla?</a></h3>
                                             <div class="meta">
@@ -202,7 +205,7 @@
                                         </div>
                                     </div>
                                     <div class="block-21 mb-4 d-flex">
-                                        <a class="blog-img mr-4" style="background-image: url(images/image_2.jpg);"></a>
+                                        <a class="blog-img mr-4" style="background-image: url(images/image_12.jpg);"></a>
                                         <div class="text">
                                             <h3 class="heading"><a href="#">Ya fuentes?</a></h3>
                                             <div class="meta">
@@ -213,7 +216,7 @@
                                         </div>
                                     </div>
                                     <div class="block-21 mb-4 d-flex">
-                                        <a class="blog-img mr-4" style="background-image: url(images/image_3.jpg);"></a>
+                                        <a class="blog-img mr-4" style="background-image: url(images/image_12.jpg);"></a>
                                         <div class="text">
                                             <h3 class="heading"><a href="#">Cuanto tiempo queda?</a></h3>
                                             <div class="meta">

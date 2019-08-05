@@ -25,7 +25,7 @@ module.exports = function (passport) {
                 var userinfo = {
                     id: cuenta.usuario.external_id,
                     nombre: cuenta.usuario.apellidos + " " + cuenta.usuario.nombres,
-                    
+                    username: cuenta.username                    
                 };
               //  console.log(userinfo);
                 done(null, userinfo);

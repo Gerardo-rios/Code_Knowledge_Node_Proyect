@@ -6,6 +6,9 @@ var passport = require('passport');
 var cuenta = require('../controladores/registroControl');
 var cuentaC = new cuenta();
 
+var perfil = require('../controladores/perfilControl');
+var perfilC = new perfil();
+
 var auth = function (req, res, next) {
     if (req.isAuthenticated()) {
         next();
@@ -18,7 +21,7 @@ var auth = function (req, res, next) {
 /* GET home page. */
 router.get('/', function (req, res, next) {
     if (req.isAuthenticated()) {
-        res.render('index', {title: 'Gaaaaa', sesion: true, info: req.flash('info'), usuario: req.user.nombre});
+        res.render('index', {title: 'Gaaaaa', sesion: true, info: req.flash('info'), usuario: req.user.nombre, id: req.user.id});
     } else {
         res.render('index', {title: 'Gaaaaa', sesion: false, info: req.flash('info')});
     }
@@ -73,5 +76,7 @@ router.get('/auth/google', passport.authenticate('google', {
         }), function (req, res) {
             res.redirect('/');
         });
+
+router.get('/usuario_perfil/:external', auth, perfilC.visualizar_d);
 
 module.exports = router;
