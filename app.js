@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var fileUpload = require('express-fileupload');
 
 var passport = require('passport');
 
@@ -38,7 +39,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
-
+app.use('/ckeditor', express.static(__dirname + '/node_modules/ckeditor/'));
+app.use('/files', express.static(__dirname + '/files/'));
+app.use(fileUpload());
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 require('./config/passport')(passport);

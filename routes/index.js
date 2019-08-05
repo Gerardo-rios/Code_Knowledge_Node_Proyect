@@ -79,4 +79,22 @@ router.get('/auth/google', passport.authenticate('google', {
 
 router.get('/usuario_perfil/:external', auth, perfilC.visualizar_d);
 
+// ingreso de imagenes 
+router.post('/upload',function(req,res){
+
+    var EDfile = req.files.upload;
+	console.log(EDfile);
+   EDfile.mv(`./files/`+EDfile.name , err => {
+        if(err) return res.status(500).send({ "upload" : 0 , "err":err });
+
+        return res.status(200).send({
+    "uploaded": 1,
+    "fileName": EDfile.name,
+    "url": `/files/`+EDfile.name
+});
+    });
+    	console.log(EDfile.name);
+});
+
+
 module.exports = router;
