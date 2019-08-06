@@ -5,6 +5,8 @@ var passport = require('passport');
 
 var cuenta = require('../controladores/registroControl');
 var cuentaC = new cuenta();
+var registroControl = require('../controladores/utilidades'); 
+var registroControlC = new registroControl();
 
 var perfil = require('../controladores/perfilControl');
 var perfilC = new perfil();
@@ -85,21 +87,34 @@ router.get('/usuario_perfil/:external/edit', auth, perfilC.visualizar_modificar)
 router.post('/usuario_perfil/:external/edit/save', auth, perfilC.modificar);
 
 // ingreso de imagenes 
-router.post('/upload', function (req, res) {
-
+router.post('/upload', function(req,res){
+ 
     var EDfile = req.files.upload;
+	
+    var hoy = new Date();
+
+    cad="_"+hoy.getDate()+hoy.getMonth()+1+hoy.getFullYear()+'__'+hoy.getHours()+"_"+hoy.getMinutes()+"_"+hoy.getSeconds(); 
+
+    EDfile.name=cad+EDfile.name;
+    
+    var dir = `./files/`+EDfile.name;
+
+    
     console.log(EDfile);
-    EDfile.mv(`./files/` + EDfile.name, err => {
-        if (err)
-            return res.status(500).send({"upload": 0, "err": err});
+   
+    EDfile.mv(`./files/`+EDfile.name , err => {
+       console.log(err);
+        if(err) return res.status(500).send({ message : 'error tal '+ err });
 
         return res.status(200).send({
-            "uploaded": 1,
-            "fileName": EDfile.name,
-            "url": `/files/` + EDfile.name
-        });
+    "uploaded": 1,
+    "fileName": EDfile.name,
+    "url": `/files/`+EDfile.name
+});
     });
-    console.log(EDfile.name);
+    	console.log(EDfile.name);
+       
+    
 });
 
 
