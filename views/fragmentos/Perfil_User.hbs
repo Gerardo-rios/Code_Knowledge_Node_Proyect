@@ -1,15 +1,12 @@
-<!DOCTYPE HTML>
 
 <html>
     <head>
         <title>{{title}}</title>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+        <meta name="viewport" content="width=device-width, initial-scale=1" />        
         <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
         <link rel="stylesheet" href="/css/mainUP.css"/>
         <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-
     </head>
     <body>
         <!-- Header -->
@@ -38,7 +35,10 @@
                 <section id="one">
                     <div class="container">
                         <header class="major">
-                            <h2>Datos</h2>
+                            <ul class="actions">
+                                <li> <h2>Datos</h2> </li>  
+                                <li> <a style="color: blue" name="edit" href="/usuario_perfil/{{user.external_id}}/edit">Editar</a> </li>
+                            </ul>
                         </header>    
                     </div>
                     <form method="post" action="#">
@@ -46,9 +46,7 @@
                             <div class="row uniform">
                                 <div class="12u">
                                     <ul class="actions">
-                                        <li><h3>Información Personal</h3></li>
-                                        <li><a style="color: blue" name="edit" href="">Editar</a></li>
-                                        <li><input id="save" type="submit" value="Guardar" style="display: none"/></li>
+                                        <li><h3>Información Personal</h3></li>                                                                                
                                     </ul>
                                 </div>
                             </div>
@@ -91,10 +89,6 @@
                                     </select>                                    
                                 </div>
                             </div>
-                            <div class="row uniform" style="display: none" id="divDes">
-                                <label class="label" style="color: black"> Descripción: </label>
-                                <div class="12u"><textarea name="descripcion" id="descripcion" rows="3"></textarea></div>
-                            </div>
                         </div>
                     </form>
                 </section>
@@ -108,9 +102,7 @@
                             <div class="row uniform">
                                 <div class="12u">
                                     <ul class="actions">
-                                        <li><h3>Información de la cuenta</h3></li>
-                                        <li><a href="" style="color: blue" name="edit2">Editar</a></li>
-                                        <li><input id="save2" type="submit" value="Guardar" style="display: none"/></li>
+                                        <li><h3>Información de la cuenta</h3></li>                                        
                                     </ul>
                                 </div>
                             </div>
@@ -123,10 +115,6 @@
                                     <label class="label" style="color: black"> Correo Electrónico: </label>
                                     <input type="email" name="email" id="email" value="{{user.cuenta.email}}" disabled/>
                                 </div>
-                            </div>
-                            <div class="row uniform" style="display: none" id="divContra">
-                                <label class="label" style="color: black"> Contraseña: </label>
-                                <div class="12u"><input type="password" name="clave_n" id="clave_n"/></div>
                             </div>
                         </div>
                     </form>

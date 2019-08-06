@@ -77,23 +77,27 @@ router.get('/auth/google', passport.authenticate('google', {
             res.redirect('/');
         });
 
+//perfil del usuario
 router.get('/usuario_perfil/:external', auth, perfilC.visualizar_d);
 
+router.get('/usuario_perfil/:external/edit', auth, perfilC.visualizar_modificar);
+
 // ingreso de imagenes 
-router.post('/upload',function(req,res){
+router.post('/upload', function (req, res) {
 
     var EDfile = req.files.upload;
-	console.log(EDfile);
-   EDfile.mv(`./files/`+EDfile.name , err => {
-        if(err) return res.status(500).send({ "upload" : 0 , "err":err });
+    console.log(EDfile);
+    EDfile.mv(`./files/` + EDfile.name, err => {
+        if (err)
+            return res.status(500).send({"upload": 0, "err": err});
 
         return res.status(200).send({
-    "uploaded": 1,
-    "fileName": EDfile.name,
-    "url": `/files/`+EDfile.name
-});
+            "uploaded": 1,
+            "fileName": EDfile.name,
+            "url": `/files/` + EDfile.name
+        });
     });
-    	console.log(EDfile.name);
+    console.log(EDfile.name);
 });
 
 

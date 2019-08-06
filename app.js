@@ -7,6 +7,9 @@ var fileUpload = require('express-fileupload');
 
 var passport = require('passport');
 
+//favicon
+var favicon = require('express-favicon');
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
@@ -30,8 +33,10 @@ app.use(session({
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+//registro de parciales xd
 var hbs = require('hbs');
 hbs.registerPartials(__dirname + '/views/fragmentos');
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -46,9 +51,14 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 require('./config/passport')(passport);
 
+//favicon
+app.use(favicon(__dirname + '/public/images/icons/favicon.ico'));
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

@@ -30,6 +30,32 @@ class perfilControl {
         });
     }
 
+    visualizar_modificar(req, res) {
+
+        var external = req.params.external;
+        var user = models.usuario;
+        var cuenta = models.cuenta;
+
+        user.findAll({where: {external_id: external}, include: [{model: cuenta, as: 'cuenta'}]}).then(function (persone) {
+            if (persone.length > 0) {
+                var userE = persone[0];
+                res.render('fragmentos/perfil_user_edit',
+                        {title: 'edit a lo bien',
+                            sesion: true,
+                            user: userE,
+                            msg: {error: req.flash('error'), info: req.flash('info')}
+                        });
+            } else {
+                req.flash('error', 'Hubo un problema al intentar cargar los datos');
+                res.redirect('/');
+            }
+        }).error(function (error) {
+            req.flash('error', 'Hubo un problema, comunicate con tu servicio del sistema');
+            res.redirect('/');
+        });
+
+    }
+
 }
 
 module.exports = perfilControl;
