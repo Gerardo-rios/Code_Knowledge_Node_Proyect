@@ -52,7 +52,7 @@ app.use(passport.session()); // persistent login sessions
 require('./config/passport')(passport);
 
 //favicon
-app.use(favicon(__dirname + '/public/images/icons/favicon.ico'));
+app.use(favicon(__dirname + '/public/images/codificacion.png'));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
