@@ -56,6 +56,44 @@ class perfilControl {
 
     }
 
+    modificar(req, res) {
+        var user = models.usuario;
+        var cuenta = models.cuenta;
+        var external = req.body.external;        
+        user.findAll({where: {external_id: req.params.external}, include: [{model: cuenta, as: 'cuenta'}]}).then(function (persone) {
+            if (persone.length > 0) {
+                var userM = persone[0];
+                userM.apellidos = req.body.second_name;
+                userM.nombres = req.body.name;
+                userM.pais_origen = req.body.pais;
+                userM.grado_estudio = req.body.educacion;
+                //userM.imagen = req.body.imagen;
+                userM.descripcion = req.body.descripcion;
+                userM.save().then(function (result) {
+                    var cuentM = userM.cuenta;
+                    cuentM.username = req.body.username;
+                    cuentM.email = req.body.email;
+                    cuentM.clave = req.body.clave_n;
+                    cuentM.save();                    
+                    req.flash('info', 'Se ha modificado correctamente');
+                    res.redirect('/usuario_perfil/'+external);
+                }).error(function (error) {
+                    console.log(error);
+                    req.flash('error', 'No se pudo modificar');
+                    res.redirect('/usuario_perfil/' + external);
+                });
+
+
+            } else {
+                req.flash('error', 'No existe el dato a buscar');
+                res.redirect('/usuario_perfil/' + external);
+            }
+        }).error(function (error) {
+            req.flash('error', 'se produjo un error');
+            res.redirect('/');
+        });
+    }
+
 }
 
 module.exports = perfilControl;

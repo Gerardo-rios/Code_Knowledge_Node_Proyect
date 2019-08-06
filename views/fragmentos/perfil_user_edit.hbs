@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <title>{{title}}</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="stylesheet" href="/css/mainUP.css"/>
+
+    </head>
+    <body>
+        <!-- Header -->
+        <section id="header">
+            <header>
+                <span class="image avatar"><img src="{{user.imagen}}" alt="" /></span>
+                <h1 id="logo"><a href="#"></a>{{user.cuenta.username}}</h1>
+                <p>{{user.descripcion}}</p>
+            </header>
+            <nav id="nav">
+                <ul>
+                    <li><a href="#one" class="active">Información Personal</a></li>
+                    <li><a href="#two">Información de la cuenta</a></li>
+                    <li><a href="/">Volver</a></li>
+                </ul>
+            </nav>
+        </section>
+
+        <!-- Wrapper -->
+        <div id="wrapper">
+            <!-- Main -->
+            <div id="main">
+                <!-- One -->
+                <section id="one">
+                    <div class="container">
+                        <header class="major">
+                            <h2>Datos</h2>
+                        </header>
+                    </div>
+
+                    <form method="post" action="/usuario_perfil/{{user.external_id}}/edit/save">
+                        <input type="hidden" value="{{user.external_id}}" name= "external" />
+                        <div class="container">
+                            <div class="row uniform">
+                                <div class="12u">
+                                    <ul class="actions">
+                                        <li><h3>Información Personal</h3></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row uniform">
+                                <div class="6u 12u">
+                                    <label class="label" style="color: black"> Nombre: </label>
+                                    <input type="text" name="name" id="name" value="{{user.nombres}}"/>
+                                </div>
+                                <div class="6u 12u">
+                                    <label class="label" style="color: black"> Apellido: </label>
+                                    <input type="text" name="second_name" id="second_name" value="{{user.apellidos}}"/>
+                                </div>
+                            </div>
+                            <div class="row uniform">
+                                <div class="12u">
+                                    <label class="label" style="color: black"> Grado de Estudio: </label>
+                                    <select name="educacion">
+                                        <option value="{{user.grado_estudio}}">{{user.grado_estudio}}</option>
+                                        <option value="Primaria"> Primaria </option>
+                                        <option value="Bachiller"> Bachiller </option>
+                                        <option value="Educacion Superior"> Educación Superior </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row uniform">
+                                <div class="12u">
+                                    <label class="label" style="color: black"> País Origen: </label>
+
+                                    <select name="pais">
+                                        <option value="{{user.pais_origen}}" selected> {{user.pais_origen}}</option>
+                                        <option value="ChacaChaca"> ChacaChaca </option>
+                                        <option value="Carita de bolero"> Carita de Bolero </option>
+                                        <option value="kasajistan"> Kasajistan </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row uniform">
+                                <div class="12u">
+                                    <label class="label" style="color: black"> Descripción: </label>
+                                    <textarea name="descripcion" id="descripcion" rows="3">{{user.descripcion}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <section id="two">
+                            <div class="container">
+                                <div class="row uniform">
+                                    <div class="12u">
+                                        <ul class="actions">
+                                            <li><h3>Información de la cuenta</h3></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row uniform">
+                                    <div class="6u 12u">
+                                        <label class="label" style="color: black"> Nombre de Usuario: </label>
+                                        <input type="text" name="username" id="username" value="{{user.cuenta.username}}"/>
+                                    </div>
+                                    <div class="6u 12u">
+                                        <label class="label" style="color: black"> Correo Electrónico: </label>
+                                        <input type="email" name="email" id="email" value="{{user.cuenta.email}}" disabled/>
+                                    </div>
+                                    <div class="12u">
+                                        <label class="label" style="color: black"> Contraseña: </label>
+                                        <input type="password" name="clave_n" id="clave_n" value="{{user.cuenta.clave}}"/>
+                                    </div>
+                                </div>
+
+                                <div class="row uniform">
+                                    <div class="12u">
+                                        <ul class="actions">
+                                            <li><input type="submit" value="Guardar" /></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </section>
+                    </form>
+                </section>
+
+            </div>
+
+            <!-- Footer -->
+            <section id="footer">
+                <div class="container">
+                    <ul class="copyright">
+                        <li>&copy; Perfil PE. All rights reserved.</li><li>Design: <a href="https://www.facebook.com/profile.php?id=100007827077113" target="blank">Yo mero</a></li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Scripts -->
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/jquery.scrollzer.min.js"></script>
+        <script src="/js/jquery.scrolly.min.js"></script>
+        <script src="/js/skel.min.js"></script>
+        <script src="/js/utilUP.js"></script>
+        <script src="/js/mainUP.js"></script>
+    </body>
+</html>

@@ -42,6 +42,22 @@
         <div id="colorlib-page">
             <a href="" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
             <aside id="colorlib-aside" role="complementary" class="js-fullheight">
+                {{#if msg}}
+                {{#if msg.error}}
+                <div class="form-group">
+                    <div class="label label-danger" style="font-size: 16px">
+                        {{msg.error}}
+                    </div>                        
+                </div>
+                {{/if}}
+                {{#if msg.info}}
+                <div class="form-group">
+                    <div class="label label-success" style="font-size: 16px">
+                        {{msg.info}}
+                    </div>                        
+                </div>                  
+                {{/if}}
+                {{/if}}
                 {{#unless sesion}}
                 <div style="align-content: center; margin-bottom: 40px; margin-top: 0px;">
                     <a class="btn btn-danger" href="/logeo"> Iniciar Sesión</a>

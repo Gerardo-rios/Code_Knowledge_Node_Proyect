@@ -21,9 +21,9 @@ var auth = function (req, res, next) {
 /* GET home page. */
 router.get('/', function (req, res, next) {
     if (req.isAuthenticated()) {
-        res.render('index', {title: 'Gaaaaa', sesion: true, info: req.flash('info'), usuario: req.user.nombre, id: req.user.id});
+        res.render('index', {title: 'Gaaaaa', sesion: true, info: req.flash('info'), usuario: req.user.nombre, id: req.user.id, msg: {error: req.flash('error'), info: req.flash('info')}});
     } else {
-        res.render('index', {title: 'Gaaaaa', sesion: false, info: req.flash('info')});
+        res.render('index', {title: 'Gaaaaa', sesion: false, info: req.flash('info'), msg: {error: req.flash('error'), info: req.flash('info')}});
     }
 
 });
@@ -81,6 +81,8 @@ router.get('/auth/google', passport.authenticate('google', {
 router.get('/usuario_perfil/:external', auth, perfilC.visualizar_d);
 
 router.get('/usuario_perfil/:external/edit', auth, perfilC.visualizar_modificar);
+
+router.post('/usuario_perfil/:external/edit/save', auth, perfilC.modificar);
 
 // ingreso de imagenes 
 router.post('/upload', function (req, res) {
