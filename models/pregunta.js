@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
         pregunta.belongsTo(models.usuario, {foreignKey: 'id_usuario'});
         pregunta.hasMany(models.respuesta, {foreignKey: 'id_pregunta', as: "respuesta"});
         pregunta.hasMany(models.puntuacion, {foreignKey: 'id_pregunta', as: "pregunta_puntuacion"});
-
     };
     return pregunta;
 };
