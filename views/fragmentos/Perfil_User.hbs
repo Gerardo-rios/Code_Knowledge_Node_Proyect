@@ -3,7 +3,7 @@
     <head>
         <title>{{title}}</title>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />        
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
         <link rel="stylesheet" href="/css/mainUP.css"/>
         <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -38,25 +38,25 @@
                     <div class="form-group">
                         <div class="label label-danger" style="font-size: 16px">
                             {{msg.error}}
-                        </div>                        
+                        </div>
                     </div>
                     {{/if}}
                     {{#if msg.info}}
                     <div class="form-group">
                         <div class="label label-success" style="font-size: 16px">
                             {{msg.info}}
-                        </div>                        
-                    </div>                  
+                        </div>
+                    </div>
                     {{/if}}
                     {{/if}}
                     <div class="container">
                         <header class="major">
                             <ul class="actions">
-                                <li> <h2>Datos</h2> </li>  
+                                <li> <h2>Datos</h2> </li>
                                 <li> <a href="/usuario_perfil/{{user.external_id}}/edit" style="color: #000077"> Editar </a> </li>
-                                <!-- <li> <input type="button" onclick="window.location = '/usuario_perfil/{{user.external_id}}/edit'" value="Editar"> </li>  -->                             
+                                <!-- <li> <input type="button" onclick="window.location = '/usuario_perfil/{{user.external_id}}/edit'" value="Editar"> </li>  -->
                             </ul>
-                        </header>    
+                        </header>
                     </div>
                     <input type="hidden" value="{{user.external_id}}" name="external" />
                     <form method="post" action="#">
@@ -64,7 +64,7 @@
                             <div class="row uniform">
                                 <div class="12u">
                                     <ul class="actions">
-                                        <li><h3>Información Personal</h3></li>                                                                                
+                                        <li><h3>Información Personal</h3></li>
                                     </ul>
                                 </div>
                             </div>
@@ -98,13 +98,9 @@
 
                                     <select name="pais" disabled>
                                         {{#if user.pais_origen}}
-                                        <option value="{{user.pais_origen}}" selected> {{user.pais_origen}}</option> 
-                                        {{else}}
-                                        <option value="ChacaChaca"> ChacaChaca </option>
-                                        <option value="Carita de bolero"> Carita de Bolero </option>
-                                        <option value="kasajistan"> Kasajistan </option>
+                                        <option value="{{user.pais_origen}}" selected> {{user.pais_origen}}</option>
                                         {{/if}}
-                                    </select>                                    
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -120,7 +116,7 @@
                             <div class="row uniform">
                                 <div class="12u">
                                     <ul class="actions">
-                                        <li><h3>Información de la cuenta</h3></li>                                        
+                                        <li><h3>Información de la cuenta</h3></li>
                                     </ul>
                                 </div>
                             </div>
@@ -152,11 +148,11 @@
         </div>
 
         <!-- Scripts -->
-        <script src="/js/jquery.min.js"></script>        
+        <script src="/js/jquery.min.js"></script>
         <script src="/js/jquery.scrollzer.min.js"></script>
         <script src="/js/jquery.scrolly.min.js"></script>
         <script src="/js/skel.min.js"></script>
-        <script src="/js/utilUP.js"></script>        
-        <script src="/js/mainUP.js"></script>
+        <script src="/js/utilUP.js"></script>
+        <script src="/js/mainUP.js"></script>        
     </body>
 </html>
