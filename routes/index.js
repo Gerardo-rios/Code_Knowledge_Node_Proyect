@@ -23,9 +23,9 @@ var auth = function (req, res, next) {
 /* GET home page. */
 router.get('/', function (req, res, next) {
     if (req.isAuthenticated()) {
-        res.render('index', {title: 'Gaaaaa', sesion: true, info: req.flash('info'), usuario: req.user.nombre, id: req.user.id, msg: {error: req.flash('error'), info: req.flash('info')}});
+        res.render('index', {title: 'Gaaaaa', sesion: true, username:req.user.username,usuario: req.user.nombre, id: req.user.id,imagen:req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}});
     } else {
-        res.render('index', {title: 'Gaaaaa', sesion: false, info: req.flash('info'), msg: {error: req.flash('error'), info: req.flash('info')}});
+        res.render('index', {title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}});
     }
 
 });
@@ -58,10 +58,13 @@ router.get('/login/facebook',
         passport.authenticate('facebook', {scope: ['email']}));
 
 router.get('/login/facebook/return',
-        passport.authenticate('facebook', {failureRedirect: '/logeo'
+        passport.authenticate('facebook', {
+            failureRedirect: '/logeo'
+           
         }),
         function (req, res) {
             res.redirect('/');
+            
         });
 
 
@@ -72,12 +75,20 @@ router.get('/auth/google', passport.authenticate('google', {
         'https://www.googleapis.com/auth/userinfo.profile',
         'https://www.googleapis.com/auth/userinfo.email'
     ]
-})),
-        router.get('/auth/google/callback', passport.authenticate('google', {
-            failureRedirect: '/logeo'
-        }), function (req, res) {
-            res.redirect('/');
-        });
+}));
+        
+        
+//        router.get('/auth/google/callback', passport.authenticate('google', {
+//             failureRedirect: '/logeo',
+//             failureFlash: 'el correo para esta cuenta ya esta registrado ,pruebe iniciar sesion de otra forma',
+//         successFlash: 'Welcome!' 
+//        }),
+//         function (req, res) {
+//            res.redirect('/');
+//        },);
+ router.get('/auth/google/callback', passport.authenticate('google', {
+              successRedirect: '/',
+        failRedirect:'/logeo'}));
 
 //perfil del usuario
 router.get('/usuario_perfil/:external', auth, perfilC.visualizar_d);

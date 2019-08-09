@@ -22,10 +22,12 @@ module.exports = function (passport) {
     passport.deserializeUser(function (id, done) {
         Cuenta.findOne({where: {id: id}, include: [{model: Persona}]}).then(function (cuenta) {
             if (cuenta) {
+                //console.log(cuenta);
                 var userinfo = {
                     id: cuenta.usuario.external_id,
                     nombre: cuenta.usuario.apellidos + " " + cuenta.usuario.nombres,
-                    username: cuenta.username                    
+                    username: cuenta.username    ,         
+                    imagen: cuenta.usuario.imagen
                 };
               //  console.log(userinfo);
                 done(null, userinfo);
@@ -45,12 +47,15 @@ module.exports = function (passport) {
             },
             function (req, email, password, done) {
                 var Cuenta = cuenta;
-                Cuenta.findOne({where: {username: email}}).then(function (cuenta) {
+                Cuenta.findOne({where: {username: email,tipo_cuenta: 0}}).then(function (cuenta) {
                     if (!cuenta) {
                         return done(null, false, {message: req.flash('error', 'Cuenta no existe')});
                     }
                     if (cuenta.clave !== password) {
                         return done(null, false, {message: req.flash('error', 'Clave incorrecta')});
+                    }
+                    if(cuenta.activa=== false){
+                        return done(null, false, {message: req.flash('error', 'Su usuario a sido bloqueado')});
                     }
                     var userinfo = cuenta.get();
                     return done(null, userinfo);
@@ -67,34 +72,55 @@ module.exports = function (passport) {
         clientSecret: process.env['FACEBOOK_CLIENT_SECRET'],
         callbackURL: '/login/facebook/return',
         enableProof: true,
+         passReqToCallback   : true,
         profileFields: ['id', 'displayName', 'emails', 'picture', 'short_name']
     },
-            function (accessToken, refreshToken, profile, done) {
-                //console.log(profile);
+            function (req,accessToken, refreshToken, profile, done) {
+                
+                //                console.log(profile);
+ var a = profile.emails[0].value.split("@");
+       var use_nam=(a[0]+""+(Math.round((Math.random()*(100-1))+1)*100)/100+""+a[1].substring(0,3).split('').reverse().join(''));
                 //var Persona = persona;
                 var datos = {
-                    nombres: profile.displayName,
+                    nombres: profile.short_name,
                     external_id: uuid.v4(),
-                    apellidos: profile.short_name,
+                    apellidos: profile.name.familyName,
                     pais_origen: "",
                     grado_estudio: "",
                     imagen: profile.photos[0].value,
                     descripcion: "",
                     cuenta: {
-                        username: profile.displayName,
+                        username: use_nam,
                         clave: profile.id,
                         tipo_cuenta: 1, // 0 es local //1 es facebook // 2 es google
                         email: profile.emails[0].value,
                         activa: true,
-                        id_rol: null // rol 0 sera usuario // 1 sera admininistrador
+                        id_rol: 2 // rol 2 sera usuario // 1 sera admininistrador
                     }
                 };
-                Persona.findOrCreate({where: {'$cuenta.clave$': profile.id}, defaults: datos, include: [{model: models.cuenta, as: 'cuenta'}]}).then(function ([user, created]) {
+                
+                
+                Persona.findOrCreate({where: {'$cuenta.email$': datos.cuenta.email}, defaults: datos, include: [{model: models.cuenta, as: 'cuenta'}]}).then(function ([user, created]) {
                    // console.log(user.get({plain: true}));
                    // console.log(created);
+                   if(user.cuenta.tipo_cuenta === 1){
+                   if(user.cuenta.activa ===true){
                     perfil = user.cuenta.get();
                     return done(null, perfil);
+                }else{
+                               req.flash('error',"su cuenta esta bloqueda , puede ser debido a contenido inapropiado");
+                            req.res.redirect('/logeo');
+                            return done(null,null);
 
+                }
+                }
+                else{
+                       req.flash('error',"ESTAS CREDENCIALES YA ESTAN REGISTRADAS");
+                            req.res.redirect('/logeo');
+                            return done(null,null);
+
+                    
+                }
                 }).catch(function (error) {
                     //console.log(error);
                     return done(error, null);
@@ -107,39 +133,59 @@ module.exports = function (passport) {
     passport.use(new LocalStrategyGoogle({
         clientID: process.env['GOOGLE_CLIENT_ID'],
         clientSecret: process.env['GOOGLE_CLIENT_SECRET'], 
-        callbackURL:  '/auth/google/callback'
+        callbackURL:  '/auth/google/callback',
+        passReqToCallback   : true
            
     },
     
-            function (accessToken, refreshToken, profile, done) {
+            function (req,accessToken, refreshToken, profile, done) {
                // console.log(profile);
-               
+       var a = profile.emails[0].value.split("@");
+       var use_nam=(a[0]+""+(Math.round((Math.random()*(100-1))+1)*100)/100+""+a[1].substring(0,3).split('').reverse().join(''));
+               //console.log(profile);
                 var datos = {
                     nombres: profile.name.givenName,
                     external_id: uuid.v4(),
                     apellidos: profile.name.familyName,
-                    pais_origen: profile._json.locale,
+                    pais_origen: "",
                     grado_estudio: "",
                     imagen: profile._json.picture,
                     descripcion: "",
                     cuenta: {
-                        username: profile.displayName,
+                        username: use_nam,
                         clave: profile.id,
                         tipo_cuenta: 2, // 0 es local //1 es facebook // 2 es google
                         email: profile.emails[0].value,
                         activa: true,
-                        id_rol: null // rol 0 sera usuario // 1 sera admininistrador
+                        id_rol: 1 // rol 1 sera usuario // 2 sera admininistrador
                     }
                 };
-                Persona.findOrCreate({where: {'$cuenta.clave$': profile.id}, defaults: datos, include: [{model: models.cuenta, as: 'cuenta'}]}).then(function ([user, created]) {
-                  //  console.log(user.get({plain: true}));
-                 //   console.log(created);
+                
+                
+                Persona.findOrCreate({where: {'$cuenta.email$':datos.cuenta.email}, defaults: datos, include: [{model: models.cuenta, as: 'cuenta'}]}).then(function ([user, created]) {
+                    
+                    if(user.cuenta.tipo_cuenta === 2){
+                   if(user.cuenta.activa ===true){
                     perfil = user.cuenta.get();
                     return done(null, perfil);
+                }else{
+                    //console.log(accessToken +"refres: "+ refreshToken,);
+                             req.flash('error',"su cuenta esta bloqueda , puede ser debido a contenido inapropiado");
+                            req.res.redirect('/logeo');
+                            return done(null,null);
+
+               
+                }
+                }else{
+                       req.flash('error',"ESTAS CREDENCIALES YA ESTAN REGISTRADAS");
+                            req.res.redirect('/logeo');
+                            
+               return done(null,null);
+                }
 
                 }).catch(function (error) {
-                    console.log(error);
-                    return done(error, perfil);
+                   // console.log(error);
+                    return done(error, null);
                 });
 
 

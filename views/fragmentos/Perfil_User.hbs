@@ -12,7 +12,7 @@
         <!-- Header -->
         <section id="header">
             <header>
-                <span class="image avatar"><img src="http://pm1.narvii.com/6521/ab473abe34ff2005c6a1df09235a8aecdb7b142a_00.jpg" alt="" /></span>
+                <span class="image avatar"><img src="{{user.imagen}}" alt="imagen de perfil" /></span>
                 <h1 id="logo"><a href="#"></a>{{user.cuenta.username}}</h1>
                 <p>{{user.descripcion}}</p>
             </header>
@@ -84,10 +84,7 @@
                                     <select name="educacion" disabled>
                                         {{#if user.grado_estudio}}
                                         <option value="{{user.grado_estudio}}"> {{user.grado_estudio}}</option>
-                                        {{else}}
-                                        <option value="Primaria"> Primaria </option>
-                                        <option value="Bachiller"> Bachiller </option>
-                                        <option value="Educacion Superior"> Educación Superior </option>
+                                        
                                         {{/if}}
                                     </select>
                                 </div>

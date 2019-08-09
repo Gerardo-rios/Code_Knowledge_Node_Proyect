@@ -2,12 +2,13 @@
 
 var uuid = require('uuid');
 var models = require('./../models/');
-
+const sequelize = require('sequelize');
 class registroControl {
 
     guardarNormal(req, res) {
 
         var persona = models.usuario;
+        var cuenta = models.cuenta;
 
         var datos = {
             nombres: req.body.nombre_u,
@@ -15,7 +16,7 @@ class registroControl {
             apellidos: req.body.apellido_u,
             pais_origen: "",
             grado_estudio: "",
-            imagen: "",
+            imagen: "https://www.nerdix.cl/wp-content/uploads/2018/07/mrpickles_destacado-696x383.png",
             descripcion: "",
             cuenta: {
                 username: req.body.username,
@@ -27,13 +28,49 @@ class registroControl {
             }
         };
 
-        persona.create(datos, {include: [{model: models.cuenta, as: 'cuenta'}]}).then(function (wason) {
-            req.flash('info', "Se ha registrado Correctamente");
-            res.redirect("/logeo");
-        }).error(function (error) {
-            req.flash('error', 'Fuentes');
-            res.redirect('/registro');
+        cuenta.findOne({
+            attributes: [[sequelize.fn('COUNT', sequelize.col('email')), 'no_email']],
+            where: {email: datos.cuenta.email}
+
+        }).then(function (emails) {
+
+            if (emails.dataValues.no_email !== 0) {
+                req.flash('error', "el correo ya se encuentra registrado");
+                res.redirect("/registro");
+            } else {
+                cuenta.findOne({
+                    attributes: [[sequelize.fn('COUNT', sequelize.col('username')), 'no_username']],
+                    where: {username: datos.cuenta.username}
+
+                }).then(function (username) {
+                    var nombre =datos.cuenta.username;
+                    var numero=username.dataValues.no_username;
+                    if ( numero!== 0) {
+                        
+                        req.flash('error', "El nombre de usuario ya se encuentra registrado, porfavor ingrese otro o pruebe con ");
+                        res.redirect("/registro");
+                    } else {
+                        persona.create(datos, {include: [{model: models.cuenta, as: 'cuenta'}]}).then(function (wason) {
+                            //console.log(wason);
+                            req.flash('info', "Se ha registrado Correctamente");
+                            res.redirect("/logeo");
+                        }).error(function (error) {
+                            req.flash('error', 'Fuentes');
+                            res.redirect('/registro');
+                        });
+
+
+                    }
+                }).catch(function (error) {
+                    req.flash('error', "error en base ");
+
+                });
+            }
+        }).catch(function (error) {
+            req.flash('error', "error en base ");
+
         });
+
 
     }
 
