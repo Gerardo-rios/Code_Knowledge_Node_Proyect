@@ -4,7 +4,7 @@
         <title>{{title}}</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-              <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
         <!--===============================================================================================-->	
         <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
@@ -20,7 +20,7 @@
         <div class="limiter">
             <div class="container-login100" style="background-image: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/5bdd2f7d-1984-45d7-b33a-81b4fd7321b8/dbjr7m9-2cb29e23-4655-4f78-8702-1e6cda5d7fb8.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzViZGQyZjdkLTE5ODQtNDVkNy1iMzNhLTgxYjRmZDczMjFiOFwvZGJqcjdtOS0yY2IyOWUyMy00NjU1LTRmNzgtODcwMi0xZTZjZGE1ZDdmYjguanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.Y7Hxw40ZldpUZr0YCKOhQzH0KjCmLRPndGHsGrP0lbU');">
                 <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
-                    <form class="login100-form validate-form flex-sb flex-w" method="POST" action="/inicio_sesion">
+                    <form id="form_inicio_sesion" class="login100-form validate-form flex-sb flex-w" method="POST" action="/inicio_sesion">
                         <span class="login100-form-title p-b-53">
                             Inicia Sesion con:
                         </span>
@@ -37,29 +37,29 @@
                         <div class="container">
                             {{#if msg}}
                             {{#if msg.error}}
-                            
-                                <div class="alert alert-danger " style="font-size: 16px">
-                                    {{msg.error}}
-                                </div>
-                            
+
+                            <div class="alert alert-danger " style="font-size: 16px">
+                                {{msg.error}}
+                            </div>
+
                             {{/if}}
                             {{#if msg.info}}
-                            
-                                <div class="alert alert-success" style="font-size: 16px">
-                                    {{msg.info}}
-                                </div>
-                            
+
+                            <div class="alert alert-success" style="font-size: 16px">
+                                {{msg.info}}
+                            </div>
+
                             {{/if}}
                             {{/if}}
                         </div>
-                        
+
                         <div class="p-t-31 p-b-9">
                             <span class="txt1">
-                                Nombre de Usuario
+                                Correo
                             </span>
                         </div>
-                        <div class="wrap-input100 validate-input" data-validate = "Debes poner tu nombre de usuario">
-                            <input class="input100" type="text" name="username" >
+                        <div class="wrap-input100 validate-input" data-validate = "Debes poner tu clave">
+                            <input class="input100" type="email" name="username">
                             <span class="focus-input100"></span>
                         </div>
 
@@ -73,29 +73,12 @@
                             </a>
                         </div>
                         <div class="wrap-input100 validate-input" data-validate = "No puedes iniciar sesion sin contrasena">
-                            <input class="input100" type="password" name="pass" >
+                            <input class="input100" type="password" name="pass">
                             <span class="focus-input100"></span>
                         </div>
-                        {{#if msg}}
-                        {{#if msg.error}}
-                        <div class="form-group">
-                            <div class="label label-danger" style="font-size: 16px">
-                                {{msg.error}}
-                            </div>                        
-                        </div>
-                        {{/if}}
-                        {{#if msg.info}}
-                        <div class="form-group">
-                            <div class="label label-success" style="font-size: 16px">
-                                {{msg.info}}
-                            </div>                        
-                        </div>                  
-                        {{/if}}
-                        {{/if}}
+
                         <div class="container-login100-form-btn m-t-17">
-                            <button class="login100-form-btn">
-                                Ingresar
-                            </button>
+                            <input class="login100-form-btn" type="submit" id="boton_logear" value="Ingresar">                                
                         </div>
 
                         <div class="w-full text-center p-t-55">
@@ -114,8 +97,11 @@
 
 
         <div id="dropDownSelect1"></div>
-
+        
+        <script src="js/jquery.min.js"></script> 
+        <script src="js/aos.js"></script>
         <script src="js/main.js"></script>
-
+        <script language="javascript" type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/jquery.validate.min.js"></script>
+        <script src="js/validaciones.js"></script>
     </body>
 </html>

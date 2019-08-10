@@ -16,7 +16,7 @@ class registroControl {
             apellidos: req.body.apellido_u,
             pais_origen: "",
             grado_estudio: "",
-            imagen: "https://www.nerdix.cl/wp-content/uploads/2018/07/mrpickles_destacado-696x383.png",
+            imagen: "https://ih1.redbubble.net/image.496975846.0253/poster,840x830,f8f8f8-pad,750x1000,f8f8f8.jpg",
             descripcion: "",
             cuenta: {
                 username: req.body.username,

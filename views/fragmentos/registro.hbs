@@ -21,7 +21,7 @@
         <div class="limiter">
             <div class="container-login100" style="background-image: url('https://ic.c4assets.com/brands/mr-pickles/series-1/episode-1/ae781432-07be-40ea-859c-72ca036abe4c.jpg?interpolation=progressive-bicubic&output-quality=90');">
                 <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
-                    <form class="login100-form validate-form flex-sb flex-w" method="POST" action="/registro">
+                    <form class="login100-form validate-form flex-sb flex-w" id="form_registro" method="POST" action="/registro">
                         <span class="login100-form-title p-b-53">
                             Registrate con:
                         </span>
@@ -100,9 +100,7 @@
 
                     
                         <div class="container-login100-form-btn m-t-17">
-                            <button class="login100-form-btn">
-                                Registrarse
-                            </button>
+                            <input class="login100-form-btn" type="submit" value="Registrate">
                         </div>
                     </form>
                 </div>
@@ -113,7 +111,11 @@
         <div id="dropDownSelect1"></div>
 
         <!--===============================================================================================-->
+        <script src="js/jquery.min.js"></script> 
+        <script src="js/aos.js"></script>
         <script src="js/main.js"></script>
+        <script language="javascript" type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/jquery.validate.min.js"></script>
+        <script src="js/validaciones.js"></script>
 
     </body>
 </html>
