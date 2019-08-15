@@ -48,7 +48,7 @@ module.exports = function (passport) {
             },
             function (req, email, password, done) {
                 var Cuenta = cuenta;
-                Cuenta.findOne({where: {email: email/*,tipo_cuenta: 0*/}}).then(function (cuenta) {
+                Cuenta.findOne({where: {email: email,tipo_cuenta: 0}}).then(function (cuenta) {
                     if (!cuenta) {
                         return done(null, false, {message: req.flash('error', 'Cuenta no existe')});
                     }

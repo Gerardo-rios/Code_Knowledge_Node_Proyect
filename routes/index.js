@@ -11,6 +11,12 @@ var registroControlC = new registroControl();
 var perfil = require('../controladores/perfilControl');
 var perfilC = new perfil();
 
+var rol = require('../controladores/rolControl');
+var rolC = new rol();
+
+var pregunta = require('../controladores/preguntaControl');
+var preguntaC = new pregunta();
+
 var auth = function (req, res, next) {
     if (req.isAuthenticated()) {
         next();
@@ -22,6 +28,7 @@ var auth = function (req, res, next) {
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+    rolC.crear_rol();
     if (req.isAuthenticated()) {
         res.render('index', {title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}});
     } else {
@@ -125,9 +132,13 @@ router.post('/upload', function (req, res) {
         });
     });
     console.log(EDfile.name);
+    
+
 
 
 });
+    //métodos de preguntas    
+router.post('/guardarPregunta', preguntaC.guardar);
 
 
 module.exports = router;

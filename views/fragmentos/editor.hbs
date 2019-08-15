@@ -91,7 +91,7 @@
                         <div class="row d-flex">
                             <div class="col-xl-8 py-5 px-md-5">
                                 <h2 style="font-size: 35px"> Formular una pregunta </h2><br>
-                                <form action="#" class="search-form">
+                                <form method="POST" class="search-form" action="/guardarPregunta" >
                                     <div class="container">
                                         <label class="label" style="color: black; font-size: 25px"> Título </label>
                                         <input type="text" name="titulo_p" class="form-control" placeholder="¿Cúal es tu pregunta de programación? Sé específico"/>
@@ -99,8 +99,12 @@
                                     </div>
                                     <div class="container">                                        
                                         <label class="label" style="color: black; font-size: 25px"> Cuerpo </label>
-                                        <div id="editor1" class="container"></div>
+                                        <textarea id="editor1" class="container" name="descripcion_p"></textarea>
                                         <br>
+                                    </div>
+                                    <div class="container">                                        
+                                        <button type="submit" class="btn btn-primary btn-lg">PUBLICAR</button>
+                                        <a href="/" class="btn btn-danger btn-lg">CANCELAR</a>
                                     </div>
 
                                 </form>

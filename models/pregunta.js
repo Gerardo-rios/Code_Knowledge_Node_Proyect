@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
         titulo: DataTypes.STRING,
         external_id: DataTypes.UUID,
         descripcion: DataTypes.TEXT,
-        grado_estudio: DataTypes.STRING,
+        etiquetas: DataTypes.STRING,
         numero_vistas: DataTypes.INTEGER
 
     }, {freezeTableName: true});
