@@ -4,11 +4,36 @@
         <title>{{title}}</title>
         <script type="text/javascript" src="js/jquery-1.12.0.js"></script>
 
+        <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
-        <link rel="stylesheet"
-              href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/styles/default.min.css">
+        <link rel="stylesheet" href="css/styleB.css">
+        <link rel="stylesheet" href="css/fontawesome-all.css">
+
+        <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+        <link rel="stylesheet" href="css/animate.css">
+
+        <link rel="stylesheet" href="css/owl.carousel.min.css">
+        <link rel="stylesheet" href="css/owl.theme.default.min.css">
+        <link rel="stylesheet" href="css/magnific-popup.css">
+
+        <link rel="stylesheet" href="css/aos.css">
+
+        <link rel="stylesheet" href="css/ionicons.min.css">
+
+        <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+        <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+
+        <link rel="stylesheet" href="css/flaticon.css">
+        <link rel="stylesheet" href="css/icomoon.css">
+        <link rel="stylesheet" href="css/style.css">
+
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/styles/default.min.css">
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/highlight.min.js"></script>
         <script src = "/ckeditor/ckeditor.js"></script> 
         <link rel="stylesheet" type="text/css" href="/ckeditor/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css">
@@ -19,16 +44,142 @@
         </script>
     </head>
     <body>
+        {{#if sesion}}
+        {{> barra_noti}}
+        {{/if}}
+        <div id="colorlib-page">
+            <a href="" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+            <aside id="colorlib-aside" role="complementary" class="js-fullheight">
+                {{#if msg}}
+                {{#if msg.error}}
+                <div class="form-group">
+                    <div class="label label-danger" style="font-size: 16px">
+                        {{msg.error}}
+                    </div>                        
+                </div>
+                {{/if}}
+                {{#if msg.info}}
+                <div class="form-group">
+                    <div class="label label-success" style="font-size: 16px">
+                        {{msg.info}}
+                    </div>                        
+                </div>                  
+                {{/if}}
+                {{/if}}
+
+                <nav id="colorlib-main-menu" role="navigation">
+                    <ul>
+                        <li class="colorlib-active"><a href="/">Home</a></li>
+                        <li><a href="/">News</a></li>
+                        <li><a href="/">Faq</a></li>
+                        <li><a href="/">About</a></li>
+                        <li><a href="/">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="colorlib-footer">
+                    <h1 id="colorlib-logo" class="mb-4"><a href="#" style="background-image: url(images/bg-01.jpg);">{{title}}</a></h1>
+                    <p class="pfooter"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                </div>
+            </aside> <!-- END COLORLIB-ASIDE -->
+            <div id="colorlib-main">
+
+                <section class="ftco-section ftco-no-pt ftco-no-pb">
+
+                    <div class="container">
+                        <div class="row d-flex">
+                            <div class="col-xl-8 py-5 px-md-5">
+                                <h2 style="font-size: 35px"> Formular una pregunta </h2><br>
+                                <form action="#" class="search-form">
+                                    <div class="container">
+                                        <label class="label" style="color: black; font-size: 25px"> Título </label>
+                                        <input type="text" name="titulo_p" class="form-control" placeholder="¿Cúal es tu pregunta de programación? Sé específico"/>
+                                        <br>
+                                    </div>
+                                    <div class="container">                                        
+                                        <label class="label" style="color: black; font-size: 25px"> Cuerpo </label>
+                                        <div id="editor1" class="container"></div>
+                                        <br>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="col-xl-4 sidebar ftco-animate bg-light pt-5">
+                                <div class="sidebar-box pt-md-4">
+                                    <form action="#" class="search-form">
+                                        <div class="form-group">
+                                            <span class="icon icon-search"></span>
+                                            <input type="text" class="form-control" placeholder="Search">  <!-- Para buscador -->
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="ayura">
+                                    <b>COMO PREGUNTAR</b>
+                                    <p>
+                                        Preferimos preguntas que pueden ser respondidas, no simplemente debatidas.<br>
+
+                                        Proporciona detalles. Comparte lo que ya sabes.
+                                    </p>
+                                </div>
+                                <div class="sidebar-box ftco-animate">
+                                    <h3 class="sidebar-heading">Categorías</h3>
+                                    <ul class="categories">
+                                        <li><a href="#">Programación de escritorio <span>(6)</span></a></li>
+                                        <li><a href="#">Programación Web <span>(8)</span></a></li>
+                                        <li><a href="#">Base de Datos <span>(2)</span></a></li>
+                                        <li><a href="#">Programación Android <span>(2)</span></a></li>
+                                    </ul>
+                                </div>
 
 
-        <div class="container" style="width: 50%;height: 30%"> 
-            <div id="editor1" class="container"></div>
-        </div>
 
-        <script>
-            CKEDITOR.replace('editor1');
-        </script>
+                                <div class="sidebar-box ftco-animate">
+                                    <h3 class="sidebar-heading">Nube de tags</h3>
+                                    <ul class="tagcloud">
+                                        <a href="#" class="tag-cloud-link">sql</a>
+                                        <a href="#" class="tag-cloud-link">nosql</a>
+                                        <a href="#" class="tag-cloud-link">node</a>
+                                        <a href="#" class="tag-cloud-link">java</a>
+                                        <a href="#" class="tag-cloud-link">c++</a>
+                                        <a href="#" class="tag-cloud-link">python</a>
+                                        <a href="#" class="tag-cloud-link">pascal</a>
+                                        <a href="#" class="tag-cloud-link">javascript</a>
+                                    </ul>
+                                </div>
+
+                                <div class="sidebar-box ftco-animate">
+                                    <h3 class="sidebar-heading">Paragraph</h3>
+                                    <p>SIEMPRE ESPERA LO INESPERADO</p>
+                                </div>
+                            </div><!-- END COL -->
+                        </div>
+                    </div>
+                </section>
+
+            </div><!-- END COLORLIB-MAIN -->
+        </div><!-- END COLORLIB-PAGE -->
+        <!-- loader -->
+        <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-migrate-3.0.1.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.easing.1.3.js"></script>
+        <script src="js/jquery.waypoints.min.js"></script>
+        <script src="js/jquery.stellar.min.js"></script>
+        <script src="js/owl.carousel.min.js"></script>
+        <script src="js/jquery.magnific-popup.min.js"></script>
+        <script src="js/aos.js"></script>
+        <script src="js/jquery.animateNumber.min.js"></script>
+        <script src="js/scrollax.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+        <script src="js/google-map.js"></script>
+        <script src="js/main.js"></script>
+        <script>CKEDITOR.replace('editor1');</script>
         <script>hljs.initHighlightingOnLoad();</script>
+
         <!--===============================================================================================
        <pre>
 <code class="language-html">&lt;html&gt;

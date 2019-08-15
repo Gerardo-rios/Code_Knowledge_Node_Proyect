@@ -4,14 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/darlackbrown/Documentos/Node/code_knowledge_unl/views/fragmentos/registro.hbs</file>
-            <file>file:/home/darlackbrown/Documentos/Node/code_knowledge_unl/controladores/perfilControl.js</file>
-            <file>file:/home/darlackbrown/Documentos/Node/code_knowledge_unl/views/fragmentos/perfil_user_edit.hbs</file>
-            <file>file:/home/darlackbrown/Documentos/Node/code_knowledge_unl/views/fragmentos/login.hbs</file>
+            <file>file:/home/darlackbrown/Documentos/Node/code_knowledge_unl/views/index.hbs</file>
+            <file>file:/home/darlackbrown/Documentos/Node/code_knowledge_unl/models/pregunta.js</file>
             <file>file:/home/darlackbrown/Documentos/Node/code_knowledge_unl/views/fragmentos/barra_noti.hbs</file>
             <file>file:/home/darlackbrown/Documentos/Node/code_knowledge_unl/routes/index.js</file>
-            <file>file:/home/darlackbrown/Documentos/Node/code_knowledge_unl/controladores/registroControl.js</file>
-            <file>file:/home/darlackbrown/Documentos/Node/code_knowledge_unl/config/passport.js</file>
-            <file>file:/home/darlackbrown/Documentos/Node/code_knowledge_unl/public/js/validaciones.js</file>
+            <file>file:/home/darlackbrown/Documentos/Node/code_knowledge_unl/views/fragmentos/editor.hbs</file>
+            <file>file:/home/darlackbrown/Documentos/Node/code_knowledge_unl/views/fragmentos/Perfil_User.hbs</file>
+            <file>file:/home/darlackbrown/Documentos/Node/code_knowledge_unl/public/css/styleB.css</file>
         </group>
     </open-files>
 </project-private>

@@ -5,7 +5,7 @@ var passport = require('passport');
 
 var cuenta = require('../controladores/registroControl');
 var cuentaC = new cuenta();
-var registroControl = require('../controladores/utilidades'); 
+var registroControl = require('../controladores/utilidades');
 var registroControlC = new registroControl();
 
 var perfil = require('../controladores/perfilControl');
@@ -23,7 +23,7 @@ var auth = function (req, res, next) {
 /* GET home page. */
 router.get('/', function (req, res, next) {
     if (req.isAuthenticated()) {
-        res.render('index', {title: 'Gaaaaa', sesion: true, username:req.user.username,usuario: req.user.nombre, id: req.user.id,imagen:req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}});
+        res.render('index', {title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}});
     } else {
         res.render('index', {title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}});
     }
@@ -38,8 +38,8 @@ router.get('/registro', function (req, res, next) {
     res.render('fragmentos/registro', {title: 'Registro', msg: {error: req.flash('error'), info: req.flash('info')}});
 });
 
-router.get('/testEditor', function (req, res, next) {
-    res.render('fragmentos/editor', {title: 'editor'});
+router.get('/pregunta', auth, function (req, res, next) {
+    res.render('fragmentos/editor', {title: 'Editor', msg: {error: req.flash('error'), info: req.flash('info')}});
 });
 
 router.post('/registro', cuentaC.guardarNormal);
@@ -60,11 +60,11 @@ router.get('/login/facebook',
 router.get('/login/facebook/return',
         passport.authenticate('facebook', {
             failureRedirect: '/logeo'
-           
+
         }),
         function (req, res) {
             res.redirect('/');
-            
+
         });
 
 
@@ -76,8 +76,8 @@ router.get('/auth/google', passport.authenticate('google', {
         'https://www.googleapis.com/auth/userinfo.email'
     ]
 }));
-        
-        
+
+
 //        router.get('/auth/google/callback', passport.authenticate('google', {
 //             failureRedirect: '/logeo',
 //             failureFlash: 'el correo para esta cuenta ya esta registrado ,pruebe iniciar sesion de otra forma',
@@ -86,9 +86,9 @@ router.get('/auth/google', passport.authenticate('google', {
 //         function (req, res) {
 //            res.redirect('/');
 //        },);
- router.get('/auth/google/callback', passport.authenticate('google', {
-              successRedirect: '/',
-        failRedirect:'/logeo'}));
+router.get('/auth/google/callback', passport.authenticate('google', {
+    successRedirect: '/',
+    failRedirect: '/logeo'}));
 
 //perfil del usuario
 router.get('/usuario_perfil/:external', auth, perfilC.visualizar_d);
@@ -98,34 +98,35 @@ router.get('/usuario_perfil/:external/edit', auth, perfilC.visualizar_modificar)
 router.post('/usuario_perfil/:external/edit/save', auth, perfilC.modificar);
 
 // ingreso de imagenes 
-router.post('/upload', function(req,res){
- 
+router.post('/upload', function (req, res) {
+
     var EDfile = req.files.upload;
-	
+
     var hoy = new Date();
 
-    cad="_"+hoy.getDate()+hoy.getMonth()+1+hoy.getFullYear()+'__'+hoy.getHours()+"_"+hoy.getMinutes()+"_"+hoy.getSeconds(); 
+    cad = "_" + hoy.getDate() + hoy.getMonth() + 1 + hoy.getFullYear() + '__' + hoy.getHours() + "_" + hoy.getMinutes() + "_" + hoy.getSeconds();
 
-    EDfile.name=cad+EDfile.name;
-    
-    var dir = `./files/`+EDfile.name;
+    EDfile.name = cad + EDfile.name;
 
-    
+    var dir = `./files/` + EDfile.name;
+
+
     console.log(EDfile);
-   
-    EDfile.mv(`./files/`+EDfile.name , err => {
-       console.log(err);
-        if(err) return res.status(500).send({ message : 'error tal '+ err });
+
+    EDfile.mv(`./files/` + EDfile.name, err => {
+        console.log(err);
+        if (err)
+            return res.status(500).send({message: 'error tal ' + err});
 
         return res.status(200).send({
-    "uploaded": 1,
-    "fileName": EDfile.name,
-    "url": `/files/`+EDfile.name
-});
+            "uploaded": 1,
+            "fileName": EDfile.name,
+            "url": `/files/` + EDfile.name
+        });
     });
-    	console.log(EDfile.name);
-       
-    
+    console.log(EDfile.name);
+
+
 });
 
 
