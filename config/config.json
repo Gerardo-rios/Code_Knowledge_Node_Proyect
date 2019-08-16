@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "Richard",
-    "password": "1234",
+    "username": "root",
+    "password": "root",
     "database": "ask",
     "host": "127.0.0.1",
     "dialect": "mysql",
@@ -12,16 +12,16 @@
         "timezone": "-05:00"
   },
   "test": {
-    "username": "Richard",
-    "password": "1234",
+    "username": "root",
+    "password": "root",
     "database": "database_test",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "operatorsAliases": false
   },
   "production": {
-    "username": "Richard",
-    "password": "1234",
+    "username": "root",
+    "password": "root",
     "database": "database_production",
     "host": "127.0.0.1",
     "dialect": "mysql",

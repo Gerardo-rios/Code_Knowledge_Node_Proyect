@@ -1,10 +1,9 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
     const cuenta = sequelize.define('cuenta', {
-       
         clave: DataTypes.STRING,
         tipo_cuenta: DataTypes.INTEGER(1),
-        email: {type:DataTypes.STRING, unique:true},
+        email: {type:DataTypes.STRING(150), unique:true},
         activa: DataTypes.BOOLEAN,
         ultima_sesion: {type: DataTypes.DATE, defaultValue: sequelize.literal('NOW()')}
     }, {freezeTableName: true});

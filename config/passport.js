@@ -26,7 +26,7 @@ module.exports = function (passport) {
                 var userinfo = {
                     id: cuenta.usuario.external_id,
                     nombre: cuenta.usuario.apellidos + " " + cuenta.usuario.nombres,
-                    username: cuenta.username,
+                    username: cuenta.usuario.username,
                     correo: cuenta.email,
                     imagen: cuenta.usuario.imagen
                 };
@@ -77,7 +77,7 @@ module.exports = function (passport) {
         profileFields: ['id', 'displayName', 'emails', 'picture', 'short_name']
     },
             function (req, accessToken, refreshToken, profile, done) {
-
+                    console.log(profile);
                 //                console.log(profile);
                 var a = profile.emails[0].value.split("@");
                 var use_nam = (a[0] + "" + (Math.round((Math.random() * (100 - 1)) + 1) * 100) / 100 + "" + a[1].substring(0, 3).split('').reverse().join(''));
@@ -90,8 +90,9 @@ module.exports = function (passport) {
                     grado_estudio: "",
                     imagen: profile.photos[0].value,
                     descripcion: "",
+                    username: use_nam,
                     cuenta: {
-                        username: use_nam,
+                     
                         clave: profile.id,
                         tipo_cuenta: 1, // 0 es local //1 es facebook // 2 es google
                         email: profile.emails[0].value,
@@ -138,7 +139,7 @@ module.exports = function (passport) {
 
     },
             function (req, accessToken, refreshToken, profile, done) {
-                // console.log(profile);
+                console.log(profile);
                 var a = profile.emails[0].value.split("@");
                 var use_nam = (a[0] + "" + (Math.round((Math.random() * (100 - 1)) + 1) * 100) / 100 + "" + a[1].substring(0, 3).split('').reverse().join(''));
                 //console.log(profile);
@@ -150,8 +151,9 @@ module.exports = function (passport) {
                     grado_estudio: "",
                     imagen: profile._json.picture,
                     descripcion: "",
+                    username: use_nam,
                     cuenta: {
-                        username: use_nam,
+                        
                         clave: profile.id,
                         tipo_cuenta: 2, // 0 es local //1 es facebook // 2 es google
                         email: profile.emails[0].value,
