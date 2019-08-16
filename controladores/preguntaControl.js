@@ -2,11 +2,8 @@
 
 var uuid = require('uuid');
 var models = require('./../models/');
-var Sequelize = require('sequelize');
-var sequelize = new Sequelize('ask', 'root', 'root', {
-    host: 'localhost',
-    dialect: 'mysql'
-});
+var sequelize = require('sequelize');
+var feach = require('sync-each');
 var op = sequelize.Op;
 
 class preguntaControl {
@@ -45,51 +42,69 @@ class preguntaControl {
             res.redirect('/logeo');
         });
     }// patron de diseño dao datapbjetc  , finquelon . facade estructural
-    visualizar(req, res) {
+   visualizar(req, res) {
 
         var external = req.params.external;
         var pregunta = models.pregunta;
         var usuario = models.usuario;
-//console.log(external);
-        pregunta.findAll({where: {external_id: external}, include: [{model: models.respuesta, as: 'respuesta', include: [{model: models.comentario, as: 'comentario'}]}], order: [[{model: models.respuesta, as: 'respuesta'}, 'createdAt', 'DESC']]}).then(function (resulT) {
-            console.log(resulT);
-//        sequelize.query('SELECT'+' `pregunta`.`id`, `pregunta`.`titulo`, `pregunta`.`external_id`, `pregunta`.`descripcion`, `pregunta`.`etiqueta`, `pregunta`.`numero_vistas`, `pregunta`.`createdAt`, `pregunta`.`updatedAt`, `pregunta`.`id_usuario`, `respuesta`.`id` AS `respuesta.id`, `respuesta`.`aceptada` AS `respuesta.aceptada`, `respuesta`.`external_id` AS `respuesta.external_id`, `respuesta`.`descripcion` AS `respuesta.descripcion`, `respuesta`.`external_id_usuario` AS `respuesta.external_id_usuario`, `respuesta`.`createdAt` AS `respuesta.createdAt`, `respuesta`.`updatedAt` AS `respuesta.updatedAt`, `respuesta`.`id_pregunta` AS `respuesta.id_pregunta`, `respuesta->comentario`.`id` AS `respuesta.comentario.id`, `respuesta->comentario`.`external_id` AS `respuesta.comentario.external_id`, `respuesta->comentario`.`descripcion` AS `respuesta.comentario.descripcion`, `respuesta->comentario`.`external_id_usuario` AS `respuesta.comentario.external_id_usuario`, `respuesta->comentario`.`createdAt` AS `respuesta.comentario.createdAt`, `respuesta->comentario`.`updatedAt` AS `respuesta.comentario.updatedAt`, `respuesta->comentario`.`id_respuesta` AS `respuesta.comentario.id_respuesta` FROM `pregunta` AS `pregunta` LEFT OUTER JOIN `respuesta` AS `respuesta` ON `pregunta`.`id` = `respuesta`.`id_pregunta` LEFT OUTER JOIN `comentario` AS `respuesta->comentario` ON `respuesta`.`id` = `respuesta->comentario`.`id_respuesta` WHERE `pregunta`.`external_id` = "ab53dbf1-7c1d-49e8-8975-b1161879c493" ORDER BY `respuesta`.`createdAt` DESC;'
-//,{ type:Sequelize.QueryTypes.SELECT ,nest:true,raw:true }).then(([results, metadata]) => {
-// console.log(results);
-// console.log(metadata);
 
-// console.log(metadata);
+        pregunta.findAll({where: {external_id: external}, include: [{model: models.respuesta, as: 'respuesta', include: [{model: models.comentario, as: 'comentario'}]}]/*,order:[[{model: models.respuesta, as: 'respuesta'}, 'createdAt', 'DESC']]*/}).then(function (resulT) {
+
+
+            if (resulT.length > 0) {
+                // var data = [];
+                var preguntaA = resulT[0];
+                preguntaA.increment('numero_vistas', {silent: true});
+                preguntaA.descripcion = preguntaA.descripcion.replace(/%0/g, '\r\n');
+                var a = preguntaA.respuesta;
+
+                feach(preguntaA.respuesta,
+                        function (items, next) {
+
+                            usuario.findOne({where: {external_id: items.external_id_usuario}}).then(function (user_resp) {
+                                if (user_resp) {
+                                    items.usuario_respuesta = {
+                                        imagen: user_resp.imagen,
+                                        usuario: user_resp.username
+                                    };
+
+                                    feach(items.comentario,
+                                            function (it, next) {
+                                                usuario.findOne({where: {external_id: it.external_id_usuario}}).then(function (user_resp_c) {
+                                                    if (user_resp_c) {
+                                                        it.usuario_comentario = {
+                                                            imagen: user_resp_c.imagen,
+                                                            usuario: user_resp_c.username
+                                                        };
+                                                        next(null, it);
+                                                    }
+                                                });
+
+                                            },
+                                            function (err, d) {
+                                            });
+
+                                    next(null, items);
+                                }
+                            });
+
+                        }, function (err, data) {
+
+                    preguntaA.respuesta = data;
+                    console.log(preguntaA);
+                    //res.render('fragmentos/prueba', {pregunta: preguntaA,msg:{'info':req.flash('info')}});
+                      // fragmento a renderizar de pregunta  
+                });
+
+            } else {
+                req.flash('error', 'Hubo un problema al intentar cargar los datos');
+                res.redirect('/');
+            }
+        }).error(function (error) {
+            req.flash('error', 'Hubo un problema, comunicate con tu servicio del sistema');
+            res.redirect('/');
         });
-        //console.log(resulT[0]);   
-//            if (resulT.length > 0) {
-//                 var data = {};
-//                var userA = resulT[0];
-//                userA.increment('numero_vistas');
-//                 userA.descripcion= userA.descripcion.replace(/%0/g,'\r\n');
 
-//                userA.respuesta.forEach(function (item,index){
-//                    usuario.findOne({where:{external_id:item.external_id_usuario}}).then(function (r){
-//                       
-//                       data[index]={
-//                            username :r.nombres,
-//                            imagen:r.imagen        
-//                        };
-//                       
-//                    });
-//             
-//                });
-
-//                console.log(userA.respuesta.usuario);
-//                res.render('fragmentos/prueba',{user:userA});;
-//                 
-//            } else {
-//                req.flash('error', 'Hubo un problema al intentar cargar los datos');
-//                res.redirect('/');
-//            }
-//        }).error(function (error) {
-//            req.flash('error', 'Hubo un problema, comunicate con tu servicio del sistema');
-//            res.redirect('/');
-//        });
     }
 
     visualizar_modificar(req, res) {
@@ -143,9 +158,6 @@ class preguntaControl {
 
 }
 
-function ver(data) {
-    console.log(data);
-}
 
 module.exports = preguntaControl;
 
