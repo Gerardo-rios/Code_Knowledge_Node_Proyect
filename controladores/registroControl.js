@@ -11,6 +11,7 @@ class registroControl {
         var cuenta = models.cuenta;
 
         var datos = {
+            username: req.body.username,
             nombres: req.body.nombre_u,
             external_id: uuid.v4(),
             apellidos: req.body.apellido_u,
@@ -19,7 +20,7 @@ class registroControl {
             imagen: "https://ih1.redbubble.net/image.496975846.0253/poster,840x830,f8f8f8-pad,750x1000,f8f8f8.jpg",
             descripcion: "",
             cuenta: {
-                username: req.body.username,
+                
                 clave: req.body.clave,
                 tipo_cuenta: 0, // 0 es local //1 es facebook // 2 es google
                 email: req.body.email,
