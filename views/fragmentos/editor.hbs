@@ -42,11 +42,10 @@
         <script type="text/javascript" src='/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js'>
 
         </script>
+
+
     </head>
     <body>
-        {{#if sesion}}
-        {{> barra_noti}}
-        {{/if}}
         <div id="colorlib-page">
             <a href="" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
             <aside id="colorlib-aside" role="complementary" class="js-fullheight">
@@ -69,46 +68,60 @@
 
                 <nav id="colorlib-main-menu" role="navigation">
                     <ul>
-                        <li class="colorlib-active"><a href="/">Home</a></li>
-                        <li><a href="/">News</a></li>
-                        <li><a href="/">Faq</a></li>
-                        <li><a href="/">About</a></li>
-                        <li><a href="/">Contact</a></li>
+                        <li class="colorlib-active"><a href="/">Inicio</a></li>
+                        <li><a href="/">Noticias</a></li>                        
+                        <li><a href="/">Acerca de Nosotros</a></li>
+                        <li><a href="/">Contacto</a></li>
                     </ul>
-                </nav>
-                <div class="colorlib-footer">
-                    <h1 id="colorlib-logo" class="mb-4"><a href="#" style="background-image: url(images/bg-01.jpg);">{{title}}</a></h1>
-                    <p class="pfooter"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                </div>
+                </nav> 
             </aside> <!-- END COLORLIB-ASIDE -->
             <div id="colorlib-main">
 
                 <section class="ftco-section ftco-no-pt ftco-no-pb">
 
                     <div class="container">
+
                         <div class="row d-flex">
+                            {{#if ask}}
+                            {{> verPregunta}}
+                            {{else}}
                             <div class="col-xl-8 py-5 px-md-5">
                                 <h2 style="font-size: 35px"> Formular una pregunta </h2><br>
                                 <form method="POST" class="search-form" action="/guardarPregunta" >
-                                    <div class="container">
+                                    <div class="form-group">
                                         <label class="label" style="color: black; font-size: 25px"> Título </label>
-                                        <input type="text" name="titulo_p" class="form-control" placeholder="¿Cúal es tu pregunta de programación? Sé específico"/>
+                                        <input type="text" name="titulo_p" class="form-control" placeholder="¿Cúal es tu pregunta de programación? Sé específico" required/>
                                         <br>
                                     </div>
-                                    <div class="container">                                        
+                                    <div class="form-group">                                        
                                         <label class="label" style="color: black; font-size: 25px"> Cuerpo </label>
-                                        <textarea id="editor1" class="container" name="descripcion_p"></textarea>
+                                        <textarea id="editor1" class="container" name="descripcion_p" required></textarea>
                                         <br>
                                     </div>
-                                    <div class="container">                                        
-                                        <button type="submit" class="btn btn-primary btn-lg">PUBLICAR</button>
+                                    <div class="form-group">                                        
+                                        <label class="label" style="color: black; font-size: 25px"> Categoria </label>
+                                        <select class="form-control" name="categoria_p">
+                                            <option value="" selected> Selecciona una categoria... </option>>
+                                            <option value="Programación Web"> Programación Web </option>
+                                            <option value="Programación de Escritorio"> Programación de Escritorio </option>
+                                            <option value="Base de Datos"> Base de Datos </option>
+                                            <option value="Programación Movil"> Programación Movil </option>
+                                        </select>
+                                        <br>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="label" style="color: black; font-size: 25px"> Etiquetas </label>
+                                        <input type="text" name="etiquetas" id="etiquetas" class="form-control" placeholder="ej. (jquery, javascript, node)" data-role="tagsinput"/>
+                                        <br>
+                                    </div>
+                                    <div class="form-group">                                        
+                                        <input type="submit" class="btn btn-primary btn-lg" value="Publicar tu Pregunta"/>
                                         <a href="/" class="btn btn-danger btn-lg">CANCELAR</a>
                                     </div>
 
                                 </form>
                             </div>
+                            {{/if}}
                             <div class="col-xl-4 sidebar ftco-animate bg-light pt-5">
                                 <div class="sidebar-box pt-md-4">
                                     <form action="#" class="search-form">
@@ -139,7 +152,7 @@
 
 
                                 <div class="sidebar-box ftco-animate">
-                                    <h3 class="sidebar-heading">Nube de tags</h3>
+                                    <h3 class="sidebar-heading">Nube de etiquetas</h3>
                                     <ul class="tagcloud">
                                         <a href="#" class="tag-cloud-link">sql</a>
                                         <a href="#" class="tag-cloud-link">nosql</a>
@@ -153,8 +166,8 @@
                                 </div>
 
                                 <div class="sidebar-box ftco-animate">
-                                    <h3 class="sidebar-heading">Paragraph</h3>
-                                    <p>SIEMPRE ESPERA LO INESPERADO</p>
+                                    <h3 class="sidebar-heading">Mensaje del dia</h3>
+                                    <p>Vas a caer chupetin trujillo</p>
                                 </div>
                             </div><!-- END COL -->
                         </div>
@@ -183,6 +196,7 @@
         <script src="js/main.js"></script>
         <script>CKEDITOR.replace('editor1');</script>
         <script>hljs.initHighlightingOnLoad();</script>
+        <script src="js/bootstrap-tagsinput.js"></script>
 
         <!--===============================================================================================
        <pre>

@@ -20,7 +20,6 @@ class registroControl {
             imagen: "https://ih1.redbubble.net/image.496975846.0253/poster,840x830,f8f8f8-pad,750x1000,f8f8f8.jpg",
             descripcion: "",
             cuenta: {
-                
                 clave: req.body.clave,
                 tipo_cuenta: 0, // 0 es local //1 es facebook // 2 es google
                 email: req.body.email,
@@ -39,15 +38,15 @@ class registroControl {
                 req.flash('error', "el correo ya se encuentra registrado");
                 res.redirect("/registro");
             } else {
-                cuenta.findOne({
+                persona.findOne({
                     attributes: [[sequelize.fn('COUNT', sequelize.col('username')), 'no_username']],
-                    where: {username: datos.cuenta.username}
+                    where: {username: datos.username}
 
                 }).then(function (username) {
-                    var nombre =datos.cuenta.username;
-                    var numero=username.dataValues.no_username;
-                    if ( numero!== 0) {
-                        
+                    var nombre = datos.username;
+                    var numero = username.dataValues.no_username;
+                    if (numero !== 0) {
+
                         req.flash('error', "El nombre de usuario ya se encuentra registrado, porfavor ingrese otro o pruebe con ");
                         res.redirect("/registro");
                     } else {

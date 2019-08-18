@@ -30,9 +30,9 @@ var auth = function (req, res, next) {
 router.get('/', function (req, res, next) {
     rolC.crear_rol();
     if (req.isAuthenticated()) {
-        res.render('index', {title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}});
+        res.render('index', {title: 'Wawanakwa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}});
     } else {
-        res.render('index', {title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}});
+        res.render('index', {title: 'Wawanakwa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}});
     }
 
 });
@@ -46,7 +46,7 @@ router.get('/registro', function (req, res, next) {
 });
 
 router.get('/pregunta', auth, function (req, res, next) {
-    res.render('fragmentos/editor', {title: 'Editor', msg: {error: req.flash('error'), info: req.flash('info')}});
+    res.render('fragmentos/editor', {title: 'Preguntar', msg: {error: req.flash('error'), info: req.flash('info')}, ask: false});
 });
 
 router.post('/registro', cuentaC.guardarNormal);
@@ -132,12 +132,12 @@ router.post('/upload', function (req, res) {
         });
     });
     console.log(EDfile.name);
-    
+
 
 
 
 });
-    //métodos de preguntas    
+//métodos de preguntas    
 router.post('/guardarPregunta', preguntaC.guardar);
 
 
