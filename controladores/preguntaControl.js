@@ -5,7 +5,7 @@ var models = require('./../models/');
 var sequelize = require('sequelize');
 var feach = require('sync-each');
 var op = sequelize.Op;
-const mostrar = 1;
+const mostrar = 5;
 class preguntaControl {
 
     buscar(req, res) {
