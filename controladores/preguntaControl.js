@@ -281,18 +281,18 @@ class preguntaControl {
         
     }
     paginacion(req, res) {
-        var pagina = req.params.page;
+        var pagina = req.params.page*1;
         if (pagina === 1) {
             res.redirect("/");
         }
-
+    var paginas = 1;
         var pregunta = models.pregunta;
         var persona = models.usuario;
         var limite = mostrar * pagina;
         var quita = (pagina - 1) * mostrar;
-        pregunta.findAll({offset: quita, limit: limite, include: [{model: persona, as: 'usuario'}, {model: models.categoria, as: 'categorium'}, {model: models.respuesta, as: 'respuesta', attributes: {exclude: ['aceptada', 'descripcion', 'external_id_usuario', 'createdAt', 'updatedAt']}}], order: [['createdAt', 'DESC']]}).then(function (result) {
+        pregunta.findAll({ offset: quita, limit: mostrar, include: [{model: persona, as: 'usuario'}, {model: models.categoria, as: 'categorium'}, {model: models.respuesta, as: 'respuesta', attributes: {exclude: ['aceptada', 'descripcion', 'external_id_usuario', 'createdAt', 'updatedAt']}}], order: [['createdAt', 'DESC']]}).then(function (result) {
             // usuario contiene pregunta y contiene tambuien la imagen
-            var paginas = 1;
+            console.log(result);
             pregunta.count().then(function (no_preguntas) {
                 paginas = Math.ceil(no_preguntas / mostrar);
                 if (pagina > paginas) {
@@ -406,7 +406,7 @@ class preguntaControl {
         var pregunta = models.pregunta;
         var usuario = models.usuario;
 
-        pregunta.findAll({where: {external_id: external}, include: [{model: models.categoria, as: 'categoria'}, {model: models.respuesta, as: 'respuesta', include: [{model: models.comentario, as: 'comentario'}]}]/*,order:[[{model: models.respuesta, as: 'respuesta'}, 'createdAt', 'DESC']]*/}).then(function (resulT) {
+        pregunta.findAll({where: {external_id: external}, include: [{model: models.categoria, as: 'categorium'}, {model: models.respuesta, as: 'respuesta', include: [{model: models.comentario, as: 'comentario'}]}]/*,order:[[{model: models.respuesta, as: 'respuesta'}, 'createdAt', 'DESC']]*/}).then(function (resulT) {
 
 
             if (resulT.length > 0) {
