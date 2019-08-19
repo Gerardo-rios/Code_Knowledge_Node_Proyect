@@ -2,20 +2,46 @@
     <div class="row pt-md-4">
         <div class="col-md-12">
             <div class="blog-entry ftco-animate d-md-flex">
-                <a href="#" class="img img-2" style="background-image: url(images/image_1.jpg);"></a>
+
                 <div class="text text-2 pl-md-4">
-                    <h3 class="mb-2"><a href="#">A Loving Heart is the Truest Wisdom</a></h3>
+                    <h3 class="mb-2"><a href="/pregunta/{{pregunta.external_id}}">{{pregunta.titulo}}</a></h3>
                     <div class="meta-wrap">
                         <p class="meta">
-                            <span><i class="icon-calendar mr-2"></i>June 28, 2019</span>
-                            <span><a href="#"><i class="icon-folder-o mr-2"></i>Travel</a></span>
-                            <span><i class="icon-comment2 mr-2"></i>5 Comment</span>
+                            <span><i class="icon-calendar mr-2"></i>{{pregunta.createdAt}}</span>
+                            <span><a href="#"><i class="icon-folder-o mr-2"></i>{{pregunta.categoria}}</a></span>
+                            <span><i class="icon-comment2 mr-2"></i>{{pregunta.numero_vistas}} Visitas</span>
                         </p>
                     </div>
-                    <p class="mb-4">A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                    <p><a href="/" class="btn-custom">Responder Pregunta <span class="ion-ios-arrow-forward"></span></a></p>
+                    {{{pregunta.descripcion}}}                    
                 </div>
             </div>
+        </div>
+        <div class="blog-entry ftco-animate d-md-flex">
+            <form class="form-group" method="POST" action="">
+                <label class="label" style="color: black; font-size: 25px"> Tu respuesta </label>                
+                <textarea id="editor1" class="container" name="descripcion_p" required></textarea>
+                <br>
+                <div class="form-group">                                        
+                    <input type="submit" class="btn btn-primary btn-lg" value="Publicar tu Respuesta"/>                    
+                </div>
+            </form>
+        </div>
+        <div class="form-group">
+            <label class="label" style="color: black; font-size: 25px"> Registrate o Inicia Sesion </label>
+            {{#unless sesion}}        
+            <a href="/login/facebook" class="btn btn-warning">
+                <img src="/images/icons/facebook.png" alt="FACEBOOK">
+                Facebook
+            </a>
+            <a href="/auth/google" class="btn btn-secondary">
+                <img src="/images/icons/icon-google.png" alt="GOOGLE">
+                Google
+            </a>
+            <a href="/logeo" class="btn btn-success">
+                <img src="/images/icons/symbol-01.png" alt="CORREO">                
+                Correo y clave
+            </a>
+            {{/unless}}
         </div>
     </div>
 </div>

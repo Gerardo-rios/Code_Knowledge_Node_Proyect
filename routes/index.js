@@ -45,8 +45,8 @@ router.get('/registro', function (req, res, next) {
     res.render('fragmentos/registro', {title: 'Registro', msg: {error: req.flash('error'), info: req.flash('info')}});
 });
 
-router.get('/pregunta', auth, function (req, res, next) {
-    res.render('fragmentos/editor', {title: 'Preguntar', msg: {error: req.flash('error'), info: req.flash('info')}, ask: false});
+router.get('/pregunta', function (req, res, next) {
+    res.render('fragmentos/editor', {title: 'Preguntar', msg: {error: req.flash('error'), info: req.flash('info')}});
 });
 
 router.post('/registro', cuentaC.guardarNormal);
@@ -138,7 +138,8 @@ router.post('/upload', function (req, res) {
 
 });
 //métodos de preguntas    
-router.post('/guardarPregunta', preguntaC.guardar);
+router.post('/guardarPregunta', auth, preguntaC.guardar);
 
+router.get('/pregunta/:external', preguntaC.visualizar);
 
 module.exports = router;

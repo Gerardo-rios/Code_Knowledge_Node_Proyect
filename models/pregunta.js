@@ -5,8 +5,8 @@ module.exports = (sequelize, DataTypes) => {
         external_id: DataTypes.UUID,
         descripcion: DataTypes.TEXT,
         etiquetas: DataTypes.STRING,
-        numero_vistas: DataTypes.INTEGER
-
+        numero_vistas: DataTypes.INTEGER,
+        categoria: DataTypes.STRING
     }, {freezeTableName: true});
     pregunta.associate = function (models) {
         pregunta.belongsTo(models.usuario, {foreignKey: 'id_usuario'});

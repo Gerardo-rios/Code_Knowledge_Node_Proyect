@@ -25,6 +25,8 @@ class preguntaControl {
                 titulo: req.body.titulo_p,
                 external_id: uuid.v4(),
                 descripcion: descrip,
+                etiquetas: req.body.etiquetas,
+                categoria: req.body.categoria_p,
                 numero_vistas: 0,
                 id_usuario: result.id
             };
@@ -42,7 +44,8 @@ class preguntaControl {
             res.redirect('/logeo');
         });
     }// patron de diseño dao datapbjetc  , finquelon . facade estructural
-   visualizar(req, res) {
+
+    visualizar(req, res) {
 
         var external = req.params.external;
         var pregunta = models.pregunta;
@@ -93,8 +96,13 @@ class preguntaControl {
                     preguntaA.respuesta = data;
                     console.log(preguntaA);
                     //res.render('fragmentos/prueba', {pregunta: preguntaA,msg:{'info':req.flash('info')}});
-                      // fragmento a renderizar de pregunta  
+                    // fragmento a renderizar de pregunta  
                 });
+                if (req.isAuthenticated()) {
+                    res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: true, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA});
+                } else {
+                    res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA});
+                }
 
             } else {
                 req.flash('error', 'Hubo un problema al intentar cargar los datos');
