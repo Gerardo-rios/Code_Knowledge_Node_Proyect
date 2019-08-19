@@ -59,7 +59,7 @@ class perfilControl {
     modificar(req, res) {
         var user = models.usuario;
         var cuenta = models.cuenta;
-        var external = req.body.external;
+        var external = req.body.external;        
         user.findAll({where: {external_id: req.params.external}, include: [{model: cuenta, as: 'cuenta'}]}).then(function (persone) {
             if (persone.length > 0) {
                 var userM = persone[0];
@@ -69,14 +69,14 @@ class perfilControl {
                 userM.grado_estudio = req.body.educacion;
                 //userM.imagen = req.body.imagen;
                 userM.descripcion = req.body.descripcion;
-                userM.username = req.body.username;
                 userM.save().then(function (result) {
                     var cuentM = userM.cuenta;
+                    cuentM.username = req.body.username;
                     cuentM.email = req.body.email;
                     cuentM.clave = req.body.clave_n;
-                    cuentM.save();
+                    cuentM.save();                    
                     req.flash('info', 'Se ha modificado correctamente');
-                    res.redirect('/usuario_perfil/' + external);
+                    res.redirect('/usuario_perfil/'+external);
                 }).error(function (error) {
                     console.log(error);
                     req.flash('error', 'No se pudo modificar');

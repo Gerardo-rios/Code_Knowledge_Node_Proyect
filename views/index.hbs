@@ -10,28 +10,28 @@
         <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
 
 
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/styleB.css">
-        <link rel="stylesheet" href="css/fontawesome-all.css">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/styleB.css">
+        <link rel="stylesheet" href="/css/fontawesome-all.css">
 
-        <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-        <link rel="stylesheet" href="css/animate.css">
+        <link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
+        <link rel="stylesheet" href="/css/animate.css">
 
-        <link rel="stylesheet" href="css/owl.carousel.min.css">
-        <link rel="stylesheet" href="css/owl.theme.default.min.css">
-        <link rel="stylesheet" href="css/magnific-popup.css">
+        <link rel="stylesheet" href="/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+        <link rel="stylesheet" href="/css/magnific-popup.css">
 
-        <link rel="stylesheet" href="css/aos.css">
+        <link rel="stylesheet" href="/css/aos.css">
 
-        <link rel="stylesheet" href="css/ionicons.min.css">
+        <link rel="stylesheet" href="/css/ionicons.min.css">
 
-        <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-        <link rel="stylesheet" href="css/jquery.timepicker.css">
+        <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+        <link rel="stylesheet" href="/css/jquery.timepicker.css">
 
 
-        <link rel="stylesheet" href="css/flaticon.css">
-        <link rel="stylesheet" href="css/icomoon.css">
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="/css/flaticon.css">
+        <link rel="stylesheet" href="/css/icomoon.css">
+        <link rel="stylesheet" href="/css/style.css">
 
     </head>
 
@@ -86,6 +86,25 @@
 
                             <div class="col-xl-8 py-5 px-md-5">                                
                                 <div class="row pt-md-4">
+                                    {{#each preguntas}}
+                                    <div class="col-md-12">
+                                        <div class="blog-entry ftco-animate d-md-flex">
+                                            <a href="#" class="img img-2" style="background-image: url('{{this.usuario.imagen}}');"></a>
+                                            <div class="text text-2 pl-md-4">
+                                                <h3 class="mb-2"><a href="#">{{this.titulo}}</a></h3>
+                                                <div class="meta-wrap">
+                                                    <p class="meta">
+                                                        <span><i class="icon-calendar mr-2"></i>{{this.dia}}</span>
+                                                        <span><a href="#"><i class="icon-folder-o mr-2"></i>Travel</a></span>
+                                                        <span><i class="icon-comment2 mr-2"></i>{{this.respuesta.length}} Comment</span>
+                                                    </p>
+                                                </div>
+                                                <!--    <p class="mb-4" >{{{this.descripcion}}}</p>-->
+                                                <p><a href="/" class="btn-custom">Responder Pregunta <span class="ion-ios-arrow-forward"></span></a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{/each}}
                                     <div class="col-md-12">
                                         <div class="blog-entry ftco-animate d-md-flex">
                                             <a href="#" class="img img-2" style="background-image: url(images/image_1.jpg);"></a>
@@ -175,38 +194,88 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="block-27">
-                                            <ul>
-                                                <li><a href="#">&lt;</a></li>
-                                                <li class="active"><span>1</span></li>
-                                                <li><a href="#">2</a></li>
-                                                <li><a href="#">3</a></li>
-                                                <li><a href="#">4</a></li>
-                                                <li><a href="#">5</a></li>
-                                                <li><a href="#">&gt;</a></li>
+
+                                            <ul id ="paginas">
+                                                {{#if index}}
+                                                <script>
+
+
+                                                    function A() {
+                                                        var pag = "";
+                                                        var page = "{{page}}" * 1;
+                                                        console.log(page);
+                                                        var paginas = "{{paginas}}" * 1;
+                                                        //console.log(page);
+                                                        if (page != 1 && page != "") {
+                                                            pag += "<li><a href='/page/" + (page - 1) + "'" + "> &lt; </a> </li>";
+                                                        }
+                                                        for (i = 0; i < paginas; i++) {
+                                                            if (page == (i + 1) || (page == '' && i === 0)) {
+                                                                pag += "<li class='active'><span>" + (i + 1) + "</span></li>";
+                                                            } else {
+                                                                pag += "<li><a href='/page/" + (i + 1) + "'>" + (i + 1) + "</a></li>";
+                                                            }
+                                                        }
+                                                        if (page < paginas && page!=0 ) {
+                                                            if(page==null){page=1;}
+                                                            pag += "<li><a href='/page/" + (page + 1) + "'" + "> &gt;</a></li>";
+                                                        }
+                                                        var datos = document.getElementById("paginas");
+                                                        console.log(datos);
+                                                        datos.innerHTML = pag;
+                                                    }
+                                                    ;
+                                                    window.onload = A();
+
+
+                                                </script>
+                                                {{/if}}
+                                                 {{#if search}}
+                                                     
+                                                         <script>
+
+
+                                                    function A() {
+                                                        var pag = "";
+                                                        var page = "{{page}}" * 1;
+                                                        var encode = encodeURIComponent("{{b.texto}}");
+                                                        var paginas = "{{paginas}}" * 1;
+                                                        console.log(paginas)
+                                                        if (page != 1 && page != "") {
+                                                            pag += "<li><a href='/search/"+(page-1)+"?texto={{b.texto}}&criterio={{b.criterio}}'> &lt; </a> </li>";
+                                                        }
+                                                        for (var i = 0; i<paginas; i++) {
+                                                            if (page == (i + 1) || (page == '' && i === 0)) {
+                                                                pag += "<li class='active'><span>" +(i + 1) + "</span></li>";
+                                                            } else {
+                                                                pag += "<li><a href='/search/"+(i+1)+"?texto="+encode+"&criterio={{b.criterio}}'>" + (i + 1) + "</a></li>";
+                                                            }
+                                                        }
+                                                        if ((page) < paginas && page!=0)   {
+                                                            
+                                                            if(page==null){page=1;}
+                                                            pag += "<li><a href='/search/"+(page + 1)+"?texto={{b.texto}}&criterio={{b.criterio}}'> &gt;</a></li>";
+                                                        }
+                                                        var datos = document.getElementById("paginas");
+                                                        console.log(datos);
+                                                        datos.innerHTML = pag;
+                                                    }
+                                                    ;
+                                                    window.onload = A();
+
+
+                                                </script>
+                                                     
+                                                   {{/if}}
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-4 sidebar ftco-animate bg-light pt-5">
-                                <div class="sidebar-box pt-md-4">
-                                    <form action="#" class="search-form">
-                                        <div class="form-group">
-                                            <span class="icon icon-search"></span>
-                                            <input type="text" class="form-control" placeholder="Buscar">  <!-- Para buscador -->
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="sidebar-box ftco-animate">
-                                    <h3 class="sidebar-heading">Categorías</h3>
-                                    <ul class="categories">
-                                        <li><a href="#">Programación de escritorio <span>(6)</span></a></li>
-                                        <li><a href="#">Programación Web <span>(8)</span></a></li>
-                                        <li><a href="#">Base de Datos <span>(2)</span></a></li>
-                                        <li><a href="#">Programación Android <span>(2)</span></a></li>
-                                    </ul>
-                                </div>
-
+                                {{> busqueda}}
+                              
+                                {{> categorias}}
                                 <div class="sidebar-box ftco-animate">
                                     <h3 class="sidebar-heading">Preguntas Populares</h3>
                                     <div class="block-21 mb-4 d-flex">
@@ -272,21 +341,23 @@
         <!-- loader -->
         <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
-        <script src="js/jquery.min.js"></script>
-        <script src="js/jquery-migrate-3.0.1.min.js"></script>
-        <script src="js/popper.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/jquery.easing.1.3.js"></script>
-        <script src="js/jquery.waypoints.min.js"></script>
-        <script src="js/jquery.stellar.min.js"></script>
-        <script src="js/owl.carousel.min.js"></script>
-        <script src="js/jquery.magnific-popup.min.js"></script>
-        <script src="js/aos.js"></script>
-        <script src="js/jquery.animateNumber.min.js"></script>
-        <script src="js/scrollax.min.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-        <script src="js/google-map.js"></script>
-        <script src="js/main.js"></script>
-
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/jquery-migrate-3.0.1.min.js"></script>
+        <script src="/js/popper.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/jquery.easing.1.3.js"></script>
+        <script src="/js/jquery.waypoints.min.js"></script>
+        <script src="/js/jquery.stellar.min.js"></script>
+        <script src="/js/owl.carousel.min.js"></script>
+        <script src="/js/jquery.magnific-popup.min.js"></script>
+        <script src="/js/aos.js"></script>
+        <script src="/js/jquery.animateNumber.min.js"></script>
+        <script src="/js/scrollax.min.js"></script>
+       <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script-->
+        <script src="/js/google-map.js"></script>
+        <script src="/js/main.js"></script>
+        <script> {$("#criterio").val("{{b.criterio}}")}</script>
+        <script src="/js/utilidad/categoria_lateral.js"></script> 
+       
     </body>
 </html>

@@ -5,11 +5,367 @@ var models = require('./../models/');
 var sequelize = require('sequelize');
 var feach = require('sync-each');
 var op = sequelize.Op;
-
+const mostrar = 1;
 class preguntaControl {
 
-    index(req, res) {
+    buscar(req, res) {
+        var paginas = 1;
+        var pagina = req.params.page;
+        var limite = mostrar * pagina;
+        var quita = (pagina - 1) * mostrar;
+        var persona = models.usuario;
+        var pregunta = models.pregunta;
+        var respuesta = models.respuesta;
+        var data = [];
+        var texto = req.query.texto;
+       
+        var criterio = req.query.criterio;
+        if (criterio == "") {
+            if (texto == "") {
+                res.redirect('/');
+            } else {
+                pregunta.findAll({where: {titulo: {[op.substring]: texto}}, limit: mostrar, include: [{model: models.categoria, as: "categorium"}, {model: persona, as: 'usuario'}, {model: models.respuesta, as: 'respuesta', attributes: {exclude: ['aceptada', 'descripcion', 'external_id_usuario', 'createdAt', 'updatedAt']}}], order: [['createdAt', 'DESC']]}).then(function (result) {
+                    // usuario contiene pregunta y contiene tambuien la imagen
 
+                    pregunta.count({where: {titulo: {[op.substring]: texto}}}).then(function (no_preguntas) {
+                        paginas = Math.ceil(no_preguntas / mostrar);
+
+                        feach(result, function (item, next) {
+                            var descrip = item.descripcion;
+                            descrip = descrip.replace(/%0/gm, "\r\n");
+                            item.descripcion = descrip;
+                            item.dia = item.createdAt.toJSON().slice(0, 19).replace('T', ' ');
+
+                            next(null, item);
+
+                        }, function (err, data) {
+                            var b = {
+                                texto: texto,
+                                criterio: criterio,
+                                cantidad: no_preguntas};
+
+                            if (req.isAuthenticated()) {
+                                res.render('index', {title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                            } else {
+                                res.render('index', {title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                            }
+                        });
+
+                    });
+
+
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
+            }
+        } else if (criterio == "etiquetas") {
+            
+            texto = texto.split(",");
+            
+            console.log(texto);
+            pregunta.findAll({where: {etiquetas: {[op.substring]: texto}}, limit: mostrar, include: [{model: models.categoria, as: 'categorium'}, {model: persona, as: 'usuario'}, {model: models.respuesta, as: 'respuesta', attributes: {exclude: ['aceptada', 'descripcion', 'external_id_usuario', 'createdAt', 'updatedAt']}}], order: [['createdAt', 'DESC']]}).then(function (result) {
+                // usuario contiene pregunta y contiene tambuien la imagen
+
+                pregunta.count({where: {etiquetas: {[op.substring]: texto}}}).then(function (no_preguntas) {
+                    paginas = Math.ceil(no_preguntas / mostrar);
+                    if (paginas === 0) {
+                        paginas = 1;
+                    }
+                    feach(result, function (item, next) {
+                        var descrip = item.descripcion;
+                        descrip = descrip.replace(/%0/gm, "\r\n");
+                        item.descripcion = descrip;
+                        item.dia = item.createdAt.toJSON().slice(0, 19).replace('T', ' ');
+
+                        next(null, item);
+
+                    }, function (err, data) {
+                        var b = {
+                            texto: texto,
+                            criterio: criterio,
+                            cantidad: no_preguntas};
+
+                        if (req.isAuthenticated()) {
+                            res.render('index', {title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                        } else {
+                            res.render('index', {title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                        }
+                    });
+
+                });
+
+
+            }).catch(function (error) {
+                console.log(error);
+            });
+
+        } else if (criterio == 'categoria') {
+            texto = texto.toUpperCase();
+          
+            pregunta.findAll({limit: mostrar, include: [{model: persona, as: 'usuario'}, {model: models.categoria, as: 'categorium', where: {nombre: {[op.substring]: texto}}}, {model: models.respuesta, as: 'respuesta', attributes: {exclude: ['aceptada', 'descripcion', 'external_id_usuario', 'createdAt', 'updatedAt']}}], order: [['createdAt', 'DESC']]}).then(function (result) {
+                // usuario contiene pregunta y contiene tambuien la imagen
+
+                pregunta.count({include: [{model: models.categoria, as: 'categorium', where: {nombre: {[op.substring]: texto}}}]}).then(function (no_preguntas) {
+                    paginas = Math.ceil(no_preguntas / mostrar);
+                   
+                    feach(result, function (item, next) {
+                        var descrip = item.descripcion;
+                        descrip = descrip.replace(/%0/gm, "\r\n");
+                        item.descripcion = descrip;
+                        item.dia = item.createdAt.toJSON().slice(0, 19).replace('T', ' ');
+
+                        next(null, item);
+
+                    }, function (err, data) {
+                        var b = {
+                            texto: texto,
+                            criterio: criterio,
+                            cantidad: no_preguntas};
+
+                        if (req.isAuthenticated()) {
+                            res.render('index', {title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                        } else {
+                            res.render('index', {title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                        }
+                    });
+
+                });
+
+
+            }).catch(function (error) {
+                console.log(error);
+            });
+
+        } else {
+            res.redirect('/');
+        }
+
+    }
+
+    paginacion_search(req, res) {
+        var paginas = 1;
+        var pagina = req.params.page;
+        var limite = mostrar * pagina;
+        var quita = (pagina - 1) * mostrar;
+        var persona = models.usuario;
+        var pregunta = models.pregunta;
+        var respuesta = models.respuesta;
+        var texto = req.query.texto;
+       
+        var criterio = req.query.criterio;
+       
+        if (criterio == "") {
+            if (texto == "") {
+                res.redirect('/');
+            } else {
+                pregunta.findAll({offset: quita, where: {titulo: {[op.substring]: texto}}, limit: mostrar, include: [{model: models.categoria, as: "categorium"}, {model: persona, as: 'usuario'}, {model: models.respuesta, as: 'respuesta', attributes: {exclude: ['aceptada', 'descripcion', 'external_id_usuario', 'createdAt', 'updatedAt']}}], order: [['createdAt', 'DESC']]}).then(function (result) {
+                    // usuario contiene pregunta y contiene tambuien la imagen
+
+                    pregunta.count({where: {titulo: {[op.substring]: texto}}}).then(function (no_preguntas) {
+                        paginas = Math.ceil(no_preguntas / mostrar);
+                        console.log(paginas);
+                        feach(result, function (item, next) {
+                            var descrip = item.descripcion;
+                            descrip = descrip.replace(/%0/gm, "\r\n");
+                            item.descripcion = descrip;
+                            item.dia = item.createdAt.toJSON().slice(0, 19).replace('T', ' ');
+
+                            next(null, item);
+
+                        }, function (err, data) {
+                            
+                            var b = {
+                                texto: texto,
+                                criterio: criterio,
+                                cantidad: no_preguntas};
+
+                            if (req.isAuthenticated()) {
+                                res.render('index', {title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b, page: pagina});
+                            } else {
+                                res.render('index', {title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b, page: pagina});
+                            }
+                        });
+
+                    });
+
+
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
+            }
+        } else if (criterio == "etiquetas") {
+            
+            
+           
+            pregunta.findAll({offset: quita, where: {etiquetas: {[op.substring]: texto}}, limit: mostrar, include: [{model: models.categoria, as: 'categorium'}, {model: persona, as: 'usuario'}, {model: models.respuesta, as: 'respuesta', attributes: {exclude: ['aceptada', 'descripcion', 'external_id_usuario', 'createdAt', 'updatedAt']}}], order: [['createdAt', 'DESC']]}).then(function (result) {
+                // usuario contiene pregunta y contiene tambuien la imagen
+
+                pregunta.count({where: {etiquetas: {[op.substring]: texto}}}).then(function (no_preguntas) {
+                    paginas = Math.ceil(no_preguntas / mostrar);
+                    if (paginas === 0) {
+                        paginas = 1;
+                    }
+                    feach(result, function (item, next) {
+                        var descrip = item.descripcion;
+                        descrip = descrip.replace(/%0/gm, "\r\n");
+                        item.descripcion = descrip;
+                        item.dia = item.createdAt.toJSON().slice(0, 19).replace('T', ' ');
+
+                        next(null, item);
+
+                    }, function (err, data) {
+                        
+                        
+                        var b = {
+                            texto: texto,
+                            criterio: criterio,
+                            cantidad: no_preguntas};
+
+                        if (req.isAuthenticated()) {
+                            res.render('index', { page: pagina,title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                        } else {
+                            res.render('index', { page: pagina,title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                        }
+                    });
+
+                });
+
+
+            }).catch(function (error) {
+                console.log(error);
+            });
+
+        } else if (criterio == 'categoria') {
+            texto = texto.toUpperCase();
+            pregunta.findAll({offset: quita, limit: mostrar, include: [{model: persona, as: 'usuario'}, {model: models.categoria, as: 'categorium', where: {nombre: {[op.substring]: texto}}}, {model: models.respuesta, as: 'respuesta', attributes: {exclude: ['aceptada', 'descripcion', 'external_id_usuario', 'createdAt', 'updatedAt']}}], order: [['createdAt', 'DESC']]}).then(function (result) {
+                // usuario contiene pregunta y contiene tambuien la imagen
+
+                pregunta.count({include: [{model: models.categoria, as: 'categorium', where: {nombre: {[op.substring]: texto}}}]}).then(function (no_preguntas) {
+                    paginas = Math.ceil(no_preguntas / mostrar);
+                    if (paginas === 0) {
+                        paginas = 1;
+                    }
+                    feach(result, function (item, next) {
+                        var descrip = item.descripcion;
+                        descrip = descrip.replace(/%0/gm, "\r\n");
+                        item.descripcion = descrip;
+                        item.dia = item.createdAt.toJSON().slice(0, 19).replace('T', ' ');
+
+                        next(null, item);
+
+                    }, function (err, data) {
+                        var b = {
+                            texto: texto,
+                            criterio: criterio,
+                            cantidad: no_preguntas};
+
+                        if (req.isAuthenticated()) {
+                            res.render('index', { page: pagina,title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                        } else {
+                            res.render('index', { page: pagina,title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                        }
+                    });
+
+                });
+
+
+            }).catch(function (error) {
+                console.log(error);
+            });
+
+        } else {
+            res.redirect('/');
+        }
+        
+    }
+    paginacion(req, res) {
+        var pagina = req.params.page;
+        if (pagina === 1) {
+            res.redirect("/");
+        }
+
+        var pregunta = models.pregunta;
+        var persona = models.usuario;
+        var limite = mostrar * pagina;
+        var quita = (pagina - 1) * mostrar;
+        pregunta.findAll({offset: quita, limit: limite, include: [{model: persona, as: 'usuario'}, {model: models.categoria, as: 'categorium'}, {model: models.respuesta, as: 'respuesta', attributes: {exclude: ['aceptada', 'descripcion', 'external_id_usuario', 'createdAt', 'updatedAt']}}], order: [['createdAt', 'DESC']]}).then(function (result) {
+            // usuario contiene pregunta y contiene tambuien la imagen
+            var paginas = 1;
+            pregunta.count().then(function (no_preguntas) {
+                paginas = Math.ceil(no_preguntas / mostrar);
+                if (pagina > paginas) {
+                    req.flash("error", "no existen tantas paginas no seas verga no me botes el sistema ");
+                    res.redirect("/");
+
+                } else {
+                    feach(result, function (item, next) {
+                        var descrip = item.descripcion;
+                        descrip = descrip.replace(/%0/gm, "\r\n");
+
+                        item.descripcion = descrip;
+
+                        item.dia = item.createdAt.toJSON().slice(0, 19).replace('T', ' ');
+
+
+                        next(null, item);
+                        // console.log(item);
+                    }, function (err, data) {
+                        if (req.isAuthenticated()) {
+                            res.render('index', {title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, page: pagina, index: true});
+                        } else {
+                            res.render('index', {title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, page: pagina, index: true});
+                        }
+                    });
+                }
+                ;
+
+
+
+            });
+
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+
+    }
+
+    index(req, res) {
+        var paginas = 1;
+        var pregunta = models.pregunta;
+        var persona = models.usuario;
+        pregunta.findAll({limit: mostrar, include: [{model: persona, as: 'usuario'}, {model: models.categoria, as: "categorium"}, {model: models.respuesta, as: 'respuesta', attributes: {exclude: ['aceptada', 'descripcion', 'external_id_usuario', 'createdAt', 'updatedAt']}}], order: [['createdAt', 'DESC']]}).then(function (result) {
+            // usuario contiene pregunta y contiene tambuien la imagen
+            pregunta.count().then(function (no_preguntas) {
+                paginas = Math.ceil(no_preguntas / mostrar);
+
+                feach(result, function (item, next) {
+                    var descrip = item.descripcion;
+                    descrip = descrip.replace(/%0/gm, "\r\n");
+
+                    item.descripcion = descrip;
+
+                    item.dia = item.createdAt.toJSON().slice(0, 19).replace('T', ' ');
+
+
+                    next(null, item);
+                    // console.log(item);
+                }, function (err, data) {
+                    if (req.isAuthenticated()) {
+                        res.render('index', {title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, index: true});
+                    } else {
+                        res.render('index', {title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, index: true});
+                    }
+                });
+
+            });
+
+
+        }).catch(function (error) {
+            console.log(error);
+        });
     }
 
     guardar(req, res) {
@@ -25,10 +381,10 @@ class preguntaControl {
                 titulo: req.body.titulo_p,
                 external_id: uuid.v4(),
                 descripcion: descrip,
-                etiquetas: req.body.etiquetas,
-                categoria: req.body.categoria_p,
                 numero_vistas: 0,
-                id_usuario: result.id
+                id_usuario: result.id,
+                etiquetas: req.body.etiquetas,
+                id_categoria: req.body.categoria_p
             };
             pregunta.create(datos).then(function (creado) {
 
@@ -44,14 +400,13 @@ class preguntaControl {
             res.redirect('/logeo');
         });
     }// patron de diseño dao datapbjetc  , finquelon . facade estructural
-
     visualizar(req, res) {
 
         var external = req.params.external;
         var pregunta = models.pregunta;
         var usuario = models.usuario;
 
-        pregunta.findAll({where: {external_id: external}, include: [{model: models.respuesta, as: 'respuesta', include: [{model: models.comentario, as: 'comentario'}]}]/*,order:[[{model: models.respuesta, as: 'respuesta'}, 'createdAt', 'DESC']]*/}).then(function (resulT) {
+        pregunta.findAll({where: {external_id: external}, include: [{model: models.categoria, as: 'categoria'}, {model: models.respuesta, as: 'respuesta', include: [{model: models.comentario, as: 'comentario'}]}]/*,order:[[{model: models.respuesta, as: 'respuesta'}, 'createdAt', 'DESC']]*/}).then(function (resulT) {
 
 
             if (resulT.length > 0) {
@@ -95,14 +450,13 @@ class preguntaControl {
 
                     preguntaA.respuesta = data;
                     console.log(preguntaA);
-                    //res.render('fragmentos/prueba', {pregunta: preguntaA,msg:{'info':req.flash('info')}});
-                    // fragmento a renderizar de pregunta  
-                });
-                if (req.isAuthenticated()) {
+                     if (req.isAuthenticated()) {
                     res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: true, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA});
                 } else {
                     res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA});
                 }
+
+                });
 
             } else {
                 req.flash('error', 'Hubo un problema al intentar cargar los datos');

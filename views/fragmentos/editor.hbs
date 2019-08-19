@@ -2,8 +2,8 @@
 <html>
     <head>
         <title>{{title}}</title>
-        <script type="text/javascript" src="js/jquery-1.12.0.js"></script>
-
+        <script type="text/javascript" src="/js/jquery-1.12.0.js"></script>
+  
         <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
@@ -42,7 +42,7 @@
         <script type="text/javascript" src='/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js'>
 
         </script>
-
+       <link rel="stylesheet" href="/css/bootstrap-tagsinput.css">
 
     </head>
     <body>
@@ -87,7 +87,7 @@
                             {{else}}
                             <div class="col-xl-8 py-5 px-md-5">
                                 <h2 style="font-size: 35px"> Formular una pregunta </h2><br>
-                                <form method="POST" class="form-group" action="/guardarPregunta" >
+                                <form method="POST" class="search-form" action="/guardarPregunta" >
                                     <div class="form-group">
                                         <label class="label" style="color: black; font-size: 25px"> Título </label>
                                         <input type="text" name="titulo_p" class="form-control" placeholder="¿Cúal es tu pregunta de programación? Sé específico" required/>
@@ -100,12 +100,8 @@
                                     </div>
                                     <div class="form-group">                                        
                                         <label class="label" style="color: black; font-size: 25px"> Categoria </label>
-                                        <select class="form-control" name="categoria_p">
-                                            <option value="" selected> Selecciona una categoria... </option>>
-                                            <option value="Programación Web"> Programación Web </option>
-                                            <option value="Programación de Escritorio"> Programación de Escritorio </option>
-                                            <option value="Base de Datos"> Base de Datos </option>
-                                            <option value="Programación Movil"> Programación Movil </option>
+                                        <select class="form-control" name="categoria_p" id="cat">
+                                          
                                         </select>
                                         <br>
                                     </div>
@@ -123,14 +119,7 @@
                             </div>
                             {{/if}}
                             <div class="col-xl-4 sidebar ftco-animate bg-light pt-5">
-                                <div class="sidebar-box pt-md-4">
-                                    <form action="#" class="search-form">
-                                        <div class="form-group">
-                                            <span class="icon icon-search"></span>
-                                            <input type="text" class="form-control" placeholder="Search">  <!-- Para buscador -->
-                                        </div>
-                                    </form>
-                                </div>
+                               {{> busqueda}}
                                 <div class="ayura">
                                     <b>COMO PREGUNTAR</b>
                                     <p>
@@ -139,20 +128,10 @@
                                         Proporciona detalles. Comparte lo que ya sabes.
                                     </p>
                                 </div>
-                                <div class="sidebar-box ftco-animate">
-                                    <h3 class="sidebar-heading">Categorías</h3>
-                                    <ul class="categories">
-                                        <li><a href="#">Programación de escritorio <span>(6)</span></a></li>
-                                        <li><a href="#">Programación Web <span>(8)</span></a></li>
-                                        <li><a href="#">Base de Datos <span>(2)</span></a></li>
-                                        <li><a href="#">Programación Android <span>(2)</span></a></li>
-                                    </ul>
-                                </div>
-
-
-
-                                <div class="sidebar-box ftco-animate">
-                                    <h3 class="sidebar-heading">Nube de etiquetas</h3>
+                              
+                                {{> categorias}}
+                                  <div class="sidebar-box ftco-animate">
+                                    <h3 class="sidebar-heading">Nube de tags</h3>
                                     <ul class="tagcloud">
                                         <a href="#" class="tag-cloud-link">sql</a>
                                         <a href="#" class="tag-cloud-link">nosql</a>
@@ -164,7 +143,6 @@
                                         <a href="#" class="tag-cloud-link">javascript</a>
                                     </ul>
                                 </div>
-
                                 <div class="sidebar-box ftco-animate">
                                     <h3 class="sidebar-heading">Mensaje del dia</h3>
                                     <p>Vas a caer chupetin trujillo</p>
@@ -186,8 +164,10 @@
         <script src="/js/jquery.easing.1.3.js"></script>
         <script src="/js/jquery.waypoints.min.js"></script>
         <script src="/js/jquery.stellar.min.js"></script>
+       
         <script src="/js/owl.carousel.min.js"></script>
         <script src="/js/jquery.magnific-popup.min.js"></script>
+        
         <script src="/js/aos.js"></script>
         <script src="/js/jquery.animateNumber.min.js"></script>
         <script src="/js/scrollax.min.js"></script>
@@ -197,19 +177,9 @@
         <script>CKEDITOR.replace('editor1');</script>
         <script>hljs.initHighlightingOnLoad();</script>
         <script src="/js/bootstrap-tagsinput.js"></script>
-
-        <!--===============================================================================================
-       <pre>
-<code class="language-html">&lt;html&gt;
-&lt;/html&gt;</code></pre>
-
-<p>&nbsp;</p>
-
-<div data-oembed-url="https://es.slideshare.net/reidhoffman/blitzscaling-book-trailer-118631898">
-<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 75%; padding-top: 38px;"><iframe allow="encrypted-media" allowfullscreen="" scrolling="no" src="https://www.slideshare.net/slideshow/embed_code/key/oavlplpm7ErfpQ" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" tabindex="-1"></iframe></div>
-</div>
-
-<p>&nbsp;</p>
-        -->
+              <script src="/js/utilidad/categoria_lateral.js"></script> 
+            <script src="/js/utilidad/utilidades.js"></script>
+              
+     
     </body>
 </html>

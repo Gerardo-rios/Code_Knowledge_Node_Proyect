@@ -29,11 +29,12 @@ var auth = function (req, res, next) {
 /* GET home page. */
 router.get('/', function (req, res, next) {
     rolC.crear_rol();
-    if (req.isAuthenticated()) {
-        res.render('index', {title: 'Wawanakwa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}});
-    } else {
-        res.render('index', {title: 'Wawanakwa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}});
-    }
+    preguntaC.index(req,res);
+//    if (req.isAuthenticated()) {
+//        res.render('index', {title: 'Wawanakwa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}});
+//    } else {
+//        res.render('index', {title: 'Wawanakwa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}});
+//    }
 
 });
 
@@ -45,8 +46,8 @@ router.get('/registro', function (req, res, next) {
     res.render('fragmentos/registro', {title: 'Registro', msg: {error: req.flash('error'), info: req.flash('info')}});
 });
 
-router.get('/pregunta', function (req, res, next) {
-    res.render('fragmentos/editor', {title: 'Preguntar', msg: {error: req.flash('error'), info: req.flash('info')}});
+router.get('/pregunta',  function (req, res, next) {
+    res.render('fragmentos/editor', {title: 'Preguntar', msg: {error: req.flash('error'), info: req.flash('info')}, ask: false});
 });
 
 router.post('/registro', cuentaC.guardarNormal);
@@ -141,5 +142,19 @@ router.post('/upload', function (req, res) {
 router.post('/guardarPregunta', auth, preguntaC.guardar);
 
 router.get('/pregunta/:external', preguntaC.visualizar);
+
+
+
+//router.get('/preguntas', function (req,res){
+//    res.render('fragmentos/verPregunta');
+//});
+
+//paginacion del index para las preguntas 
+
+router.get('/page/:page', preguntaC.paginacion);
+
+//searchs 
+router.get('/search', preguntaC.buscar);
+router.get('/search/:page',preguntaC.paginacion_search);
 
 module.exports = router;
