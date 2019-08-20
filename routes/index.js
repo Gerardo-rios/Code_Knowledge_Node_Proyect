@@ -5,8 +5,9 @@ var passport = require('passport');
 
 var cuenta = require('../controladores/registroControl');
 var cuentaC = new cuenta();
-var registroControl = require('../controladores/utilidades');
-var registroControlC = new registroControl();
+
+var respuesta = require('../controladores/RespuestaControl');
+var respuestaC = new respuesta();
 
 var perfil = require('../controladores/perfilControl');
 var perfilC = new perfil();
@@ -29,7 +30,7 @@ var auth = function (req, res, next) {
 /* GET home page. */
 router.get('/', function (req, res, next) {
     rolC.crear_rol();
-    preguntaC.index(req,res);
+    preguntaC.index(req, res);
 //    if (req.isAuthenticated()) {
 //        res.render('index', {title: 'Wawanakwa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}});
 //    } else {
@@ -46,7 +47,7 @@ router.get('/registro', function (req, res, next) {
     res.render('fragmentos/registro', {title: 'Registro', msg: {error: req.flash('error'), info: req.flash('info')}});
 });
 
-router.get('/pregunta',  function (req, res, next) {
+router.get('/pregunta', function (req, res, next) {
     res.render('fragmentos/editor', {title: 'Preguntar', msg: {error: req.flash('error'), info: req.flash('info')}, ask: false});
 });
 
@@ -155,6 +156,8 @@ router.get('/page/:page', preguntaC.paginacion);
 
 //searchs 
 router.get('/search', preguntaC.buscar);
-router.get('/search/:page',preguntaC.paginacion_search);
+router.get('/search/:page', preguntaC.paginacion_search);
+
+router.post('/pregunta/responder', auth, respuestaC.guardar);
 
 module.exports = router;

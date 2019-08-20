@@ -17,7 +17,7 @@ class registroControl {
             apellidos: req.body.apellido_u,
             pais_origen: "",
             grado_estudio: "",
-            imagen: "https://ih1.redbubble.net/image.496975846.0253/poster,840x830,f8f8f8-pad,750x1000,f8f8f8.jpg",
+            imagen: "https://scontent-yyz1-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/s750x750/67752579_2511565135566261_4169061585040761736_n.jpg?_nc_ht=scontent-yyz1-1.cdninstagram.com&oh=aafefceb12d9a5d5c76925f15c0d5d0a&oe=5DD43C99&ig_cache_key=MjEwMTk2Nzk3MTA5MDI3NTc0Mw%3D%3D.2",
             descripcion: "",
             cuenta: {
                 clave: req.body.clave,

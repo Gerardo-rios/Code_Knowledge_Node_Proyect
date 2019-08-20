@@ -3,14 +3,14 @@
     <head>
         <title>{{title}}</title>
         <script type="text/javascript" src="/js/jquery-1.12.0.js"></script>
-  
+
         <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">        
+            
         <link rel="stylesheet" href="/css/styleB.css">
         <link rel="stylesheet" href="/css/fontawesome-all.css">
 
@@ -42,13 +42,13 @@
         <script type="text/javascript" src='/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js'>
 
         </script>
-       <link rel="stylesheet" href="/css/bootstrap-tagsinput.css">
+        <link rel="stylesheet" href="/css/bootstrap-tagsinput.css">
 
     </head>
     <body>
         <div id="colorlib-page">
             <a href="" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
-            <aside id="colorlib-aside" role="complementary" class="js-fullheight">
+            <aside id="colorlib-aside" role="complementary">
                 {{#if msg}}
                 {{#if msg.error}}
                 <div class="form-group">
@@ -70,7 +70,7 @@
                     <ul>
                         <li class="colorlib-active"><a href="/">Inicio</a></li>
                         <li><a href="/">Noticias</a></li>                        
-                        <li><a href="/">Acerca de Nosotros</a></li>
+                        <li><a href="/">Informacion</a></li>
                         <li><a href="/">Contacto</a></li>
                     </ul>
                 </nav> 
@@ -101,7 +101,7 @@
                                     <div class="form-group">                                        
                                         <label class="label" style="color: black; font-size: 25px"> Categoria </label>
                                         <select class="form-control" name="categoria_p" id="cat">
-                                          
+
                                         </select>
                                         <br>
                                     </div>
@@ -116,10 +116,9 @@
                                     </div>
 
                                 </form>
-                            </div>
-                            {{/if}}
+                            </div>                            
                             <div class="col-xl-4 sidebar ftco-animate bg-light pt-5">
-                               {{> busqueda}}
+                                {{> busqueda}}
                                 <div class="ayura">
                                     <b>COMO PREGUNTAR</b>
                                     <p>
@@ -128,9 +127,9 @@
                                         Proporciona detalles. Comparte lo que ya sabes.
                                     </p>
                                 </div>
-                              
+
                                 {{> categorias}}
-                                  <div class="sidebar-box ftco-animate">
+                                <div class="sidebar-box ftco-animate">
                                     <h3 class="sidebar-heading">Nube de tags</h3>
                                     <ul class="tagcloud">
                                         <a href="#" class="tag-cloud-link">sql</a>
@@ -148,6 +147,7 @@
                                     <p>Vas a caer chupetin trujillo</p>
                                 </div>
                             </div><!-- END COL -->
+                            {{/if}}
                         </div>
                     </div>
                 </section>
@@ -164,10 +164,10 @@
         <script src="/js/jquery.easing.1.3.js"></script>
         <script src="/js/jquery.waypoints.min.js"></script>
         <script src="/js/jquery.stellar.min.js"></script>
-       
+
         <script src="/js/owl.carousel.min.js"></script>
         <script src="/js/jquery.magnific-popup.min.js"></script>
-        
+
         <script src="/js/aos.js"></script>
         <script src="/js/jquery.animateNumber.min.js"></script>
         <script src="/js/scrollax.min.js"></script>
@@ -177,9 +177,9 @@
         <script>CKEDITOR.replace('editor1');</script>
         <script>hljs.initHighlightingOnLoad();</script>
         <script src="/js/bootstrap-tagsinput.js"></script>
-              <script src="/js/utilidad/categoria_lateral.js"></script> 
-            <script src="/js/utilidad/utilidades.js"></script>
-              
-     
+        <script src="/js/utilidad/categoria_lateral.js"></script> 
+        <script src="/js/utilidad/utilidades.js"></script>
+
+
     </body>
 </html>

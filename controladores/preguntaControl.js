@@ -18,7 +18,7 @@ class preguntaControl {
         var respuesta = models.respuesta;
         var data = [];
         var texto = req.query.texto;
-       
+
         var criterio = req.query.criterio;
         if (criterio == "") {
             if (texto == "") {
@@ -60,9 +60,9 @@ class preguntaControl {
 
             }
         } else if (criterio == "etiquetas") {
-            
+
             texto = texto.split(",");
-            
+
             console.log(texto);
             pregunta.findAll({where: {etiquetas: {[op.substring]: texto}}, limit: mostrar, include: [{model: models.categoria, as: 'categorium'}, {model: persona, as: 'usuario'}, {model: models.respuesta, as: 'respuesta', attributes: {exclude: ['aceptada', 'descripcion', 'external_id_usuario', 'createdAt', 'updatedAt']}}], order: [['createdAt', 'DESC']]}).then(function (result) {
                 // usuario contiene pregunta y contiene tambuien la imagen
@@ -102,13 +102,13 @@ class preguntaControl {
 
         } else if (criterio == 'categoria') {
             texto = texto.toUpperCase();
-          
+
             pregunta.findAll({limit: mostrar, include: [{model: persona, as: 'usuario'}, {model: models.categoria, as: 'categorium', where: {nombre: {[op.substring]: texto}}}, {model: models.respuesta, as: 'respuesta', attributes: {exclude: ['aceptada', 'descripcion', 'external_id_usuario', 'createdAt', 'updatedAt']}}], order: [['createdAt', 'DESC']]}).then(function (result) {
                 // usuario contiene pregunta y contiene tambuien la imagen
 
                 pregunta.count({include: [{model: models.categoria, as: 'categorium', where: {nombre: {[op.substring]: texto}}}]}).then(function (no_preguntas) {
                     paginas = Math.ceil(no_preguntas / mostrar);
-                   
+
                     feach(result, function (item, next) {
                         var descrip = item.descripcion;
                         descrip = descrip.replace(/%0/gm, "\r\n");
@@ -152,9 +152,9 @@ class preguntaControl {
         var pregunta = models.pregunta;
         var respuesta = models.respuesta;
         var texto = req.query.texto;
-       
+
         var criterio = req.query.criterio;
-       
+
         if (criterio == "") {
             if (texto == "") {
                 res.redirect('/');
@@ -174,7 +174,7 @@ class preguntaControl {
                             next(null, item);
 
                         }, function (err, data) {
-                            
+
                             var b = {
                                 texto: texto,
                                 criterio: criterio,
@@ -196,9 +196,9 @@ class preguntaControl {
 
             }
         } else if (criterio == "etiquetas") {
-            
-            
-           
+
+
+
             pregunta.findAll({offset: quita, where: {etiquetas: {[op.substring]: texto}}, limit: mostrar, include: [{model: models.categoria, as: 'categorium'}, {model: persona, as: 'usuario'}, {model: models.respuesta, as: 'respuesta', attributes: {exclude: ['aceptada', 'descripcion', 'external_id_usuario', 'createdAt', 'updatedAt']}}], order: [['createdAt', 'DESC']]}).then(function (result) {
                 // usuario contiene pregunta y contiene tambuien la imagen
 
@@ -216,17 +216,17 @@ class preguntaControl {
                         next(null, item);
 
                     }, function (err, data) {
-                        
-                        
+
+
                         var b = {
                             texto: texto,
                             criterio: criterio,
                             cantidad: no_preguntas};
 
                         if (req.isAuthenticated()) {
-                            res.render('index', { page: pagina,title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                            res.render('index', {page: pagina, title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                         } else {
-                            res.render('index', { page: pagina,title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                            res.render('index', {page: pagina, title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                         }
                     });
 
@@ -262,9 +262,9 @@ class preguntaControl {
                             cantidad: no_preguntas};
 
                         if (req.isAuthenticated()) {
-                            res.render('index', { page: pagina,title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                            res.render('index', {page: pagina, title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                         } else {
-                            res.render('index', { page: pagina,title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                            res.render('index', {page: pagina, title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                         }
                     });
 
@@ -278,19 +278,19 @@ class preguntaControl {
         } else {
             res.redirect('/');
         }
-        
+
     }
     paginacion(req, res) {
-        var pagina = req.params.page*1;
+        var pagina = req.params.page * 1;
         if (pagina === 1) {
             res.redirect("/");
         }
-    var paginas = 1;
+        var paginas = 1;
         var pregunta = models.pregunta;
         var persona = models.usuario;
         var limite = mostrar * pagina;
         var quita = (pagina - 1) * mostrar;
-        pregunta.findAll({ offset: quita, limit: mostrar, include: [{model: persona, as: 'usuario'}, {model: models.categoria, as: 'categorium'}, {model: models.respuesta, as: 'respuesta', attributes: {exclude: ['aceptada', 'descripcion', 'external_id_usuario', 'createdAt', 'updatedAt']}}], order: [['createdAt', 'DESC']]}).then(function (result) {
+        pregunta.findAll({offset: quita, limit: mostrar, include: [{model: persona, as: 'usuario'}, {model: models.categoria, as: 'categorium'}, {model: models.respuesta, as: 'respuesta', attributes: {exclude: ['aceptada', 'descripcion', 'external_id_usuario', 'createdAt', 'updatedAt']}}], order: [['createdAt', 'DESC']]}).then(function (result) {
             // usuario contiene pregunta y contiene tambuien la imagen
             console.log(result);
             pregunta.count().then(function (no_preguntas) {
@@ -354,9 +354,9 @@ class preguntaControl {
                     // console.log(item);
                 }, function (err, data) {
                     if (req.isAuthenticated()) {
-                        res.render('index', {title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, index: true});
+                        res.render('index', {title: 'C-K-U', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, index: true});
                     } else {
-                        res.render('index', {title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, index: true});
+                        res.render('index', {title: 'C-K-U', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, index: true});
                     }
                 });
 
@@ -400,6 +400,7 @@ class preguntaControl {
             res.redirect('/logeo');
         });
     }// patron de diseño dao datapbjetc  , finquelon . facade estructural
+    
     visualizar(req, res) {
 
         var external = req.params.external;
@@ -450,11 +451,11 @@ class preguntaControl {
 
                     preguntaA.respuesta = data;
                     console.log(preguntaA);
-                     if (req.isAuthenticated()) {
-                    res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: true, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA});
-                } else {
-                    res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA});
-                }
+                    if (req.isAuthenticated()) {
+                        res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: true, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA, respuesta: a});
+                    } else {
+                        res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA, respuesta: a});
+                    }
 
                 });
 

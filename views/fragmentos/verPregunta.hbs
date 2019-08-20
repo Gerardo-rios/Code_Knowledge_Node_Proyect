@@ -1,3 +1,4 @@
+
 <div class="col-xl-8 py-5 px-md-5">                                
     <div class="row pt-md-4">
         <div class="col-md-12">
@@ -9,26 +10,33 @@
                         <p class="meta">
                             <span><i class="icon-calendar mr-2"></i>{{pregunta.createdAt}}</span>
                             <span><a href="#"><i class="icon-folder-o mr-2"></i>{{pregunta.categoria}}</a></span>
-                            <span><i class="icon-comment2 mr-2"></i>{{pregunta.numero_vistas}} Visitas</span>
+                            <span><i class="icon-comment2 mr-2"></i>{{pregunta.respuesta.length}}</span>
                         </p>
                     </div>
-                    {{{pregunta.descripcion}}}                    
+
+                    {{{pregunta.descripcion}}}
+
                 </div>
             </div>
         </div>
+
         <div class="blog-entry ftco-animate d-md-flex">
-            <form class="form-group" method="POST" action="">
+            <form class="form-group" method="POST" action="/pregunta/responder">
+                <input type="hidden" name="p_ex" value="{{pregunta.external_id}}">
+                <input type="hidden" name="p_id" value="{{pregunta.id}}">
                 <label class="label" style="color: black; font-size: 25px"> Tu respuesta </label>                
-                <textarea id="editor1" class="container" name="descripcion_p" required></textarea>
+                <textarea id="editor1" class="container" name="descripcion_r" required></textarea>
                 <br>
                 <div class="form-group">                                        
                     <input type="submit" class="btn btn-primary btn-lg" value="Publicar tu Respuesta"/>                    
                 </div>
             </form>
         </div>
+        {{#unless sesion}} 
         <div class="form-group">
+
             <label class="label" style="color: black; font-size: 25px"> Registrate o Inicia Sesion </label>
-            {{#unless sesion}}        
+
             <a href="/login/facebook" class="btn btn-warning">
                 <img src="/images/icons/facebook.png" alt="FACEBOOK">
                 Facebook
@@ -41,7 +49,8 @@
                 <img src="/images/icons/symbol-01.png" alt="CORREO">                
                 Correo y clave
             </a>
-            {{/unless}}
+
         </div>
+        {{/unless}}
     </div>
 </div>
