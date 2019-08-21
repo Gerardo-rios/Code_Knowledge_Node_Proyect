@@ -144,7 +144,7 @@ module.exports = function (passport) {
                 var use_nam = (a[0] + "" + (Math.round((Math.random() * (100 - 1)) + 1) * 100) / 100 + "" + a[1].substring(0, 3).split('').reverse().join(''));
                 //console.log(profile);
                 var datos = {
-                    nombres: profile.name.givenName,
+                    nombres: profile.displayName,
                     external_id: uuid.v4(),
                     apellidos: profile.name.familyName,
                     pais_origen: "",

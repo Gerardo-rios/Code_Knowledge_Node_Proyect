@@ -37,7 +37,7 @@ class ComentarioControl {
             res.json(cat);
         }).catch(function (error) {
             console.log(error);
-            res.json(error);
+            res.send(error);
         });
     }else{
         res.json({});

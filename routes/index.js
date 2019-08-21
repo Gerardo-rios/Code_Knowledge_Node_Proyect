@@ -18,6 +18,18 @@ var rolC = new rol();
 var pregunta = require('../controladores/preguntaControl');
 var preguntaC = new pregunta();
 
+var admin = require('../controladores/AdminControl');
+var adminC = new admin();
+
+var authadmin = function (req, res, next) {
+    if (req.isAuthenticated()) {
+       adminC.admin(req,res,next);
+    } else {
+        req.flash('error', 'DEBES INICIAR SESION PRIMERO');
+        res.redirect('/');
+    }
+};
+
 var auth = function (req, res, next) {
     if (req.isAuthenticated()) {
         next();
@@ -38,6 +50,12 @@ router.get('/', function (req, res, next) {
 //    }
 
 });
+
+router.get('/administar', adminC.listar);
+
+router.get('/cuenta/:external_id',adminC.bloquear);
+router.get('/descuenta/:external_id', adminC.desbloquear);
+
 
 router.get('/logeo', function (req, res, next) {
     res.render('fragmentos/login', {title: 'Inicio de Sesion', msg: {error: req.flash('error'), info: req.flash('info')}});

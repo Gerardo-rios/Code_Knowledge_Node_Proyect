@@ -452,9 +452,9 @@ class preguntaControl {
                     preguntaA.respuesta = data;
                     console.log(preguntaA);
                     if (req.isAuthenticated()) {
-                        res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: true, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA, respuesta: a});
+                        res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: true, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA});
                     } else {
-                        res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA, respuesta: a});
+                        res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA});
                     }
 
                 });
