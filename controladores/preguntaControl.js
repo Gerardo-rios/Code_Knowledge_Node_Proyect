@@ -45,7 +45,7 @@ class preguntaControl {
                                 cantidad: no_preguntas};
 
                             if (req.isAuthenticated()) {
-                                res.render('index', {title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                                res.render('index', {rol:req.user.rol,title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                             } else {
                                 res.render('index', {title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                             }
@@ -69,9 +69,7 @@ class preguntaControl {
 
                 pregunta.count({where: {etiquetas: {[op.substring]: texto}}}).then(function (no_preguntas) {
                     paginas = Math.ceil(no_preguntas / mostrar);
-                    if (paginas === 0) {
-                        paginas = 1;
-                    }
+                  
                     feach(result, function (item, next) {
                         var descrip = item.descripcion;
                         descrip = descrip.replace(/%0/gm, "\r\n");
@@ -87,7 +85,7 @@ class preguntaControl {
                             cantidad: no_preguntas};
 
                         if (req.isAuthenticated()) {
-                            res.render('index', {title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                            res.render('index', {rol:req.user.rol,title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                         } else {
                             res.render('index', {title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                         }
@@ -124,7 +122,7 @@ class preguntaControl {
                             cantidad: no_preguntas};
 
                         if (req.isAuthenticated()) {
-                            res.render('index', {title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                            res.render('index', {rol:req.user.rol,title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                         } else {
                             res.render('index', {title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                         }
@@ -181,7 +179,7 @@ class preguntaControl {
                                 cantidad: no_preguntas};
 
                             if (req.isAuthenticated()) {
-                                res.render('index', {title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b, page: pagina});
+                                res.render('index', {rol:req.user.rol,title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b, page: pagina});
                             } else {
                                 res.render('index', {title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b, page: pagina});
                             }
@@ -224,7 +222,7 @@ class preguntaControl {
                             cantidad: no_preguntas};
 
                         if (req.isAuthenticated()) {
-                            res.render('index', {page: pagina, title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                            res.render('index', {rol:req.user.rol,page: pagina, title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                         } else {
                             res.render('index', {page: pagina, title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                         }
@@ -262,7 +260,7 @@ class preguntaControl {
                             cantidad: no_preguntas};
 
                         if (req.isAuthenticated()) {
-                            res.render('index', {page: pagina, title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                            res.render('index', {page: pagina, title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b,rol:req.user.rol});
                         } else {
                             res.render('index', {page: pagina, title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                         }
@@ -313,7 +311,7 @@ class preguntaControl {
                         // console.log(item);
                     }, function (err, data) {
                         if (req.isAuthenticated()) {
-                            res.render('index', {title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, page: pagina, index: true});
+                            res.render('index', {title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, page: pagina, index: true,rol:req.user.rol});
                         } else {
                             res.render('index', {title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, page: pagina, index: true});
                         }
@@ -354,7 +352,7 @@ class preguntaControl {
                     // console.log(item);
                 }, function (err, data) {
                     if (req.isAuthenticated()) {
-                        res.render('index', {title: 'C-K-U', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, index: true});
+                        res.render('index', {title: 'C-K-U', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, index: true,rol:req.user.rol});
                     } else {
                         res.render('index', {title: 'C-K-U', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, index: true});
                     }
@@ -452,7 +450,7 @@ class preguntaControl {
                     preguntaA.respuesta = data;
                     console.log(preguntaA);
                     if (req.isAuthenticated()) {
-                        res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: true, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA});
+                        res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: true, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA,rol:req.user.rol});
                     } else {
                         res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA});
                     }

@@ -36,6 +36,28 @@ app.set('view engine', 'hbs');
 //registro de parciales xd
 var hbs = require('hbs');
 hbs.registerPartials(__dirname + '/views/fragmentos');
+hbs.registerHelper('if_eq', function(a, b, opts) {
+    if(a == b)
+        return opts.fn(this);
+    else
+        return opts.inverse(this);
+});
+
+hbs.registerHelper('aceptada', function(a, opts) {
+  
+    for (var i=0 ;i<a.length;i++) {
+        console.log(a[i]);
+        if(a[i].aceptada==1){
+            return "SI";
+        }
+    }
+        
+           return "NO";
+    
+});
+
+hbs.registerHelper('dateFormat', require('handlebars-dateformat'));
+
 
 
 app.use(logger('dev'));

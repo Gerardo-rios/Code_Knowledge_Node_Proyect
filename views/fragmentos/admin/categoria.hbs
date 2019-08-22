@@ -58,57 +58,52 @@
         <div class="col-md-12">
 
             <div class="container">
+                
+             {{#if msg}}
+                {{#if msg.error}}
+                <div class="form-group">
+                    <div class="label label-danger" style="font-size: 16px">
+                        {{msg.error}}
+                    </div>
+                </div>
+                {{/if}}
+                {{#if msg.info}}
+                <div class="form-group">
+                    <div class="label label-success" style="font-size: 16px">
+                        {{msg.info}}
+                    </div>
+                </div>
+                {{/if}}
+                {{/if}}
+
+                <div class="panel">
+                    <div class="panel-body">
+                        <a href="#" class="btn  btn-warning " data-toggle="modal" data-target="#modal">Nueva Categoria  <span class="badge badge-dark"> + </span></a>
+
+                    </div>
+                </div>
                 <div class="table-responsive-md">
                     <table id="example" class=" table table-bordered display" style="width:100%">
                         <thead class="thead-light light">
                             <tr>
-                                <th><b>Imagen</b></th>
-                                <th><b>correo</b></th>
-                                <th><b>nombre usuario</b></th>
-                                <th><b>nombre</b></th>
-                                <th><b>fecha creacion</b></th>
-                                <th><b>Rol</b></th>
-                                <th><b>activa</b></th>
-                                <th><b>tipo cuenta</b></th>
-                                <th><b>Acciones</b></th>
+                                <th><b>N °</b></th>
+                                <th><b>NOMBRE</b></th>
+                                <th><b>CREACION</b></th>
+                                <th><b>PREGUNTAS</b></th>
+                               <!-- <th><b>ACCIONES</b></th-->
                             </tr>
                         </thead>
                         <tbody>
                             {{#if lista}}
                             {{#each lista}}
                             <tr>
-                                <td><img class="user-avatar-md rounded-circle" src="{{this.imagen}}"></img></td>
-                                <td>{{this.cuenta.email}}</td>
-                                <td>{{this.username}}</td>
-                                <td>{{this.nombres}} {{this.apellidos}}</td>
+
+                                <td>{{@index}}</td>
+                                <td>{{this.nombre}}</td>
                                 <td>{{dateFormat this.createdAt "YYYY-MM-DD; hh:mm a"}} </td>
-                                {{#if_eq this.cuenta.id_rol 1}}
-                                <td>Administrador</td>
-                                {{else}}
-                                <td>Usuario</td>
-                                {{/if_eq}}
-                                {{#if_eq this.cuenta.activa true}}
-                                <td>activa</td>
-                                {{else}}
-                                <td>inactiva</td>
-                                {{/if_eq}}
-                                {{#if_eq this.cuenta.tipo_cuenta 1}}
-                                <td>Facebook</td>
-
-                                {{/if_eq}}
-                                {{#if_eq this.cuenta.tipo_cuenta 2}}
-                                <td>Google</td>
-
-                                {{/if_eq}}
-                                {{#if_eq this.cuenta.tipo_cuenta 0}}
-                                <td>Local</td>
-
-                                {{/if_eq}}
-
-
-
-                                <td><a  href="/cuenta/{{this.external_id}}" onclick="location.refresh()" class="btn btn-danger btn-sm" id="bloquear">bloquear</a><a href="/descuenta/{{this.external_id}}"  onclick="location.refresh()" class="btn btn-secondary btn-sm" id="bloquear">desbloquear</a>
-                                </td>
+                                <td>{{this.categorium.length}} </td>
+                                <!--td><a  href="/categoria/{{this.external_id}}"  class="btn btn-danger btn-sm" id="modificar">Modificar</a>
+                                </td-->
 
                             </tr>
                             {{/each}}
@@ -125,8 +120,33 @@
 
 </div>
 <script>
-    $(document).ready(function () {
-        $('#example').DataTable();
-    });
+$(document).ready(function () {
+    $('#example').DataTable();
+});
 </script>
- 
+<!--modal-->
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header primary">
+                <h4 class="modal-title">Registro de categoria</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+            </div>
+            <div class="modal-body">
+                <form id="formulario" method="POST" action="/administrar/categoria">
+                    <div class="form-group">
+                        <label for="nombre" class="control-label">Nombre Categoria:</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" >
+                    </div>
+
+                    <div class="modal-footer">                                    
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>

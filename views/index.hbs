@@ -37,7 +37,11 @@
 
     <body>
         {{#if sesion}}
-        {{> barra_noti}}
+        {{#if_eq rol "ADMINISTRADOR"}}
+        {{> barra_noti_admin}}
+        {{else}}{{> barra_noti}}
+        
+        {{/if_eq}}
         {{/if}}
         <div id="colorlib-page">
             <a href="" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>

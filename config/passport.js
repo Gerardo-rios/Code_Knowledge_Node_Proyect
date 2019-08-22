@@ -20,7 +20,7 @@ module.exports = function (passport) {
     });
     // Permite deserialize la cuenta de usuario
     passport.deserializeUser(function (id, done) {
-        Cuenta.findOne({where: {id: id}, include: [{model: Persona}]}).then(function (cuenta) {
+        Cuenta.findOne({where: {id: id}, include: [{model: Persona},{model:models.rol,as:"rol"}]}).then(function (cuenta) {
             if (cuenta) {
                 //console.log(cuenta);
                 var userinfo = {
@@ -28,7 +28,9 @@ module.exports = function (passport) {
                     nombre: cuenta.usuario.apellidos + " " + cuenta.usuario.nombres,
                     username: cuenta.usuario.username,
                     correo: cuenta.email,
-                    imagen: cuenta.usuario.imagen
+                    imagen: cuenta.usuario.imagen,
+                    rol:cuenta.rol.nombre
+                    
                 };
                 //  console.log(userinfo);
                 done(null, userinfo);
@@ -83,7 +85,7 @@ module.exports = function (passport) {
                 var use_nam = (a[0] + "" + (Math.round((Math.random() * (100 - 1)) + 1) * 100) / 100 + "" + a[1].substring(0, 3).split('').reverse().join(''));
                 //var Persona = persona;
                 var datos = {
-                    nombres: profile.short_name,
+                    nombres: profile.displayName,
                     external_id: uuid.v4(),
                     apellidos: profile.name.familyName,
                     pais_origen: "",
@@ -144,7 +146,7 @@ module.exports = function (passport) {
                 var use_nam = (a[0] + "" + (Math.round((Math.random() * (100 - 1)) + 1) * 100) / 100 + "" + a[1].substring(0, 3).split('').reverse().join(''));
                 //console.log(profile);
                 var datos = {
-                    nombres: profile.displayName,
+                    nombres: profile.name.givenName,
                     external_id: uuid.v4(),
                     apellidos: profile.name.familyName,
                     pais_origen: "",
@@ -158,7 +160,7 @@ module.exports = function (passport) {
                         tipo_cuenta: 2, // 0 es local //1 es facebook // 2 es google
                         email: profile.emails[0].value,
                         activa: true,
-                        id_rol: 1 // rol 1 sera usuario // 2 sera admininistrador
+                        id_rol: 2 // rol 2 sera usuario // 1 sera admininistrador
                     }
                 };
 

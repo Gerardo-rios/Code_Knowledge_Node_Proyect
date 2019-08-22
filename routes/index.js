@@ -51,10 +51,16 @@ router.get('/', function (req, res, next) {
 
 });
 
-router.get('/administar', adminC.listar);
+//administracion
+router.get('/administrar/usuarios',authadmin, adminC.listar);// para prubeas comentar authadmin // valida rol Admin
+router.get('/administrar/categorias',authadmin, adminC.listar_categorias); // para prubeas comentar authadmin // valida rol Admin
+router.post('/administrar/categoria',authadmin, adminC.guardar_categorias);// para prubeas comentar authadmin // valida rol Admin
+router.get('/administrar/preguntas',authadmin ,adminC.informe_pregunta);// para prubeas comentar authadmin // valida rol Admin
 
-router.get('/cuenta/:external_id',adminC.bloquear);
-router.get('/descuenta/:external_id', adminC.desbloquear);
+
+
+router.get('/cuenta/:external_id',authadmin,adminC.bloquear);
+router.get('/descuenta/:external_id', authadmin,adminC.desbloquear);
 
 
 router.get('/logeo', function (req, res, next) {
@@ -138,7 +144,6 @@ router.post('/upload', function (req, res) {
     var dir = `./files/` + EDfile.name;
 
 
-    console.log(EDfile);
 
     EDfile.mv(`./files/` + EDfile.name, err => {
         console.log(err);
