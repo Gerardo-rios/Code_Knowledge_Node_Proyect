@@ -45,7 +45,7 @@ class preguntaControl {
                                 cantidad: no_preguntas};
 
                             if (req.isAuthenticated()) {
-                                res.render('index', {rol:req.user.rol,title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                                res.render('index', {rol: req.user.rol, title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                             } else {
                                 res.render('index', {title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                             }
@@ -69,7 +69,7 @@ class preguntaControl {
 
                 pregunta.count({where: {etiquetas: {[op.substring]: texto}}}).then(function (no_preguntas) {
                     paginas = Math.ceil(no_preguntas / mostrar);
-                  
+
                     feach(result, function (item, next) {
                         var descrip = item.descripcion;
                         descrip = descrip.replace(/%0/gm, "\r\n");
@@ -85,7 +85,7 @@ class preguntaControl {
                             cantidad: no_preguntas};
 
                         if (req.isAuthenticated()) {
-                            res.render('index', {rol:req.user.rol,title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                            res.render('index', {rol: req.user.rol, title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                         } else {
                             res.render('index', {title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                         }
@@ -122,7 +122,7 @@ class preguntaControl {
                             cantidad: no_preguntas};
 
                         if (req.isAuthenticated()) {
-                            res.render('index', {rol:req.user.rol,title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                            res.render('index', {rol: req.user.rol, title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                         } else {
                             res.render('index', {title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                         }
@@ -179,7 +179,7 @@ class preguntaControl {
                                 cantidad: no_preguntas};
 
                             if (req.isAuthenticated()) {
-                                res.render('index', {rol:req.user.rol,title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b, page: pagina});
+                                res.render('index', {rol: req.user.rol, title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b, page: pagina});
                             } else {
                                 res.render('index', {title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b, page: pagina});
                             }
@@ -222,7 +222,7 @@ class preguntaControl {
                             cantidad: no_preguntas};
 
                         if (req.isAuthenticated()) {
-                            res.render('index', {rol:req.user.rol,page: pagina, title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
+                            res.render('index', {rol: req.user.rol, page: pagina, title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                         } else {
                             res.render('index', {page: pagina, title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                         }
@@ -260,7 +260,7 @@ class preguntaControl {
                             cantidad: no_preguntas};
 
                         if (req.isAuthenticated()) {
-                            res.render('index', {page: pagina, title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b,rol:req.user.rol});
+                            res.render('index', {page: pagina, title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b, rol: req.user.rol});
                         } else {
                             res.render('index', {page: pagina, title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, search: true, b: b});
                         }
@@ -311,7 +311,7 @@ class preguntaControl {
                         // console.log(item);
                     }, function (err, data) {
                         if (req.isAuthenticated()) {
-                            res.render('index', {title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, page: pagina, index: true,rol:req.user.rol});
+                            res.render('index', {title: 'Gaaaaa', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, page: pagina, index: true, rol: req.user.rol});
                         } else {
                             res.render('index', {title: 'Gaaaaa', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, page: pagina, index: true});
                         }
@@ -352,7 +352,7 @@ class preguntaControl {
                     // console.log(item);
                 }, function (err, data) {
                     if (req.isAuthenticated()) {
-                        res.render('index', {title: 'C-K-U', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, index: true,rol:req.user.rol});
+                        res.render('index', {title: 'C-K-U', sesion: true, username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, index: true, rol: req.user.rol});
                     } else {
                         res.render('index', {title: 'C-K-U', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, preguntas: result, paginas: paginas, index: true});
                     }
@@ -398,7 +398,7 @@ class preguntaControl {
             res.redirect('/logeo');
         });
     }// patron de diseño dao datapbjetc  , finquelon . facade estructural
-    
+
     visualizar(req, res) {
 
         var external = req.params.external;
@@ -450,7 +450,7 @@ class preguntaControl {
                     preguntaA.respuesta = data;
                     console.log(preguntaA);
                     if (req.isAuthenticated()) {
-                        res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: true, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA,rol:req.user.rol});
+                        res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: true, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA, rol: req.user.rol});
                     } else {
                         res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA});
                     }
@@ -517,6 +517,115 @@ class preguntaControl {
         });
     }
 
+//usuario
+    mis_preguntas(req, res) {
+        var pregunta = models.pregunta;
+        var persona = models.usuario;
+        persona.findOne({where: {external_id: req.user.id}}).then(function (resultado) {
+            if (resultado) {
+                pregunta.findAll({where: {id_usuario: resultado.id}, atrributes: ["etiquetas", "external_id", "titulo", "id_categoria", "id_usuario", "id", "createdAt", "numero_vistas"], include: [{model: persona, as: 'usuario'}, {model: models.categoria, as: "categorium"}, {model: models.respuesta, as: 'respuesta', attributes: {exclude: ['descripcion', 'createdAt', 'updatedAt']}}]}).then(function (result) {
+
+                    res.render('fragmentos/usuario/misPreguntas', {username: req.user.username, usuario: req.user.nombre, id: req.user.id, imagen: req.user.imagen, msg: {error: req.flash('error'), info: req.flash('info')}, lista: result, rol: req.user.rol});
+
+
+
+                }).catch(function (error) {
+                    console.log(error);
+                    req.flash('error', 'Fallo del sistema, comuniquese con servicio tencico');
+                    res.redirect('/');
+                });
+
+            } else {
+                req.flash('error', 'Debes iniciar sesion');
+                res.redirect('/');
+
+            }
+
+        }).catch(function (error) {
+
+        });
+
+    }
+
+    borrar_pregunta(req, res) {
+        var body = req.body.external;
+        var pregunta = models.pregunta;
+        var usuario = models.usuario;
+        if (req.isAuthenticated()) {
+            pregunta.findOne({where: {external_id: body}, include: [{model: usuario, as: 'usuario'}]}).then(function (pre) {
+                usuario.findOne({where: {external_id: req.user.id}, include: [{model: models.cuenta, as: 'cuenta', include: [{model: models.rol, as: "rol"}]}]}).then(function (usuario) {
+                    console.log(usuario.cuenta.rol.nombre);
+                    if (pre.usuario.external_id == req.user.id || usuario.cuenta.rol.nombre == 'ADMINISTRADOR') {
+                        pre.destroy().then(function (datos) {
+                            req.flash('info', 'pregunta borrada');
+                            res.redirect('/administrar/mispreguntas');
+                        });
+
+                    } else {
+                        req.flash('error', 'Error en borrado');
+                        res.redirect('/administrar/mispreguntas');
+
+                    }
+                    ;
+                }).catch(function (error) {
+                    console.log(error);
+                    req.flash('error', 'ERROR');
+                    res.redirect('/administrar/mispreguntas');
+                });
+
+            });
+
+        } else {
+            req.flash('error', 'Inicia sesion');
+            res.redirect('/');
+        }
+    }
+    borrar_preguntaAdmin(req, res) {
+        var body = req.body.external;
+        var pregunta = models.pregunta;
+        var usuario = models.usuario;
+        if (req.isAuthenticated()) {
+            pregunta.findOne({where: {external_id: body}, include: [{model: usuario, as: 'usuario'}]}).then(function (pre) {
+                usuario.findOne({where: {external_id: req.user.id}, include: [{model: models.cuenta, as: 'cuenta', include: [{model: models.rol, as: "rol"}]}]}).then(function (usuario) {
+                    if (pre.usuario.exnternal_id != null || pre.usuario.exnternal_id != undefined) {
+                        if (pre.usuario.external_id == req.user.id) {
+                            pre.destroy().then(function (datos) {
+                                req.flash('info', 'pregunta borrada');
+                                res.redirect('/administrar/preguntas');
+
+                            });
+                        } else{
+                            res.send("error");
+                        }
+                    } if(usuario.cuenta.rol.nombre == 'ADMINISTRADOR'){
+                        pre.destroy().then(function (s){
+                                req.flash('info', 'pregunta borrada');
+                                res.redirect('/administrar/preguntas');
+
+                        });
+                            
+                    }
+                   
+                        else {
+                            req.flash('error', 'Error en borrado');
+                            res.redirect('/administrar/preguntas');
+
+                        }
+                   
+                    ;
+                }).catch(function (error) {
+                    console.log(error);
+                    req.flash('error', 'ERROR');
+                    res.redirect('/administrar/preguntas');
+                });
+
+            });
+
+        } else {
+            req.flash('error', 'Inicia sesion');
+            res.redirect('/');
+        }
+    }
 }
 
 

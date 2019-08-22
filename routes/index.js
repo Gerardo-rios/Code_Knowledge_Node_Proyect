@@ -56,6 +56,11 @@ router.get('/administrar/usuarios',authadmin, adminC.listar);// para prubeas com
 router.get('/administrar/categorias',authadmin, adminC.listar_categorias); // para prubeas comentar authadmin // valida rol Admin
 router.post('/administrar/categoria',authadmin, adminC.guardar_categorias);// para prubeas comentar authadmin // valida rol Admin
 router.get('/administrar/preguntas',authadmin ,adminC.informe_pregunta);// para prubeas comentar authadmin // valida rol Admin
+//usuario preguntas
+router.get('/administrar/mispreguntas',auth ,preguntaC.mis_preguntas);
+router.post('/dpregunta' ,auth,preguntaC.borrar_pregunta);
+router.post('/dpreguntasAdmin' ,authadmin,preguntaC.borrar_preguntaAdmin);
+
 
 
 
