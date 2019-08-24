@@ -282,8 +282,8 @@ class preguntaControl {
         } else {
             res.redirect('/');
         }
-
     }
+
     paginacion(req, res) {
         var pagina = req.params.page * 1;
         if (pagina === 1) {
@@ -478,21 +478,25 @@ class preguntaControl {
 
         var external = req.params.external;
         var pregunta = models.pregunta;
-        //var cuenta = models.cuenta;
+        //var categoria = models.categoria;
 
         pregunta.findOne({where: {external_id: external}}).then(function (pregunta) {
-
-            var userE = pregunta[0];
-            res.render('fragmentos/pregunta_editar',
-                    {title: 'editar pregunta a lo bien',
+            //categoria.findAll().then(function (result) {
+            res.render('fragmentos/editor',
+                    {title: 'Editar pregunta',
                         sesion: true,
-                        user: pregunta,
+                        preg: pregunta,
+                        //cate: result,
+                        aske: true,
                         msg: {error: req.flash('error'), info: req.flash('info')}
                     });
-
+            // }).error(function (err) {
+//                req.flash('error', 'Hubo un problema al intentar cargar los datos');
+//                res.redirect('/pregunta/' + external);
+//            });
         }).error(function (error) {
             req.flash('error', 'Hubo un problema al intentar cargar los datos');
-            res.redirect('/testEditor');
+            res.redirect('/pregunta/' + external);
         });
 
     }
@@ -500,18 +504,22 @@ class preguntaControl {
     modificar(req, res) {
 
         var pregunta = models.pregunta;
-        var external = req.body.external;
+        var external = req.params.external;
         pregunta.findOne({where: {external_id: req.params.external}}).then(function (persone) {
+            var descrip = req.body.descripcion_p;
+            descrip = descrip.replace(/\s*$/, "");
 
+            descrip = descrip.replace(/(\r\n|\n|\r)/gm, "%0");
             var userM = persone;
-            userM.titulo = req.body.titulo;
-            userM.descripcion = req.body.descripcion;
-            userM.pais_origen = req.body.pais;
+            userM.titulo = req.body.titulo_p;
+            userM.descripcion = descrip;
+            userM.id_categoria = req.body.categoria_p_e;
+            userM.etiquetas = req.body.etiquetas;
 
             userM.save().then(function (result) {
 
                 req.flash('info', 'Se ha modificado correctamente');
-                res.redirect('/preguntal/' + external + '/edit');
+                res.redirect('/pregunta/' + external);
             }).error(function (error) {
                 console.log(error);
                 req.flash('error', 'No se pudo modificar');
@@ -586,6 +594,7 @@ class preguntaControl {
             res.redirect('/');
         }
     }
+
     borrar_preguntaAdmin(req, res) {
         var body = req.body.external;
         var pregunta = models.pregunta;
@@ -630,6 +639,23 @@ class preguntaControl {
             res.redirect('/');
         }
     }
+//
+//    auth_edit(req, res, next) {
+//        
+//        models.usuario.findOne({where: {external_id: req.user.id}, include: {model: models.pregunta, as: "preg"}}).then(function (usuario) {
+//            if (usuario.id === usuario.preg.id_usuario) {
+//                next();
+//            } else {
+//                req.flash('error', 'NO AUTORIZADO');
+//                res.redirect('/');
+//            }
+//        }).catch(function (error) {
+//            console.log(error);
+//            req.flash('error', 'NO AUTORIZADO');
+//            res.redirect('/');
+//        });      
+//        
+//    }
 }
 
 

@@ -9,8 +9,8 @@
         <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">        
-            
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
         <link rel="stylesheet" href="/css/styleB.css">
         <link rel="stylesheet" href="/css/fontawesome-all.css">
 
@@ -35,7 +35,7 @@
 
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/styles/default.min.css">
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/highlight.min.js"></script>
-        <script src = "/ckeditor/ckeditor.js"></script> 
+        <script src = "/ckeditor/ckeditor.js"></script>
         <link rel="stylesheet" type="text/css" href="/ckeditor/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css">
 
 
@@ -54,26 +54,26 @@
                 <div class="form-group">
                     <div class="label label-danger" style="font-size: 16px">
                         {{msg.error}}
-                    </div>                        
+                    </div>
                 </div>
                 {{/if}}
                 {{#if msg.info}}
                 <div class="form-group">
                     <div class="label label-success" style="font-size: 16px">
                         {{msg.info}}
-                    </div>                        
-                </div>                  
+                    </div>
+                </div>
                 {{/if}}
                 {{/if}}
 
                 <nav id="colorlib-main-menu" role="navigation">
                     <ul>
                         <li class="colorlib-active"><a href="/">Inicio</a></li>
-                        <li><a href="/">Noticias</a></li>                        
+                        <li><a href="/">Noticias</a></li>
                         <li><a href="/">Informacion</a></li>
                         <li><a href="/">Contacto</a></li>
                     </ul>
-                </nav> 
+                </nav>
             </aside> <!-- END COLORLIB-ASIDE -->
             <div id="colorlib-main">
 
@@ -85,6 +85,9 @@
                             {{#if ask}}
                             {{> verPregunta}}
                             {{else}}
+                            {{#if aske}}
+                            {{> pregunta_editar}}
+                            {{else}}
                             <div class="col-xl-8 py-5 px-md-5">
                                 <h2 style="font-size: 35px"> Formular una pregunta </h2><br>
                                 <form method="POST" class="search-form" action="/guardarPregunta" >
@@ -93,12 +96,12 @@
                                         <input type="text" name="titulo_p" class="form-control" placeholder="¿Cúal es tu pregunta de programación? Sé específico" required/>
                                         <br>
                                     </div>
-                                    <div class="form-group">                                        
+                                    <div class="form-group">
                                         <label class="label" style="color: black; font-size: 25px"> Cuerpo </label>
                                         <textarea id="editor1" class="container" name="descripcion_p" required></textarea>
                                         <br>
                                     </div>
-                                    <div class="form-group">                                        
+                                    <div class="form-group">
                                         <label class="label" style="color: black; font-size: 25px"> Categoria </label>
                                         <select class="form-control" name="categoria_p" id="cat">
 
@@ -110,13 +113,13 @@
                                         <input type="text" name="etiquetas" id="etiquetas" class="form-control" placeholder="ej. (jquery, javascript, node)" data-role="tagsinput"/>
                                         <br>
                                     </div>
-                                    <div class="form-group">                                        
+                                    <div class="form-group">
                                         <input type="submit" class="btn btn-primary btn-lg" value="Publicar tu Pregunta"/>
                                         <a href="/" class="btn btn-danger btn-lg">CANCELAR</a>
                                     </div>
 
                                 </form>
-                            </div>                            
+                            </div>
                             <div class="col-xl-4 sidebar ftco-animate bg-light pt-5">
                                 {{> busqueda}}
                                 <div class="ayura">
@@ -148,6 +151,7 @@
                                 </div>
                             </div><!-- END COL -->
                             {{/if}}
+                            {{/if}}
                         </div>
                     </div>
                 </section>
@@ -177,9 +181,28 @@
         <script>CKEDITOR.replace('editor1');</script>
         <script>hljs.initHighlightingOnLoad();</script>
         <script src="/js/bootstrap-tagsinput.js"></script>
-        <script src="/js/utilidad/categoria_lateral.js"></script> 
+        <script src="/js/utilidad/categoria_lateral.js"></script>
         <script src="/js/utilidad/utilidades.js"></script>
+        <script>
+            $(document).ready(function () {
+                $("#categoria_p_e").val("{{preg.id_categoria}}");
+                $("#categoria_p_e").change();
 
+                $("#ccnc").click(function () {
+                    $(document.getElementById("ccnc")).css({display: 'none'});
+                    $(document.getElementById("com")).css({display: 'table'});
 
+                });
+
+                $("#sccc").click(function () {
+                    $(document.getElementById("ccnc")).css({display: 'block'});
+                    $(document.getElementById("com")).css({display: 'none'});
+                });
+
+                $('#myModal').on('shown.bs.modal', function () {
+                    $('#myInput').trigger('focus');
+                });
+            });
+        </script>
     </body>
 </html>

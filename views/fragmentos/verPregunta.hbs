@@ -5,7 +5,7 @@
             <div class="blog-entry ftco-animate d-md-flex">
 
                 <div class="text text-2 pl-md-4">
-                    <h3 class="mb-2"><a href="/pregunta/{{pregunta.external_id}}">{{pregunta.titulo}}</a></h3>
+                    <h3 class="mb-2"><a href="/pregunta/{{pregunta.external_id}}">{{pregunta.titulo}}</a></h3>                      
                     <div class="meta-wrap">
                         <p class="meta">
                             <span><i class="icon-calendar mr-2"></i>{{dateFormat this.createdAt "YYYY-MM-DD"}}</span>
@@ -20,13 +20,14 @@
                         <span class="btn-secondary-link"> {{pregunta.etiquetas}} </span> 
                     </div>
                 </div>
+                <a href="/pregunta/{{pregunta.external_id}}/editar" class="btn-custom">editar</a>
             </div>
 
             <div class="blog-entry ftco-animate d-md-flex">
 
                 <div class="text text-2 pl-md-4">   
                     {{#each pregunta.respuesta}}
-                    <div class="col-md-12 my-3 p-3 bg-white rounded shadow-lg">
+                    <div class="col-md-12 my-3 p-3 bg-white rounded shadow-lg" style="width: 950px; max-width: 950px">
                         <div class="blog-entry ftco-animate d-md-flex">
                             <a> <img src="{{this.usuario_respuesta.imagen}}" class="user-avatar-md rounded-circle"> </a>
                             <div class="text text-2 pl-md-4">
@@ -36,9 +37,34 @@
                                     </p>
                                 </div>
                                 <p class="mb-4" >{{{this.descripcion}}}</p>
-                                <p><a onclick="" class="btn-custom" style="color: #0000ff">Comentar <span class="ion-ios-arrow-forward"></span></a></p>
+                                <a class="btn-custom" href="/respuesta/{{this.external_id}}/editar" target="_blank">editar</a>
+                                <p><input id="ccnc" type="button" class="btn-custom" style="color: #0000ff" value="comentar"></p>
                             </div>
+                        </div>                        
+                        {{#each this.comentario}}
+                        <div class="blog-entry ftco-animate d-md-flex" style="margin-left: 15em">
+                            <a> <img src="{{this.usuario_comentario.imagen}}" class="user-avatar-md rounded-circle"> </a>
+                            <div class="text text-2 pl-md-4">
+                                <div class="meta-wrap">
+                                    <p class="meta">
+                                        <span style="color: #000">{{this.usuario_comentario.usuario}}</span>
+                                        <span><a href=""></a></span>
+                                    </p>
+                                </div>
+                                <p class="mb-4" >{{this.descripcion}}</p>
+                                <a class="btn-custom" href="/comentario/{{this.external_id}}/editar" target="_blank">editar</a>
+                            </div>
+                            
                         </div>
+                        {{/each}}
+                        <form class="form-group" id="com" method="POST" action="/pregunta/comentar" style="display: none">
+                            <input type="hidden" name="r_ex" value="{{this.external_id}}">
+                            <div class="container" style="margin-left: 15em">
+                                <textarea style="width: 600px" name="des_comen">  </textarea>
+                                <br>
+                                <input id="sccc" type="submit" class="btn-secondary-link" value="Publicar Comentario">
+                            </div>
+                        </form>
                     </div>
                     {{/each}}
                 </div>
@@ -79,3 +105,4 @@
             {{/unless}}
         </div>
     </div>
+</div>

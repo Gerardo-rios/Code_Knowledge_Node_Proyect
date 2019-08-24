@@ -36,6 +36,9 @@ app.set('view engine', 'hbs');
 //registro de parciales xd
 var hbs = require('hbs');
 hbs.registerPartials(__dirname + '/views/fragmentos');
+
+
+
 hbs.registerHelper('if_eq', function(a, b, opts) {
     if(a == b)
         return opts.fn(this);

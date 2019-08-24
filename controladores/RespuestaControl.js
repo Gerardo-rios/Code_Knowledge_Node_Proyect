@@ -29,6 +29,7 @@ class RespuestControl {
             var descrip = req.body.descripcion_r;
             descrip = descrip.replace(/\s*$/, "");
             descrip = descrip.replace(/(\r\n|\n|\r)/gm, "%0");
+
             var datos = {
                 aceptada: false,
                 external_id_usuario: req.user.id,
@@ -53,28 +54,54 @@ class RespuestControl {
 
     }
 
+    visualizar_modificar(req, res) {
+        var external = req.params.external;
+        var pregunta = models.pregunta;
+        var respuesta = models.respuesta;
+
+        respuesta.findOne({where: {external_id: external}}).then(function (pregunta) {
+            if (pregunta) {
+                res.render('fragmentos/respuesta_editar',
+                        {title: 'Editar respuesta',
+                            sesion: true,
+                            res: pregunta,
+                            msg: {error: req.flash('error'), info: req.flash('info')}
+                        });
+            } else {
+                req.flash('error', 'Hubo un problema al intentar cargar los datos');
+                res.redirect('/');
+            }
+        }).error(function (error) {
+            req.flash('error', 'Hubo un problema al intentar cargar los datos');
+            res.redirect('/');
+        });
+    }
+
     modificar(req, res) {
 
         var respuesta = models.respuesta;
-        var external = req.body.external;
+        var external = req.body.res_ex;
         respuesta.findOne({where: {external_id: external}}).then(function (persone) {
+            var descrip = req.body.descripcion_r_e;
+            descrip = descrip.replace(/\s*$/, "");
+            descrip = descrip.replace(/(\r\n|\n|\r)/gm, "%0");
 
             var userM = persone;
 
-            userM.descripcion = req.body.descripcion;
+            userM.descripcion = descrip;
 
 
             userM.save().then(function (result) {
 
                 req.flash('info', 'Se ha modificado correctamente');
-                res.redirect('/preguntal/' + external + '/edit');
+                res.redirect('/');
             }).error(function (error) {
                 console.log(error);
                 req.flash('error', 'No se pudo modificar');
                 res.redirect('/');
             });
         }).error(function (error) {
-            req.flash('error', 'no existe la pregunta a modificar');
+            req.flash('error', 'no existe la respuesta a modificar');
             res.redirect('/');
         });
     }

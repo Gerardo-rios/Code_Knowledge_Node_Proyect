@@ -1,0 +1,39 @@
+<div class="col-xl-8 py-5 px-md-5">
+    <h2 style="font-size: 35px"> Editar tu pregunta </h2><br>
+    <form method="POST" class="search-form" action="/pregunta/{{preg.external_id}}/editar/save" >
+        <div class="form-group">
+            <label class="label" style="color: black; font-size: 25px"> Título </label>
+            <input type="text" name="titulo_p" class="form-control" value="{{preg.titulo}}" required/>
+            <br>
+        </div>
+        <div class="form-group">                                        
+            <label class="label" style="color: black; font-size: 25px"> Cuerpo </label>
+            <textarea id="editor1" class="container" name="descripcion_p" required>{{preg.descripcion}}</textarea>
+            <br>
+        </div>
+        <div class="form-group">                                        
+            <label class="label" style="color: black; font-size: 25px"> Categoria </label>
+            <select class="form-control" name="categoria_p_e" id="cat">
+                <!-- {{#each cate}}
+                 {{#if_eq this.id "{{preg.id_categoria}}"}}
+                 <option value="<{{preg.id_categoria}}" selected="selected"> {{this.nombre}} </option>
+                 {{/if_eq}}
+                 {{/each}}  -->
+            </select>
+            <br>
+        </div>
+        <div class="form-group">
+            <label class="label" style="color: black; font-size: 25px"> Etiquetas </label>
+            <input type="text" name="etiquetas" id="etiquetas" class="form-control" value="{{preg.etiquetas}}" data-role="tagsinput"/>
+            <br>
+        </div>
+        <div class="form-group">                                        
+            <input type="submit" class="btn btn-primary btn-lg" value="Modificar"/>
+            <a href="/pregunta/{{preg.external_id}}" class="btn btn-danger btn-lg">CANCELAR</a>
+        </div>
+
+    </form>
+
+</div>
+
+

@@ -21,6 +21,9 @@ var preguntaC = new pregunta();
 var admin = require('../controladores/AdminControl');
 var adminC = new admin();
 
+var comen = require('../controladores/ComentarioControl');
+var comenC = new comen();
+
 var authadmin = function (req, res, next) {
     if (req.isAuthenticated()) {
         adminC.admin(req, res, next);
@@ -38,6 +41,7 @@ var auth = function (req, res, next) {
         res.redirect('/');
     }
 };
+
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -157,14 +161,27 @@ router.post('/guardarPregunta', auth, preguntaC.guardar); //guardar pregunta
 
 router.get('/pregunta/:external', preguntaC.visualizar); //visualizar pregunta
 
+router.get('/pregunta/:external/editar', auth, preguntaC.visualizar_modificar); //ver modificar pregunta
+
+router.post('/pregunta/:external/editar/save', auth, preguntaC.modificar);
+
 //paginacion del index para las preguntas 
 
 router.get('/page/:page', preguntaC.paginacion); //paginacion para el maximo de preguntas en el index
 
 //searchs 
-router.get('/search', preguntaC.buscar); 
+router.get('/search', preguntaC.buscar);
 router.get('/search/:page', preguntaC.paginacion_search);
 
 router.post('/pregunta/responder', auth, respuestaC.guardar);
 
+router.post('/pregunta/comentar', auth, comenC.guardar);
+
+router.get('/respuesta/:external/editar', auth, respuestaC.visualizar_modificar);
+
+router.post('/respuesta/:external/editar/save', auth, respuestaC.modificar);
+
+router.get('/comentario/:external/editar', auth, comenC.visualizar_modificar);
+
+router.post('/comentario/:external/editar/save', auth, comenC.modificar);
 module.exports = router;
