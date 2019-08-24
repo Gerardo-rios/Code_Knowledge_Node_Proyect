@@ -51,87 +51,85 @@
 <script src ="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
 
-{{>barra_noti_admin}}
+{{> barra_noti_admin}}
 
-<div class="col-xl-8 py-5 px-md-5" style="margin-top: 50px">  
-    <div class="row pt-md-4">
-        <div class="col-md-12">
+<div class="row pt-md-4" style="margin-top: 100px">
+    <div class="col-md-12">
 
-            <div class="container">
-                  {{#if msg}}
-                {{#if msg.error}}
-                <div class="form-group">
-                    <div class="label label-danger" style="font-size: 16px">
-                        {{msg.error}}
-                    </div>
+        <div class="container">
+            {{#if msg}}
+            {{#if msg.error}}
+            <div class="form-group">
+                <div class="label label-danger" style="font-size: 16px">
+                    {{msg.error}}
                 </div>
-                {{/if}}
-                {{#if msg.info}}
-                <div class="form-group">
-                    <div class="label label-success" style="font-size: 16px">
-                        {{msg.info}}
-                    </div>
+            </div>
+            {{/if}}
+            {{#if msg.info}}
+            <div class="form-group">
+                <div class="label label-success" style="font-size: 16px">
+                    {{msg.info}}
                 </div>
-                {{/if}}
-                {{/if}}
-                <div class="table-responsive-md">
-                    <table id="example" class=" table table-bordered display" style="width:100%">
-                        <thead class="thead-light light">
-                            <tr>
-                                <th><b>TITULO</b></th>
-                                <th><b>USUARIO</b></th>
-                                <th><b>N° RESPUESTA</b></th>
-                                <th><b>(tiene respuesta aceptadas)</b></th>
-                                <th><b>CATEGORIA</b></th>
-                                <th><b>ETIQUETAS</b></th>
-                                <th><b>N° VISTAS</b></th>
-                                <th><b>ACCIONES</b></th>
+            </div>
+            {{/if}}
+            {{/if}}
+            <div class="table-responsive-md">
+                <table id="example" class=" table table-bordered display" style="width:100%">
+                    <thead class="thead-light light">
+                        <tr>
+                            <th><b>TITULO</b></th>
+                            <th><b>USUARIO</b></th>
+                            <th><b>N° RESPUESTA</b></th>
+                            <th><b>(tiene respuesta aceptadas)</b></th>
+                            <th><b>CATEGORIA</b></th>
+                            <th><b>ETIQUETAS</b></th>
+                            <th><b>N° VISTAS</b></th>
+                            <th><b>ACCIONES</b></th>
 
-                                
-                               
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#if lista}}
-                            {{#each lista}}
-                            <tr>
-                                <td><a href="/pregunta/{{this.external_id}}">{{this.titulo}}</a></td>
-                                
-                                <td><img class="user-avatar-md rounded-circle" src="{{this.usuario.imagen}}"></img> {{this.usuario.username}}</td>
-                                
-                                <td>{{this.respuesta.length}}</td>
-                                <td>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#if lista}}
+                        {{#each lista}}
+                        <tr>
+                            <td><a href="/pregunta/{{this.external_id}}">{{this.titulo}}</a></td>
+
+                            <td><img class="user-avatar-md rounded-circle" src="{{this.usuario.imagen}}"></img> {{this.usuario.username}}</td>
+
+                            <td>{{this.respuesta.length}}</td>
+                            <td>
                                 {{#aceptada this.respuesta }}
-                                    
+
                                 {{/aceptada}}
-                                </td>
-                                <td>{{this.categorium.nombre }} </td>
-                                <td>{{this.etiquetas}}</td>
-                                 <td>{{this.numero_vistas}}</td>
-                                
+                            </td>
+                            <td>{{this.categorium.nombre }} </td>
+                            <td>{{this.etiquetas}}</td>
+                            <td>{{this.numero_vistas}}</td>
 
-                                 <td><form method="POST" action="/dpreguntasAdmin">
-                                         <input type="hidden" name="external" value="{{this.external_id}}">
-                                         <button class="btn-primary-link" type="submit" onclick="return confirm('Si eliminala pregunta los usuario ya no podran acceder a ella estas seguro?')">Borrar</button>
-                                     </form></td>
 
-                            </tr>
-                            {{/each}}
-                            {{/if}}
-                        </tbody>
-                        <tfoot>
+                            <td><form method="POST" action="/dpreguntasAdmin">
+                                    <input type="hidden" name="external" value="{{this.external_id}}">
+                                    <button class="btn-primary-link" type="submit" onclick="return confirm('Si eliminala pregunta los usuario ya no podran acceder a ella estas seguro?')">Borrar</button>
+                                </form></td>
 
-                        </tfoot>
-                    </table>
-                </div>
+                        </tr>
+                        {{/each}}
+                        {{/if}}
+                    </tbody>
+                    <tfoot>
+
+                    </tfoot>
+                </table>
             </div>
         </div>
     </div>
-
 </div>
+
 <script>
     $(document).ready(function () {
         $('#example').DataTable();
     });
 </script>
- 
+

@@ -2601,10 +2601,10 @@ input[type="button"]:disabled,
 /* One */
 
 #one:before {
-    background-image: url("https://www.xda-developers.com/files/2017/05/stack-overflow.png");
-    background-position: top right;
+    background-image: url("/images/anvorguesa.jpeg");
+    background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 100% 100%;
     content: '';
     display: block;
     height: 15em;

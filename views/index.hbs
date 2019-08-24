@@ -40,7 +40,7 @@
         {{#if_eq rol "ADMINISTRADOR"}}
         {{> barra_noti_admin}}
         {{else}}{{> barra_noti}}
-        
+
         {{/if_eq}}
         {{/if}}
         <div id="colorlib-page">
@@ -102,8 +102,8 @@
                                                 <div class="meta-wrap">
                                                     <p class="meta">
                                                         <span><i class="icon-calendar mr-2"></i>{{this.dia}}</span>
-                                                        <span><a href="#"><i class="icon-folder-o mr-2"></i>{{this.categoria.nombre}}</a></span>
-                                                        <span><i class="icon-comment2 mr-2"></i>{{this.respuesta.length}} Respuestas</span>
+                                                        <span><a><i class="icon-folder-o mr-2"></i>{{this.categorium.nombre}}</a></span>
+                                                        <span><i class="icon-comment2 mr-2"></i>{{this.respuesta.length}}</span>
                                                     </p>
                                                 </div>
                                                 <!--    <p class="mb-4" >{{{this.descripcion}}}</p>-->
@@ -203,59 +203,23 @@
                                 {{> busqueda}}
 
                                 {{> categorias}}
-                                <div class="sidebar-box ftco-animate">
-                                    <h3 class="sidebar-heading">Preguntas Populares</h3>
-                                    <div class="block-21 mb-4 d-flex">
-                                        <a class="blog-img mr-4" style="background-image: url(images/image_12.jpg);"></a>
-                                        <div class="text">
-                                            <h3 class="heading"><a href="#">Por que mi perro no habla?</a></h3>
-                                            <div class="meta">
-                                                <div><a href="#"><span class="icon-calendar"></span> June 28, 2019</a></div>
-                                                <div><a href="#"><span class="icon-person"></span> Dave Lewis</a></div>
-                                                <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="block-21 mb-4 d-flex">
-                                        <a class="blog-img mr-4" style="background-image: url(images/image_12.jpg);"></a>
-                                        <div class="text">
-                                            <h3 class="heading"><a href="#">Ya fuentes?</a></h3>
-                                            <div class="meta">
-                                                <div><a href="#"><span class="icon-calendar"></span> June 28, 2019</a></div>
-                                                <div><a href="#"><span class="icon-person"></span> Dave Lewis</a></div>
-                                                <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="block-21 mb-4 d-flex">
-                                        <a class="blog-img mr-4" style="background-image: url(images/image_12.jpg);"></a>
-                                        <div class="text">
-                                            <h3 class="heading"><a href="#">Cuanto tiempo queda?</a></h3>
-                                            <div class="meta">
-                                                <div><a href="#"><span class="icon-calendar"></span> June 28, 2019</a></div>
-                                                <div><a href="#"><span class="icon-person"></span> Dave Lewis</a></div>
-                                                <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <div class="sidebar-box ftco-animate">
                                     <h3 class="sidebar-heading">Nube de tags</h3>
                                     <ul class="tagcloud">
-                                        <a href="#" class="tag-cloud-link">sql</a>
-                                        <a href="#" class="tag-cloud-link">nosql</a>
-                                        <a href="#" class="tag-cloud-link">node</a>
-                                        <a href="#" class="tag-cloud-link">java</a>
-                                        <a href="#" class="tag-cloud-link">c++</a>
-                                        <a href="#" class="tag-cloud-link">python</a>
-                                        <a href="#" class="tag-cloud-link">pascal</a>
-                                        <a href="#" class="tag-cloud-link">javascript</a>
+                                        <a href="/search?texto=sql&criterio=etiquetas" class="tag-cloud-link">sql</a>
+                                        <a href="/search?texto=nosql&criterio=etiquetas" class="tag-cloud-link">nosql</a>
+                                        <a href="/search?texto=node&criterio=etiquetas" class="tag-cloud-link">node</a>
+                                        <a href="/search?texto=java&criterio=etiquetas" class="tag-cloud-link">java</a>
+                                        <a href="/search?texto=c++&criterio=etiquetas" class="tag-cloud-link">c++</a>
+                                        <a href="/search?texto=python&criterio=etiquetas" class="tag-cloud-link">python</a>
+                                        <a href="/search?texto=pascal&criterio=etiquetas" class="tag-cloud-link">pascal</a>
+                                        <a href="/search?texto=javascript&criterio=etiquetas" class="tag-cloud-link">javascript</a>
                                     </ul>
                                 </div>
 
                                 <div class="sidebar-box ftco-animate">
-                                    <h3 class="sidebar-heading">Paragraph</h3>
+                                    <h3 class="sidebar-heading">Mensaje del Dia</h3>
                                     <p>SIEMPRE ESPERA LO INESPERADO</p>
                                 </div>
                             </div><!-- END COL -->

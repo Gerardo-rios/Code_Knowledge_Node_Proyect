@@ -53,35 +53,6 @@ class RespuestControl {
 
     }
 
-//    visualizar(req, res) {
-//
-//        var pregunta_id = req.body.p_id;
-//        var respuesta = models.respuesta;
-//
-//        respuesta.findAll({where: {id_pregunta: pregunta_id}}).then(function (resulT) {
-//
-//            if (resulT.length > 0) {
-//                // var data = [];
-//                var respuestaA = resulT[0];
-//                respuestaA.descripcion = respuestaA.descripcion.replace(/%0/g, '\r\n');
-//
-//                if (req.isAuthenticated()) {
-//                    res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: true, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, respuesta: respuestaA});
-//                } else {
-//                    res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, respuesta: respuestaA});
-//                }
-//
-//            } else {
-//                req.flash('error', 'Hubo un problema al intentar cargar los datos');
-//                res.redirect('/');
-//            }
-//        }).error(function (error) {
-//            req.flash('error', 'Hubo un problema, comunicate con tu servicio del sistema');
-//            res.redirect('/');
-//        });
-//
-//    }
-
     modificar(req, res) {
 
         var respuesta = models.respuesta;

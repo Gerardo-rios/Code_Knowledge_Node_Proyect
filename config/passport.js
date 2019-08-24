@@ -3,7 +3,8 @@ var models = require('./../models/');
 var cuenta = models.cuenta;
 var persona = models.usuario;
 var uuid = require('uuid');
-
+var bcrypt = require('bcrypt');
+const saltROunds = 10;
 
 
 module.exports = function (passport) {
@@ -52,13 +53,15 @@ module.exports = function (passport) {
                 var Cuenta = cuenta;
                 Cuenta.findOne({where: {email: email,tipo_cuenta: 0}}).then(function (cuenta) {
                     if (!cuenta) {
-                        return done(null, false, {message: req.flash('error', 'Cuenta no existe')});
+                        return done(null, false, {message: req.flash('error', 'Credenciales incorrectas')});
                     }
-                    if (cuenta.clave !== password) {
-                        return done(null, false, {message: req.flash('error', 'Clave incorrecta')});
-                    }
+                    bcrypt.compare(password, cuenta.clave, function (err, res){
+                        if (res === false) {
+                            return done(null, false, {message: req.flash('error', 'Credenciales incorrectas')});
+                        } 
+                    });                        
                     if (cuenta.activa === false) {
-                        return done(null, false, {message: req.flash('error', 'Su usuario a sido bloqueado')});
+                        return done(null, false, {message: req.flash('error', 'Su usuario ha sido bloqueado')});
                     }
                     var userinfo = cuenta.get();
                     return done(null, userinfo);

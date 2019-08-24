@@ -23,7 +23,7 @@ var adminC = new admin();
 
 var authadmin = function (req, res, next) {
     if (req.isAuthenticated()) {
-       adminC.admin(req,res,next);
+        adminC.admin(req, res, next);
     } else {
         req.flash('error', 'DEBES INICIAR SESION PRIMERO');
         res.redirect('/');
@@ -52,46 +52,45 @@ router.get('/', function (req, res, next) {
 });
 
 //administracion
-router.get('/administrar/usuarios',authadmin, adminC.listar);// para prubeas comentar authadmin // valida rol Admin
-router.get('/administrar/categorias',authadmin, adminC.listar_categorias); // para prubeas comentar authadmin // valida rol Admin
-router.post('/administrar/categoria',authadmin, adminC.guardar_categorias);// para prubeas comentar authadmin // valida rol Admin
-router.get('/administrar/preguntas',authadmin ,adminC.informe_pregunta);// para prubeas comentar authadmin // valida rol Admin
+router.get('/administrar/usuarios', authadmin, adminC.listar);// para prubeas comentar authadmin // valida rol Admin
+router.get('/administrar/categorias', authadmin, adminC.listar_categorias); // para prubeas comentar authadmin // valida rol Admin
+router.post('/administrar/categoria', authadmin, adminC.guardar_categorias);// para prubeas comentar authadmin // valida rol Admin
+router.get('/administrar/preguntas', authadmin, adminC.informe_pregunta);// para prubeas comentar authadmin // valida rol Admin
 //usuario preguntas
-router.get('/administrar/mispreguntas',auth ,preguntaC.mis_preguntas);
-router.post('/dpregunta' ,auth,preguntaC.borrar_pregunta);
-router.post('/dpreguntasAdmin' ,authadmin,preguntaC.borrar_preguntaAdmin);
+router.get('/administrar/mispreguntas', auth, preguntaC.mis_preguntas);
+router.post('/dpregunta', auth, preguntaC.borrar_pregunta);
+router.post('/dpreguntasAdmin', authadmin, preguntaC.borrar_preguntaAdmin);
 
 
 
 
-router.get('/cuenta/:external_id',authadmin,adminC.bloquear);
-router.get('/descuenta/:external_id', authadmin,adminC.desbloquear);
+router.get('/cuenta/:external_id', authadmin, adminC.bloquear);
+router.get('/descuenta/:external_id', authadmin, adminC.desbloquear);
 
-
+//mostrar vista logeo
 router.get('/logeo', function (req, res, next) {
     res.render('fragmentos/login', {title: 'Inicio de Sesion', msg: {error: req.flash('error'), info: req.flash('info')}});
 });
-
+//mostrar vista registro
 router.get('/registro', function (req, res, next) {
     res.render('fragmentos/registro', {title: 'Registro', msg: {error: req.flash('error'), info: req.flash('info')}});
 });
-
+//mostrar vista preguntar
 router.get('/pregunta', function (req, res, next) {
-    res.render('fragmentos/editor', {title: 'Preguntar', msg: {error: req.flash('error'), info: req.flash('info')}, ask: false});
+    res.render('fragmentos/editor', {title: 'Preguntarte nunca dejar debes', msg: {error: req.flash('error'), info: req.flash('info')}, ask: false});
 });
-
+//registrar
 router.post('/registro', cuentaC.guardarNormal);
-
+//iniciar sesion local
 router.post('/inicio_sesion', passport.authenticate('local-signin',
         {successRedirect: '/',
             failureRedirect: '/logeo',
             failureFlash: true}
 ));
-
+//cerrar sesion 
 router.get('/cerrar_sesion', auth, cuentaC.cerrar_sesion);
 
 //inico de session facebook 
-
 router.get('/login/facebook',
         passport.authenticate('facebook', {scope: ['email']}));
 
@@ -106,8 +105,7 @@ router.get('/login/facebook/return',
         });
 
 
-// inicio de google
-
+//inicio de sesion google
 router.get('/auth/google', passport.authenticate('google', {
     scope: [
         'https://www.googleapis.com/auth/userinfo.profile',
@@ -115,25 +113,16 @@ router.get('/auth/google', passport.authenticate('google', {
     ]
 }));
 
-
-//        router.get('/auth/google/callback', passport.authenticate('google', {
-//             failureRedirect: '/logeo',
-//             failureFlash: 'el correo para esta cuenta ya esta registrado ,pruebe iniciar sesion de otra forma',
-//         successFlash: 'Welcome!' 
-//        }),
-//         function (req, res) {
-//            res.redirect('/');
-//        },);
 router.get('/auth/google/callback', passport.authenticate('google', {
     successRedirect: '/',
     failRedirect: '/logeo'}));
 
 //perfil del usuario
-router.get('/usuario_perfil/:external', auth, perfilC.visualizar_d);
+router.get('/usuario_perfil/:external', auth, perfilC.visualizar_d); //ver perfil
 
-router.get('/usuario_perfil/:external/edit', auth, perfilC.visualizar_modificar);
+router.get('/usuario_perfil/:external/edit', auth, perfilC.visualizar_modificar); //ver vista modificar perfil
 
-router.post('/usuario_perfil/:external/edit/save', auth, perfilC.modificar);
+router.post('/usuario_perfil/:external/edit/save', auth, perfilC.modificar); //modificar datos del perfil
 
 // ingreso de imagenes 
 router.post('/upload', function (req, res) {
@@ -148,8 +137,6 @@ router.post('/upload', function (req, res) {
 
     var dir = `./files/` + EDfile.name;
 
-
-
     EDfile.mv(`./files/` + EDfile.name, err => {
         console.log(err);
         if (err)
@@ -163,27 +150,19 @@ router.post('/upload', function (req, res) {
     });
     console.log(EDfile.name);
 
-
-
-
 });
+
 //métodos de preguntas    
-router.post('/guardarPregunta', auth, preguntaC.guardar);
+router.post('/guardarPregunta', auth, preguntaC.guardar); //guardar pregunta
 
-router.get('/pregunta/:external', preguntaC.visualizar);
-
-
-
-//router.get('/preguntas', function (req,res){
-//    res.render('fragmentos/verPregunta');
-//});
+router.get('/pregunta/:external', preguntaC.visualizar); //visualizar pregunta
 
 //paginacion del index para las preguntas 
 
-router.get('/page/:page', preguntaC.paginacion);
+router.get('/page/:page', preguntaC.paginacion); //paginacion para el maximo de preguntas en el index
 
 //searchs 
-router.get('/search', preguntaC.buscar);
+router.get('/search', preguntaC.buscar); 
 router.get('/search/:page', preguntaC.paginacion_search);
 
 router.post('/pregunta/responder', auth, respuestaC.guardar);

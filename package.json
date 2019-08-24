@@ -6,8 +6,9 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "ckeditor": "^4.12.1",
-    "cookie-parser": "^1.4.4",
+    "cookie-pa rser": "^1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^8.0.0",
     "express": "~4.16.1",

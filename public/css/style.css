@@ -167,7 +167,7 @@ figure {
 img {
     vertical-align: middle;
     border-style: none; 
-    max-width: 950px;
+    max-width: 850px;
 }
 
 svg {
@@ -441,7 +441,7 @@ pre {
     display: block;
     font-size: 87.5%;
     color: #212529; 
-    width: 950px;
+    width: 850px;
 }
 pre code {
     font-size: inherit;
@@ -8586,7 +8586,7 @@ h1, h2, h3, h4, h5,
     opacity: 1; }
 
 .blog-entry {
-    width: 100%;
+    width: 180%;
     margin-bottom: 3em; }
 .blog-entry .img {
     display: block;

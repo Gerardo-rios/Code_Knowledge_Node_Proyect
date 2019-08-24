@@ -8,49 +8,74 @@
                     <h3 class="mb-2"><a href="/pregunta/{{pregunta.external_id}}">{{pregunta.titulo}}</a></h3>
                     <div class="meta-wrap">
                         <p class="meta">
-                            <span><i class="icon-calendar mr-2"></i>{{pregunta.createdAt}}</span>
-                            <span><a href="#"><i class="icon-folder-o mr-2"></i>{{pregunta.categoria}}</a></span>
+                            <span><i class="icon-calendar mr-2"></i>{{dateFormat this.createdAt "YYYY-MM-DD"}}</span>
+                            <span><a><i class="icon-folder-o mr-2"></i>{{pregunta.categorium.nombre}}</a></span>
                             <span><i class="icon-comment2 mr-2"></i>{{pregunta.respuesta.length}}</span>
                         </p>
                     </div>
 
                     {{{pregunta.descripcion}}}
 
+                    <div class="bootstrap-tagsinput">
+                        <span class="btn-secondary-link"> {{pregunta.etiquetas}} </span> 
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="blog-entry ftco-animate d-md-flex">
-            <form class="form-group" method="POST" action="/pregunta/responder">
-                <input type="hidden" name="p_ex" value="{{pregunta.external_id}}">
-                <input type="hidden" name="p_id" value="{{pregunta.id}}">
-                <label class="label" style="color: black; font-size: 25px"> Tu respuesta </label>                
-                <textarea id="editor1" class="container" name="descripcion_r" required></textarea>
-                <br>
-                <div class="form-group">                                        
-                    <input type="submit" class="btn btn-primary btn-lg" value="Publicar tu Respuesta"/>                    
+            <div class="blog-entry ftco-animate d-md-flex">
+
+                <div class="text text-2 pl-md-4">   
+                    {{#each pregunta.respuesta}}
+                    <div class="col-md-12 my-3 p-3 bg-white rounded shadow-lg">
+                        <div class="blog-entry ftco-animate d-md-flex">
+                            <a> <img src="{{this.usuario_respuesta.imagen}}" class="user-avatar-md rounded-circle"> </a>
+                            <div class="text text-2 pl-md-4">
+                                <div class="meta-wrap">
+                                    <p class="meta">
+                                        <span style="color: #000">{{this.usuario_respuesta.usuario}}</span>
+                                    </p>
+                                </div>
+                                <p class="mb-4" >{{{this.descripcion}}}</p>
+                                <p><a onclick="" class="btn-custom" style="color: #0000ff">Comentar <span class="ion-ios-arrow-forward"></span></a></p>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
                 </div>
-            </form>
+
+            </div>
+
+            <div class="blog-entry ftco-animate d-md-flex">
+                <form class="form-group" method="POST" action="/pregunta/responder">
+                    <input type="hidden" name="p_ex" value="{{pregunta.external_id}}">
+                    <input type="hidden" name="p_id" value="{{pregunta.id}}">
+                    <label class="label" style="color: black; font-size: 25px"> Tu respuesta </label>                
+                    <textarea id="editor1" class="container" name="descripcion_r" required></textarea>
+                    <br>
+                    <div class="form-group">                                        
+                        <input type="submit" class="btn btn-primary btn-lg" value="Publicar tu Respuesta"/>                    
+                    </div>
+                </form>
+            </div>
+            {{#unless sesion}} 
+            <div class="form-group">
+
+                <label class="label" style="color: black; font-size: 25px"> Registrate o Inicia Sesion </label>
+
+                <a href="/login/facebook" class="btn btn-warning">
+                    <img src="/images/icons/facebook.png" alt="FACEBOOK">
+                    Facebook
+                </a>
+                <a href="/auth/google" class="btn btn-secondary">
+                    <img src="/images/icons/icon-google.png" alt="GOOGLE">
+                    Google
+                </a>
+                <a href="/logeo" class="btn btn-success">
+                    <img src="/images/icons/symbol-01.png" alt="CORREO">                
+                    Correo y clave
+                </a>
+
+            </div>
+            {{/unless}}
         </div>
-        {{#unless sesion}} 
-        <div class="form-group">
-
-            <label class="label" style="color: black; font-size: 25px"> Registrate o Inicia Sesion </label>
-
-            <a href="/login/facebook" class="btn btn-warning">
-                <img src="/images/icons/facebook.png" alt="FACEBOOK">
-                Facebook
-            </a>
-            <a href="/auth/google" class="btn btn-secondary">
-                <img src="/images/icons/icon-google.png" alt="GOOGLE">
-                Google
-            </a>
-            <a href="/logeo" class="btn btn-success">
-                <img src="/images/icons/symbol-01.png" alt="CORREO">                
-                Correo y clave
-            </a>
-
-        </div>
-        {{/unless}}
     </div>
-</div>
