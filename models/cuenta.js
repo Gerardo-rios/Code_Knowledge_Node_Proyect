@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     cuenta.associate = function (models) {
         cuenta.belongsTo(models.rol, {foreignKey: 'id_rol'});
         cuenta.belongsTo(models.usuario, {foreignKey: 'id_usuario'});
-        cuenta.hasMany(models.reportes, {foreignKey: 'id_cuenta', as: "reportes"});
+      //  cuenta.hasMany(models.reportes, {foreignKey: 'id_cuenta', as: "reportes"});
     };
     return cuenta;
 };

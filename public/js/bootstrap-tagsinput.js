@@ -16,8 +16,8 @@
     },
     freeInput: true,
     addOnBlur: true,
-    maxTags: undefined,
-    maxChars: undefined,
+    maxTags: 10,
+    maxChars: 75,
     confirmKeys: [13, 44],
     delimiter: ',',
     delimiterRegex: null,
@@ -25,7 +25,7 @@
     onTagExists: function(item, $tag) {
       $tag.hide().fadeIn();
     },
-    trimValue: false,
+    trimValue: true,
     allowDuplicates: false
   };
 
