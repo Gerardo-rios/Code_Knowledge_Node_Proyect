@@ -56,15 +56,25 @@ module.exports = function (passport) {
                         return done(null, false, {message: req.flash('error', 'Credenciales incorrectas')});
                     }
                     bcrypt.compare(password, cuenta.clave, function (err, res){
+                       
                         if (res === false) {
                             return done(null, false, {message: req.flash('error', 'Credenciales incorrectas')});
-                        } 
+                        }else
+                           if(cuenta.activa === false) {
+                            
+                            return done(null, false, {message: req.flash('error', 'Su usuario ha sido bloqueado')});
+                                }else{
+                             var userinfo = cuenta.get();   
+                        return done(null, userinfo);      
+                        }
+                            
+                         
                     });                        
-                    if (cuenta.activa === false) {
-                        return done(null, false, {message: req.flash('error', 'Su usuario ha sido bloqueado')});
-                    }
-                    var userinfo = cuenta.get();
-                    return done(null, userinfo);
+                    
+                    
+                    
+                    
+                    
                 }).catch(function (err) {
                     console.log("Error:", err);
                     return done(null, false, {message: req.flash('error', 'Cuenta erronea')});

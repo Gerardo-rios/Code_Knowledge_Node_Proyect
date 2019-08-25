@@ -62,7 +62,7 @@ class perfilControl {
         var external = req.body.external;
         var imagen;
         var tipo;
-         console.log("tamaño"+req.files);
+         console.log("tamaño"+req.files );
         if (req.files && req.files.imagen != undefined && req.files.imagen != null) {
              imagen = req.files.imagen;
                 

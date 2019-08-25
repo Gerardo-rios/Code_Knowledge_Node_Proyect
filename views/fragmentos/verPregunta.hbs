@@ -20,7 +20,13 @@
                         <span class="btn-secondary-link"> {{pregunta.etiquetas}} </span> 
                     </div>
                 </div>
+                {{#if id}}
+                    {{#if_eq id pregunta.usuario.external_id}}
                 <a href="/pregunta/{{pregunta.external_id}}/editar" class="btn-custom">editar</a>
+                {{else}}
+                
+                    {{/if_eq}}
+                {{/if}}
             </div>
 
             <div class="blog-entry ftco-animate d-md-flex">
@@ -37,8 +43,14 @@
                                     </p>
                                 </div>
                                 <p class="mb-4" >{{{this.descripcion}}}</p>
-                                <a class="btn-custom" href="/respuesta/{{this.external_id}}/editar" target="_blank">editar</a>
-                                <p><input id="ccnc" type="button" class="btn-custom" style="color: #0000ff" value="comentar"></p>
+                                {{#if this.usuario_respuesta.edit}}
+                                    
+                                    <a class="btn-custom" href="/respuesta/{{this.external_id}}/editar" target="_blank">editar</a>
+                                   
+                                    
+                                  
+                                {{/if}}
+                               
                             </div>
                         </div>                        
                         {{#each this.comentario}}
@@ -52,19 +64,31 @@
                                     </p>
                                 </div>
                                 <p class="mb-4" >{{this.descripcion}}</p>
+                                     {{#if this.usuario_comentario.edit_c}}
+                                     
                                 <a class="btn-custom" href="/comentario/{{this.external_id}}/editar" target="_blank">editar</a>
+                                    
+                                }
+                                {{/if}}
                             </div>
                             
                         </div>
                         {{/each}}
-                        <form class="form-group" id="com" method="POST" action="/pregunta/comentar" style="display: none">
+                         <!--div class="collapse" id="collapseExample{{@index}}"-->
+                        <p><a class=" btn btn-outline-secondary" onclick ="fade(boton{{@index}})" data-toggle="collapse" href="#collapseExample{{@index}}" role="button" aria-expanded="false" aria-controls="collapseExample{{@index}}" id="boton{{@index}}">COMENTAR</a></p>
+
+                        <form class="form-group" id="collapseExample{{@index}}" method="POST" action="/pregunta/comentar" style="display: none">
                             <input type="hidden" name="r_ex" value="{{this.external_id}}">
+                          
                             <div class="container" style="margin-left: 15em">
                                 <textarea style="width: 600px" name="des_comen">  </textarea>
+                                
                                 <br>
-                                <input id="sccc" type="submit" class="btn-secondary-link" value="Publicar Comentario">
+                                <input  type="submit" class="btn-secondary-link" value="Publicar Comentario">
+                            
                             </div>
                         </form>
+                             <!--/div-->
                     </div>
                     {{/each}}
                 </div>

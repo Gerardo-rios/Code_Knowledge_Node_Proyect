@@ -9,9 +9,9 @@ class ComentarioControl {
         var respuesta = models.respuesta;
         var ex = req.body.r_ex;
         var comentario = models.comentario;
-        var exx = req.body.p_ex;
+        var exx = req.body.pregunta;
         var usuario = models.usuario;
-
+console.log(exx);
         respuesta.findOne({where: {external_id: ex}}).then(function (resultados) {
             var datos = {
                 external_id: uuid.v4(),
@@ -20,10 +20,12 @@ class ComentarioControl {
                 id_respuesta: resultados.id
 
             };
+            
             comentario.create(datos).then(function (creado) {
 
                 req.flash('info', 'comentario guardado');
-                res.redirect('/');
+                
+                res.redirect('back');
 
             }).catch(function (error) {
                 req.flash('error', 'no se creo');

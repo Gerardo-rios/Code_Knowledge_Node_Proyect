@@ -410,10 +410,11 @@ class preguntaControl {
         var external = req.params.external;
         var pregunta = models.pregunta;
         var usuario = models.usuario;
+        var edit =false;
+        var edit_c =false;
+        pregunta.findAll({where: {external_id: external}, include: [{model:models.usuario,as:"usuario",attribute:["external_id"]},{model: models.categoria, as: 'categorium'}, {model: models.respuesta, as: 'respuesta', include: [{model: models.comentario, as: 'comentario'}]}]/*,order:[[{model: models.respuesta, as: 'respuesta'}, 'createdAt', 'DESC']]*/}).then(function (resulT) {
 
-        pregunta.findAll({where: {external_id: external}, include: [{model: models.categoria, as: 'categorium'}, {model: models.respuesta, as: 'respuesta', include: [{model: models.comentario, as: 'comentario'}]}]/*,order:[[{model: models.respuesta, as: 'respuesta'}, 'createdAt', 'DESC']]*/}).then(function (resulT) {
-
-
+console.log(pregunta.usuario);
             if (resulT.length > 0) {
                 // var data = [];
                 var preguntaA = resulT[0];
@@ -423,28 +424,47 @@ class preguntaControl {
 
                 feach(preguntaA.respuesta,
                         function (items, next) {
-
-                            usuario.findOne({where: {external_id: items.external_id_usuario}}).then(function (user_resp) {
+                            items.descripcion =items.descripcion.replace(/%0/g,'\r');
+                            if(req.user && req.user.id == items.external_id_usuario){
+                                edit=true;
+                            }else{
+                                edit=false;
+                            }
+                            usuario.findOne({attributes:["imagen","username"],where: {external_id: items.external_id_usuario}}).then(function (user_resp) {
                                 if (user_resp) {
                                     items.usuario_respuesta = {
                                         imagen: user_resp.imagen,
-                                        usuario: user_resp.username
+                                        usuario: user_resp.username,
+                                        edit : edit
                                     };
-
+                                    
+                                  
                                     feach(items.comentario,
-                                            function (it, next) {
-                                                usuario.findOne({where: {external_id: it.external_id_usuario}}).then(function (user_resp_c) {
+                                        
+                                    function (it, next) {
+                                        
+                                        if ( req.user && req.user.id == it.external_id_usuario){
+                                            edit_c = true;
+                                        }else{
+                                            edit_c = false;
+                                        }
+                                                usuario.findOne({attributes:["imagen","username"],where: {external_id:it.external_id_usuario}}).then(function (user_resp_c) {
                                                     if (user_resp_c) {
+                                                       
                                                         it.usuario_comentario = {
                                                             imagen: user_resp_c.imagen,
-                                                            usuario: user_resp_c.username
+                                                            usuario: user_resp_c.username,
+                                                            edit_c : edit_c
                                                         };
+                                                        
                                                         next(null, it);
                                                     }
                                                 });
 
                                             },
                                             function (err, d) {
+                                              items.comentario = d;
+                                              
                                             });
 
                                     next(null, items);
@@ -452,11 +472,12 @@ class preguntaControl {
                             });
 
                         }, function (err, data) {
-
+                            console.log(err);
                     preguntaA.respuesta = data;
-                    console.log(preguntaA);
+                    console.log(preguntaA.respuesta[0].comentario)
+                   // console.log(preguntaA);
                     if (req.isAuthenticated()) {
-                        res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: true, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA, rol: req.user.rol});
+                        res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: true, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA, rol: req.user.rol,id:req.user.id});
                     } else {
                         res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA});
                     }
