@@ -421,7 +421,7 @@ console.log(pregunta.usuario);
                 preguntaA.increment('numero_vistas', {silent: true});
                 preguntaA.descripcion = preguntaA.descripcion.replace(/%0/g, '\r');
                 var a = preguntaA.respuesta;
-
+                var aceptar= false;
                 feach(preguntaA.respuesta,
                         function (items, next) {
                             items.descripcion =items.descripcion.replace(/%0/g,'\r');
@@ -430,12 +430,19 @@ console.log(pregunta.usuario);
                             }else{
                                 edit=false;
                             }
+                            
+                             if(req.user && req.user.id == preguntaA.usuario.external_id){
+                                aceptar=true;
+                            }else{
+                                aceptar=false;
+                            }
                             usuario.findOne({attributes:["imagen","username"],where: {external_id: items.external_id_usuario}}).then(function (user_resp) {
                                 if (user_resp) {
                                     items.usuario_respuesta = {
                                         imagen: user_resp.imagen,
                                         usuario: user_resp.username,
-                                        edit : edit
+                                        edit : edit,
+                                        aceptar:aceptar
                                     };
                                     
                                   
@@ -463,7 +470,7 @@ console.log(pregunta.usuario);
 
                                             },
                                             function (err, d) {
-                                              items.comentario = d;
+                                             
                                               
                                             });
 
@@ -474,7 +481,7 @@ console.log(pregunta.usuario);
                         }, function (err, data) {
                             console.log(err);
                     preguntaA.respuesta = data;
-                    console.log(preguntaA.respuesta[0].comentario)
+                  
                    // console.log(preguntaA);
                     if (req.isAuthenticated()) {
                         res.render('fragmentos/editor', {title: 'Preguntar nunca dejar debes', sesion: true, msg: {error: req.flash('error'), info: req.flash('info')}, ask: true, pregunta: preguntaA, rol: req.user.rol,id:req.user.id});

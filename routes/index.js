@@ -66,7 +66,7 @@ router.post('/dpregunta', auth, preguntaC.borrar_pregunta);
 router.post('/dpreguntasAdmin', authadmin, preguntaC.borrar_preguntaAdmin);
 
 
-
+router.post('/aceptar', auth, respuestaC.aceptar);
 
 router.get('/cuenta/:external_id', authadmin, adminC.bloquear);
 router.get('/descuenta/:external_id', authadmin, adminC.desbloquear);

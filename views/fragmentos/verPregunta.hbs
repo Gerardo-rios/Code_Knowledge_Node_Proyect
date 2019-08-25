@@ -37,12 +37,29 @@
                         <div class="blog-entry ftco-animate d-md-flex">
                             <a> <img src="{{this.usuario_respuesta.imagen}}" class="user-avatar-md rounded-circle"> </a>
                             <div class="text text-2 pl-md-4">
+                                {{#if this.aceptada}}
+                                <label class="label-rounded" style="color: #000080">Respuesta aceptada por el usuario</label>
+                                {{else}}    
+                                {{#if this.usuario_respuesta.aceptar}}
+                                
+                                <form action="/aceptar" method="POST">
+                                    <input type="hidden" value="{{this.external_id}}" name="external">
+                                    <input onclick="return confirm('Aceptar las respuestas ayuda a los usuarios a identificar las soluciones que han sido utiles\nacepta esta respuesta como correcta? no tendra marcha atraz')" type="submit" class="btn btn-outline-brand" value="Aceptar respuesta">
+                                </form>
+                                
+                                    {{/if}}
+                              
+                                {{/if}}
+                                    
                                 <div class="meta-wrap">
                                     <p class="meta">
                                         <span style="color: #000">{{this.usuario_respuesta.usuario}}</span>
                                     </p>
                                 </div>
+                                
                                 <p class="mb-4" >{{{this.descripcion}}}</p>
+                                
+                                
                                 {{#if this.usuario_respuesta.edit}}
                                     
                                     <a class="btn-custom" href="/respuesta/{{this.external_id}}/editar" target="_blank">editar</a>
@@ -75,7 +92,7 @@
                         </div>
                         {{/each}}
                          <!--div class="collapse" id="collapseExample{{@index}}"-->
-                        <p><a class=" btn btn-outline-secondary" onclick ="fade(boton{{@index}})" data-toggle="collapse" href="#collapseExample{{@index}}" role="button" aria-expanded="false" aria-controls="collapseExample{{@index}}" id="boton{{@index}}">COMENTAR</a></p>
+                        <p><a class=" btn btn-outline-secondary"  data-toggle="collapse" href="#collapseExample{{@index}}" role="button" aria-expanded="false" aria-controls="collapseExample{{@index}}" id="boton{{@index}}">COMENTAR</a></p>
 
                         <form class="form-group" id="collapseExample{{@index}}" method="POST" action="/pregunta/comentar" style="display: none">
                             <input type="hidden" name="r_ex" value="{{this.external_id}}">

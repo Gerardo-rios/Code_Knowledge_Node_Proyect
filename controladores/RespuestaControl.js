@@ -7,14 +7,16 @@ class RespuestControl {
 
     aceptar(req, res) {
         var respuesta = models.respuesta;
-        var external = req.body_external_r;
+        var external = req.body.external;
         respuesta.findOne({where: {external_id: external}}).then(function (rta) {
             rta.aceptada = true;
             rta.save().then(function () {
-
+                req.flash('info','Gracias !la respuesta ha sido \naceptada ');
+                res.redirect('back');
             });
         }).catch(function (error) {
-
+            req.flash('error','HA ocurrido un error');
+                res.redirect('back');
         });
 
     }
