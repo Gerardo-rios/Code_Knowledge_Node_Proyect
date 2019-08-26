@@ -103,42 +103,57 @@ class perfilControl {
         }
 
 
-        user.findAll({where: {external_id: req.params.external}, include: [{model: cuenta, as: 'cuenta'}]}).then(function (persone) {
-            if (persone.length > 0) {
-                var userM = persone[0];
-                userM.apellidos = req.body.second_name;
-                userM.nombres = req.body.name;
-                userM.pais_origen = req.body.pais;
-                userM.grado_estudio = req.body.educacion;
-                if (imagen !== null) {
-                    userM.imagen = imagen.name;
+        var username = req.body.username;
+        var numero = user.count({where: {username: username}});
+        if (numero > 0) {
+            req.flash('error', 'nombre de usuario ya esta registrado');
+        }
+        user.count({where: {username: username}}).then(function (numero) {
+
+
+
+            user.findAll({where: {external_id: req.params.external}, include: [{model: cuenta, as: 'cuenta'}]}).then(function (persone) {
+
+                if (persone.length > 0) {
+                    var userM = persone[0];
+                    userM.apellidos = req.body.second_name;
+                    userM.nombres = req.body.name;
+                    userM.pais_origen = req.body.pais;
+                    userM.grado_estudio = req.body.educacion;
+                    if (numero < 1) {
+                        userM.username = username;
+                    } else {
+                        req.flash('error', 'nombre de usuario ya esta registrado');
+                    }
+                    if (imagen !== null) {
+                        userM.imagen = imagen.name;
+                    } else {
+                        userM.imagen = userM.imagen;
+
+                    }
+                    userM.descripcion = req.body.descripcion;
+                    userM.save().then(function (result) {
+                        var cuentM = userM.cuenta;
+                        cuentM.email = req.body.email;
+                        cuentM.clave = req.body.clave_n;
+                        cuentM.save();
+                        req.flash('info', 'Se ha modificado correctamente');
+                        res.redirect('/usuario_perfil/' + external);
+                    }).error(function (error) {
+                        console.log(error);
+                        req.flash('error', 'No se pudo modificar');
+                        res.redirect('/usuario_perfil/' + external);
+                    });
+
+
                 } else {
-                    userM.imagen = userM.imagen;
-
+                    req.flash('error', 'No existe el dato a buscar');
+                    res.redirect('/usuario_perfil/' + external);
                 }
-                userM.descripcion = req.body.descripcion;
-                userM.username = req.body.username;
-
-                userM.save().then(function (result) {
-                    var cuentM = userM.cuenta;
-                    cuentM.email = req.body.email;
-                    cuentM.save();
-                    req.flash('info', 'Se ha modificado correctamente');
-                    res.redirect('/usuario_perfil/' + external);
-                }).error(function (error) {
-                    console.log(error);
-                    req.flash('error', 'No se pudo modificar');
-                    res.redirect('/usuario_perfil/' + external);
-                });
-
-
-            } else {
-                req.flash('error', 'No existe el dato a buscar');
-                res.redirect('/usuario_perfil/' + external);
-            }
-        }).catch(function (error) {
-            req.flash('error', 'se produjo un error');
-            res.redirect('/');
+            }).catch(function (error) {
+                req.flash('error', 'se produjo un error');
+                res.redirect('/');
+            });
         });
     }
 
