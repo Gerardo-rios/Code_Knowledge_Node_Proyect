@@ -62,65 +62,66 @@ class perfilControl {
         var external = req.body.external;
         var imagen;
         var tipo;
-         console.log("tamaño"+req.files );
+        console.log("tamaño" + req.files);
         if (req.files && req.files.imagen != undefined && req.files.imagen != null) {
-             imagen = req.files.imagen;
-                
-       
-        tipo = imagen.mimetype.split('/');
-        console.log(tipo);
+            imagen = req.files.imagen;
+
+
+            tipo = imagen.mimetype.split('/');
+            console.log(tipo);
             if (tipo[0] == 'image') {
-                imagen.name = "/files/profiles/"+req.user.id +"."+tipo[1];
-                 console.log(imagen);
+                imagen.name = "/files/profiles/" + req.user.id + "." + tipo[1];
+                console.log(imagen);
 //                fs.exists("."+imagen.name ,(exists) => {
 //                    if (exists) {
 //                        
 //                        fs.unlinkSync("."+imagen.name);
 //                        console.log('borrado');
 //                    } });
-                
-                  imagen.mv(`.`+imagen.name, err => {
-       
-        if (err){
-                 console.log(err);
-            return res.status(500).send({message: 'error tal ' + err});
 
-                }
-               console.log("nose que pedo");
-        
-        });
+                imagen.mv(`.` + imagen.name, err => {
 
-       
-   
-               
-            }else
+                    if (err) {
+                        console.log(err);
+                        return res.status(500).send({message: 'error tal ' + err});
+
+                    }
+                    console.log("nose que pedo");
+
+                });
+
+
+
+
+            } else
             {
-                imagen=null;
+                imagen = null;
             }
 
-        }else{
-            imagen=null;
+        } else {
+            imagen = null;
         }
+
+
         user.findAll({where: {external_id: req.params.external}, include: [{model: cuenta, as: 'cuenta'}]}).then(function (persone) {
-            
             if (persone.length > 0) {
                 var userM = persone[0];
                 userM.apellidos = req.body.second_name;
                 userM.nombres = req.body.name;
                 userM.pais_origen = req.body.pais;
                 userM.grado_estudio = req.body.educacion;
-                if (imagen !== null){
-                userM.imagen = imagen.name;
-            }else{
-                                userM.imagen = userM.imagen;
+                if (imagen !== null) {
+                    userM.imagen = imagen.name;
+                } else {
+                    userM.imagen = userM.imagen;
 
-            }
+                }
                 userM.descripcion = req.body.descripcion;
+                userM.username = req.body.username;
+
                 userM.save().then(function (result) {
                     var cuentM = userM.cuenta;
-                    cuentM.username = req.body.username;
                     cuentM.email = req.body.email;
-                    cuentM.clave = req.body.clave_n;
                     cuentM.save();
                     req.flash('info', 'Se ha modificado correctamente');
                     res.redirect('/usuario_perfil/' + external);

@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
         <link rel="stylesheet" href="/css/styleB.css">
-       
+
         <link rel="stylesheet" href="/css/fontawesome-all.css">
 
         <link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
@@ -70,9 +70,9 @@
                 <nav id="colorlib-main-menu" role="navigation">
                     <ul>
                         <li class="colorlib-active"><a href="/">Inicio</a></li>
-                        <li><a href="/">Noticias</a></li>
-                        <li><a href="/">Informacion</a></li>
-                        <li><a href="/">Contacto</a></li>
+                        <li><a href="https://lahora.com.ec/loja" target="_blank">Noticias</a></li>
+                        <li><a href="/information" target="_blank">Informacion</a></li>
+                        <li><a href="/contact" target="_blank">Contacto</a></li>
                     </ul>
                 </nav>
             </aside> <!-- END COLORLIB-ASIDE -->
@@ -114,7 +114,7 @@
                                             .bootstrap-tagsinput{
                                                 display: block
                                             }
-                                            
+
                                         </style>
                                         <label class="label" style="color: black; font-size: 25px"> Etiquetas </label>
                                         <br>
@@ -128,6 +128,26 @@
 
                                 </form>
                             </div>
+                            {{#unless sesion}} 
+                            <div class="form-group">
+
+                                <label class="label" style="color: black; font-size: 25px"> Registrate o Inicia Sesion </label>
+
+                                <a href="/login/facebook" class="btn btn-warning">
+                                    <img src="/images/icons/facebook.png" alt="FACEBOOK">
+                                    Facebook
+                                </a>
+                                <a href="/auth/google" class="btn btn-secondary">
+                                    <img src="/images/icons/icon-google.png" alt="GOOGLE">
+                                    Google
+                                </a>
+                                <a href="/logeo" class="btn btn-success">
+                                    <img src="/images/icons/symbol-01.png" alt="CORREO">                
+                                    Correo y clave
+                                </a>
+
+                            </div>
+                            {{/unless}}
                             <div class="col-xl-4 sidebar ftco-animate bg-light pt-5">
                                 {{> busqueda}}
                                 <div class="ayura">
@@ -211,15 +231,15 @@
                     $('#myInput').trigger('focus');
                 });
             });
-            
-            
+
+
         </script>
         <script>
-   
-                function fade(elemeto){
-                    $("#"+elemeto).addClass('fade');
-                }
-    
-    </script>
+
+            function fade(elemeto) {
+                $("#" + elemeto).addClass('fade');
+            }
+
+        </script>
     </body>
 </html>

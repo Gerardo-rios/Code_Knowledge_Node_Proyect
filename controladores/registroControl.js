@@ -53,7 +53,7 @@ class registroControl {
                         var numero = username.dataValues.no_username;
                         if (numero !== 0) {
 
-                            req.flash('error', "El nombre de usuario ya se encuentra registrado, porfavor ingrese otro o pruebe con ");
+                            req.flash('error', "El nombre de usuario ya se encuentra registrado, porfavor ingrese otro");
                             res.redirect("/registro");
                         } else {
                             persona.create(datos, {include: [{model: models.cuenta, as: 'cuenta'}]}).then(function (wason) {

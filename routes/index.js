@@ -81,7 +81,12 @@ router.get('/registro', function (req, res, next) {
 });
 //mostrar vista preguntar
 router.get('/pregunta', function (req, res, next) {
-    res.render('fragmentos/editor', {title: 'Preguntarte nunca dejar debes', msg: {error: req.flash('error'), info: req.flash('info')}, ask: false});
+    if (req.isAuthenticated()) {
+        res.render('fragmentos/editor', {title: 'Preguntarte nunca dejar debes', sesion: true, msg: {error: req.flash('error'), info: req.flash('info')}, ask: false});
+    } else {
+        res.render('fragmentos/editor', {title: 'Preguntarte nunca dejar debes', sesion: false, msg: {error: req.flash('error'), info: req.flash('info')}, ask: false});
+    }
+
 });
 //registrar
 router.post('/registro', cuentaC.guardarNormal);
@@ -184,4 +189,13 @@ router.post('/respuesta/:external/editar/save', auth, respuestaC.modificar);
 router.get('/comentario/:external/editar', auth, comenC.visualizar_modificar);
 
 router.post('/comentario/:external/editar/save', auth, comenC.modificar);
+
+router.get('/information', function (req, res, next) {
+    res.render('fragmentos/informacion', {title: 'Informacion'});
+});
+
+router.get('/contact', function (req, res, next) {
+    res.render('fragmentos/contactos', {title: 'Contactos'});
+});
+
 module.exports = router;
